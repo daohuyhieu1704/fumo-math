@@ -1,0 +1,24 @@
+#include "pch.h"
+#include "InitApp.h"
+
+MYENGINE_API int InitializeApp(HWND hParent, HINSTANCE hInstance)
+{
+	InitialVariables();
+	CreateWindowClass(hParent, hInstance);
+	InitWindow(hParent, hInstance);
+	return 1;
+}
+
+MYENGINE_API LONG_PTR SetOwnWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
+{
+    SetLastError(0);
+    LONG_PTR result = SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+    if (result == 0) {
+        DWORD dwError = GetLastError();
+        if (dwError != 0) {
+            return -1;
+        }
+    }
+    return result;
+}
+
