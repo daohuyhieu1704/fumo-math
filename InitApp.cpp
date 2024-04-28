@@ -49,7 +49,7 @@ ATOM CreateWindowClass(HWND hParent, HINSTANCE hInstance)
 	return RegisterClassEx(&wc);
 }
 
-VOID InitWindow(HWND hParent, HINSTANCE hInstance)
+HWND InitWindow(HWND hParent, HINSTANCE hInstance)
 {
 	RECT rect{};
 	GetWindowRect(hParent, &rect);
@@ -57,7 +57,7 @@ VOID InitWindow(HWND hParent, HINSTANCE hInstance)
 	AdjustWindowRect(&rect, WS_CHILD, FALSE);
 	const int top{ rect.top };
 	const int left{ rect.left };
-	const int width{ (rect.right - rect.left) / 2 };
+	const int width{ (rect.right - rect.left) / 2 - 100 };
 	const int height{ rect.bottom - rect.top };
 
 	HWND hWnd = CreateWindowEx(
@@ -77,7 +77,9 @@ VOID InitWindow(HWND hParent, HINSTANCE hInstance)
 	{
 		ShowWindow(hWnd, SW_SHOWNORMAL);
 		UpdateWindow(hWnd);
+		return hWnd;
 	}
+	return NULL;
 }
 
 

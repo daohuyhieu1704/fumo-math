@@ -10,7 +10,7 @@
 #endif
 
 extern "C" {
-	MYENGINE_API int InitializeApp(HWND hParent, HINSTANCE hInstance);
+	MYENGINE_API HWND InitializeApp(HWND hParent, HINSTANCE hInstance);
 	MYENGINE_API LONG_PTR SetOwnWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong);
 }
 

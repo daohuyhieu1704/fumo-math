@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "InitApp.h"
 
-MYENGINE_API int InitializeApp(HWND hParent, HINSTANCE hInstance)
+MYENGINE_API HWND InitializeApp(HWND hParent, HINSTANCE hInstance)
 {
 	InitialVariables();
 	CreateWindowClass(hParent, hInstance);
-	InitWindow(hParent, hInstance);
-	return 1;
+	HWND window = InitWindow(hParent, hInstance);
+	return window;
 }
 
 MYENGINE_API LONG_PTR SetOwnWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)

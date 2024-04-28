@@ -7,7 +7,7 @@
 
 VOID			InitialVariables();
 ATOM			CreateWindowClass(HWND, HINSTANCE);
-VOID			InitWindow(HWND, HINSTANCE);
+HWND			InitWindow(HWND, HINSTANCE);
 VOID			MsgLoop();
 
 #endif // INITAPP_H

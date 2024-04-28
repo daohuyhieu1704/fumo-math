@@ -46,6 +46,8 @@ namespace FumoUI.Views
             try
             {
                 Loaded -= GraphView_Loaded;
+
+                RenderSurface renderSurface = new RenderSurface();
                 Grid grid = this.Parent as Grid;
                 MainWindow mainWindow = grid.Parent as MainWindow;
                 var windowInteropHelper = new WindowInteropHelper(mainWindow);
@@ -53,12 +55,7 @@ namespace FumoUI.Views
                 IntPtr hInstance = Marshal.GetHINSTANCE(typeof(MainWindow).Module);
 
                 // Call the InitializeApp function from the DLL
-                int result = RenderSurface.InitializeApp(hwnd, hInstance);
-
-                if (result == -1)
-                {
-                    MessageBox.Show("Failed to initialize the native application.");
-                }
+                renderSurface.Initialize(hwnd, hInstance);
             }
             catch (Exception ex)
             {
