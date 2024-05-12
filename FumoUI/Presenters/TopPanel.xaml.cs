@@ -31,7 +31,7 @@ namespace FumoUI.Presenters
         {
             try
             {
-                if (!(DataContext is TopPanelViewModel model))
+                if (DataContext is not TopPanelViewModel model)
                 {
                     return;
                 }

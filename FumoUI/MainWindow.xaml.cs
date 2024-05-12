@@ -23,6 +23,16 @@ namespace FumoUI
             InitializeComponent();
             directXHost = new DirectXHost();
             hostContainer.Child = directXHost;
+            hostContainer.MouseDown += HostContainer_MouseDown;
+        }
+
+        private void HostContainer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Point position = e.GetPosition(hostContainer);
+                DirectXHost.DrawCircle((float)position.X, (float)position.Y, 50);
+            }
         }
     }
 }

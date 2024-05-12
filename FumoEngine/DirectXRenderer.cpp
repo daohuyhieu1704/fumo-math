@@ -33,13 +33,19 @@ HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND p
 
     RegisterClass(&wc);
 
+    RECT rc{};
+	GetClientRect(parentHwnd, &rc);
+	LONG width = rc.right - rc.left;
+    LONG height = rc.bottom - rc.top;
+
+
     // Create the window.
     HWND hwnd = CreateWindowEx(
         WS_EX_CLIENTEDGE,              // Extended window styles.
         CLASS_NAME,                    // Window class
         L"Drawing App",        // Window text
         WS_CHILD | WS_VISIBLE,         // Window style - make it a child window that is visible
-        0, 0, 300, 300,                // Position and dimensions
+        0, 0, width, height,                // Position and dimensions
         parentHwnd,                    // Parent window    
         NULL,                          // Menu
         hInstance,                     // Instance handle
@@ -101,6 +107,39 @@ void DirectXRenderer::DrawCircle(float centerX, float centerY, float radius)
     {
         return;
     }
+}
+
+void DirectXRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
+{
+	pRenderTarget->BeginDraw();
+	pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+	for (int i = 0; i < numColumns; i++)
+	{
+		pRenderTarget->DrawLine(
+			D2D1::Point2F(i * cellWidth, 0),
+			D2D1::Point2F(i * cellWidth, numRows * cellHeight),
+			pBrush,
+			0.5f
+		);
+	}
+	for (int i = 0; i < numRows; i++)
+	{
+		pRenderTarget->DrawLine(
+			D2D1::Point2F(0, i * cellHeight),
+			D2D1::Point2F(numColumns * cellWidth, i * cellHeight),
+			pBrush,
+			1.0f
+		);
+	}
+	HRESULT hr = pRenderTarget->EndDraw();
+	if (hr == D2DERR_RECREATE_TARGET)
+	{
+		DiscardDeviceResources();
+	}
+	else if (FAILED(hr))
+	{
+		return;
+	}
 }
 
 void DirectXRenderer::DiscardDeviceResources()

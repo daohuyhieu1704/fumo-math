@@ -6,6 +6,7 @@ public:
 	HWND InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND parentHwnd);
     HRESULT InitializeDirect2D(HWND hwnd);
     void DrawCircle(float centerX, float centerY, float radius);
+    void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
 private:
 	void DiscardDeviceResources();
 private:
