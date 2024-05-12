@@ -10,19 +10,23 @@ namespace FumoUI.Utils
 {
     public class DirectXHost : HwndHost
     {
-        private RendererWrapper? rendererWrapper;
-        private IntPtr hwndHost;
+        private IntPtr hwndDirectX = IntPtr.Zero;
+        private int hostHeight, hostWidth;
+
+        public DirectXHost(int height, int width)
+        {
+            hostHeight = height;
+            hostWidth = width;
+        }
 
         protected override HandleRef BuildWindowCore(HandleRef hwndParent)
         {
-            rendererWrapper = new RendererWrapper();
-            hwndHost = rendererWrapper.CreateRendererWindow(hwndParent.Handle);
-            return new HandleRef(this, hwndHost);
+            throw new NotImplementedException();
         }
 
         protected override void DestroyWindowCore(HandleRef hwnd)
         {
-            rendererWrapper?.DestroyRendererWindow();
+            throw new NotImplementedException();
         }
     }
 }
