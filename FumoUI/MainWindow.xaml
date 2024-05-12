@@ -4,26 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FumoUI"
-        xmlns:view="clr-namespace:FumoUI.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="850">
+        xmlns:usercontrols="clr-namespace:FumoUI.Presenters"
+        d:ResizeMode="NoResize"
+        Title="MainWindow" Height="900" Width="1600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <view:GraphView Grid.Column="0" />
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <TextBlock Text="Phím điều khiển" />
-            </Grid>
-            <Grid Grid.Row="1">
-                <TextBlock Text="Py compiler" />
-            </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <usercontrols:TopPanel Grid.Row="0"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <usercontrols:LeftSide Grid.Column="0"/>
+            <Border Grid.Column="1" x:Name="hostContainer" Margin="10"/>
         </Grid>
     </Grid>
 </Window>

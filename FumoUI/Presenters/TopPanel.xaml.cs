@@ -1,5 +1,8 @@
-﻿using FumoUI.Utils;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FumoUI
+namespace FumoUI.Presenters
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for TopPanel.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class TopPanel : UserControl
     {
-        private DirectXHost directXHost;
-        public MainWindow()
+        public TopPanel()
         {
             InitializeComponent();
-            directXHost = new DirectXHost();
-            hostContainer.Child = directXHost;
         }
     }
 }

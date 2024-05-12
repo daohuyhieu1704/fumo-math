@@ -1,20 +1,25 @@
 #include "pch.h"
-#include "InitApp.h"
+#include "DbDirectX.h"
 
-WCHAR			WindowClass[MAX_NAME_LENGTH];
-WCHAR			WindowTitle[MAX_NAME_LENGTH];
-HICON			hIcon;
 
 const wchar_t g_szClassName[] = L"FumoWindowClass";
 
-VOID InitialVariables()
+HWND DbDirectX::InitializeApp(HWND hParent, HINSTANCE hInstance)
 {
-	LoadString(NULL, IDS_APPNAME, WindowClass, MAX_NAME_LENGTH);
-	LoadString(NULL, IDS_APPTITLE, WindowTitle, MAX_NAME_LENGTH);
-	hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_MAINICON));
+	InitialVariables();
+	CreateWindowClass(hParent, hInstance);
+	HWND window = InitWindow(hParent, hInstance);
+	return window;
 }
 
-static LRESULT CALLBACK WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+VOID DbDirectX::InitialVariables()
+{
+    LoadString(NULL, IDS_APPNAME, WindowClass, MAX_NAME_LENGTH);
+    LoadString(NULL, IDS_APPTITLE, WindowTitle, MAX_NAME_LENGTH);
+    hIcon = LoadIcon(NULL, MAKEINTRESOURCE(IDI_ICON1));
+}
+
+LRESULT DbDirectX::WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
@@ -30,7 +35,7 @@ static LRESULT CALLBACK WinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPara
 	return 0;
 }
 
-ATOM CreateWindowClass(HWND hParent, HINSTANCE hInstance)
+ATOM DbDirectX::CreateWindowClass(HWND hParent, HINSTANCE hInstance)
 {
 	WNDCLASSEX wc;
 	wc.cbSize = sizeof(WNDCLASSEX);
@@ -49,7 +54,7 @@ ATOM CreateWindowClass(HWND hParent, HINSTANCE hInstance)
 	return RegisterClassEx(&wc);
 }
 
-HWND InitWindow(HWND hParent, HINSTANCE hInstance)
+HWND DbDirectX::InitWindow(HWND hParent, HINSTANCE hInstance)
 {
 	RECT rect{};
 	GetWindowRect(hParent, &rect);
@@ -57,7 +62,7 @@ HWND InitWindow(HWND hParent, HINSTANCE hInstance)
 	AdjustWindowRect(&rect, WS_CHILD, FALSE);
 	const int top{ rect.top };
 	const int left{ rect.left };
-	const int width{ (rect.right - rect.left) / 2};
+	const int width{ (rect.right - rect.left) / 2 };
 	const int height{ rect.bottom - rect.top };
 
 	HWND hWnd = CreateWindowEx(
@@ -82,8 +87,7 @@ HWND InitWindow(HWND hParent, HINSTANCE hInstance)
 	return NULL;
 }
 
-
-VOID MsgLoop()
+VOID DbDirectX::MsgLoop()
 {
 	MSG msg = { 0 };
 	while (msg.message != WM_QUIT)
@@ -94,4 +98,17 @@ VOID MsgLoop()
 			DispatchMessage(&msg);
 		}
 	}
+}
+
+LONG_PTR DbDirectX::SetOwnWindowLong(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
+{
+    SetLastError(0);
+    LONG_PTR result = SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+    if (result == 0) {
+        DWORD dwError = GetLastError();
+        if (dwError != 0) {
+            return -1;
+        }
+    }
+    return result;
 }
