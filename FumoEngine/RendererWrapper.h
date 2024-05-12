@@ -14,6 +14,7 @@ public:
     RendererWrapper() : m_renderer(new DirectXRenderer()) {}
     IntPtr CreateRendererWindow(IntPtr parentHandle);
     void DestroyRendererWindow();
+	void DrawCircle(float centerX, float centerY, float radius);
     ~RendererWrapper();
 };
 

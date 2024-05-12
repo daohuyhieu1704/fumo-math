@@ -16,6 +16,11 @@ void RendererWrapper::DestroyRendererWindow()
     }
 }
 
+void RendererWrapper::DrawCircle(float centerX, float centerY, float radius)
+{
+	m_renderer->DrawCircle(centerX, centerY, radius);
+}
+
 RendererWrapper::~RendererWrapper()
 {
     delete m_renderer;

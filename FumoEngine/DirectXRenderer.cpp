@@ -51,5 +51,73 @@ HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND p
     }
 
     ShowWindow(hwnd, nCmdShow);
+    InitializeDirect2D(hwnd);
     return hwnd;
+}
+
+HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
+{
+
+    HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &pFactory);
+    if (SUCCEEDED(hr))
+    {
+        RECT rc;
+        GetClientRect(hwnd, &rc);
+        D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
+
+        hr = pFactory->CreateHwndRenderTarget(
+            D2D1::RenderTargetProperties(),
+            D2D1::HwndRenderTargetProperties(hwnd, size),
+            &pRenderTarget
+        );
+
+        if (SUCCEEDED(hr))
+        {
+            hr = pRenderTarget->CreateSolidColorBrush(
+                D2D1::ColorF(D2D1::ColorF::Black),
+                &pBrush
+            );
+        }
+    }
+
+    return hr;
+}
+
+void DirectXRenderer::DrawCircle(float centerX, float centerY, float radius)
+{
+    pRenderTarget->BeginDraw();
+    pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+    pRenderTarget->DrawEllipse(
+        D2D1::Ellipse(D2D1::Point2F(centerX, centerY), radius, radius),
+        pBrush,
+        1.0f
+    );
+    HRESULT hr = pRenderTarget->EndDraw();
+    if (hr == D2DERR_RECREATE_TARGET)
+	{
+		DiscardDeviceResources();
+    }
+    else if (FAILED(hr))
+    {
+        return;
+    }
+}
+
+void DirectXRenderer::DiscardDeviceResources()
+{
+	if (pRenderTarget)
+	{
+		pRenderTarget->Release();
+		pRenderTarget = nullptr;
+	}
+	if (pBrush)
+	{
+		pBrush->Release();
+		pBrush = nullptr;
+	}
+	if (pFactory)
+	{
+		pFactory->Release();
+		pFactory = nullptr;
+	}
 }
