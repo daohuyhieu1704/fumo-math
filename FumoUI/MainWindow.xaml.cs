@@ -21,6 +21,8 @@ namespace FumoUI
         public MainWindow()
         {
             InitializeComponent();
+            directXHost = new DirectXHost();
+            hostContainer.Child = directXHost;
         }
     }
 }

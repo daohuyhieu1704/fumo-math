@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,23 +11,24 @@ namespace FumoUI.Utils
 {
     public class DirectXHost : HwndHost
     {
-        private IntPtr hwndDirectX = IntPtr.Zero;
-        private int hostHeight, hostWidth;
-
-        public DirectXHost(int height, int width)
-        {
-            hostHeight = height;
-            hostWidth = width;
-        }
+        private static RendererWrapper? rendererWrapper;
+        private IntPtr hwndHost;
 
         protected override HandleRef BuildWindowCore(HandleRef hwndParent)
         {
-            throw new NotImplementedException();
+            rendererWrapper = new RendererWrapper();
+            hwndHost = rendererWrapper.CreateRendererWindow(hwndParent.Handle);
+            return new HandleRef(this, hwndHost);
         }
 
         protected override void DestroyWindowCore(HandleRef hwnd)
         {
-            throw new NotImplementedException();
+            rendererWrapper?.DestroyRendererWindow();
+        }
+
+        public static void DrawCircle(float centerX, float centerY, float radius)
+        {
+            rendererWrapper?.DrawCircle(centerX, centerY, radius);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FumoUI.ViewModels.TopPanel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,29 @@ namespace FumoUI.Presenters
         public TopPanel()
         {
             InitializeComponent();
+            DataContext = new TopPanelViewModel();
+        }
+
+        private void CommandAction(Action<TopPanelViewModel> callback)
+        {
+            try
+            {
+                if (!(DataContext is TopPanelViewModel model))
+                {
+                    return;
+                }
+
+                callback(model);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void DrawCircle_Click(object sender, RoutedEventArgs e)
+        {
+            CommandAction(model => model.DrawCircle());
         }
     }
 }

@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:FumoUI.Presenters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <Border Background="LightGray">
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Content="Circle" Margin="10" Click="DrawCircle_Click" />
+        </StackPanel>
+    </Border>
 </UserControl>
