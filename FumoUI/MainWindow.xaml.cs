@@ -17,22 +17,14 @@ namespace FumoUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DirectXHost directXHost;
+        private readonly DirectXHost directXHost;
+        private readonly MessageInterceptor messageInterceptor;
         public MainWindow()
         {
             InitializeComponent();
-            directXHost = new DirectXHost();
+            directXHost = new();
             hostContainer.Child = directXHost;
-            hostContainer.MouseDown += HostContainer_MouseDown;
-        }
-
-        private void HostContainer_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                Point position = e.GetPosition(hostContainer);
-                DirectXHost.DrawCircle((float)position.X, (float)position.Y, 50);
-            }
+            messageInterceptor = new(this);
         }
     }
 }

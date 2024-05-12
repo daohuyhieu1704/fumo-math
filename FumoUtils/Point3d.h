@@ -9,6 +9,8 @@ namespace Geometry
 		Point3d(double x, double y, double z);
 		~Point3d();
 
+		double DistanceTo(Point3d other) const;
+
 		double x;
 		double y;
 		double z;

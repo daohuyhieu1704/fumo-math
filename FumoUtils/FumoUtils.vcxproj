@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Point3d.h" />
   </ItemGroup>

@@ -23,5 +23,6 @@
     <ClInclude Include="pch.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry.h" />
   </ItemGroup>
 </Project>

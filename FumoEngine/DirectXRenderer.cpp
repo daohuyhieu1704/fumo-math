@@ -1,9 +1,16 @@
 #include "pch.h"
 #include "DirectXRenderer.h"
 
+using namespace Geometry;
+
 LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg) {
+    case WM_LBUTTONDOWN:
+    {
+        PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
+        return 0; // Return 0 if you handle this message.
+    }
     case WM_DESTROY:
         PostQuitMessage(0);
         return 0;
@@ -142,6 +149,10 @@ void DirectXRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns
 	}
 }
 
+void DirectXRenderer::CreateDeviceIndependentResources()
+{
+}
+
 void DirectXRenderer::DiscardDeviceResources()
 {
 	if (pRenderTarget)
@@ -159,4 +170,17 @@ void DirectXRenderer::DiscardDeviceResources()
 		pFactory->Release();
 		pFactory = nullptr;
 	}
+}
+
+void DirectXRenderer::CreateDeviceResources()
+{
+}
+
+void DirectXRenderer::DiscardDeviceIndependentResources()
+{
+    if (pFactory)
+    {
+        pFactory->Release();
+        pFactory = nullptr;
+    }
 }

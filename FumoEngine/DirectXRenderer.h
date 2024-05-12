@@ -7,6 +7,9 @@ public:
     HRESULT InitializeDirect2D(HWND hwnd);
     void DrawCircle(float centerX, float centerY, float radius);
     void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
+    void CreateDeviceIndependentResources();
+    void CreateDeviceResources();
+    void DiscardDeviceIndependentResources();
 private:
 	void DiscardDeviceResources();
 private:
