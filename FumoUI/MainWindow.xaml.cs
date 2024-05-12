@@ -25,21 +25,6 @@ namespace FumoUI
         public MainWindow()
         {
             InitializeComponent();
-            this.SizeChanged += MainWindow_SizeChanged;
-            this.StateChanged += MainWindow_StateChanged;
-        }
-
-        private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            RenderSurface.ResizeWin32Window(0, 0, (int)this.ActualWidth / 2, (int)this.ActualHeight);
-        }
-
-        private void MainWindow_StateChanged(object sender, EventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized || this.WindowState == WindowState.Normal)
-            {
-                RenderSurface.ResizeWin32Window(0, 0, (int)this.ActualWidth / 2, (int)this.ActualHeight);
-            }
         }
     }
 }

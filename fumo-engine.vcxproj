@@ -25,6 +25,8 @@
     <RootNamespace>fumoengine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>FumoEngine</ProjectName>
+    <TargetFramework>net8.0</TargetFramework>
+    <WindowsTargetPlatformMinVersion>7.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -45,6 +47,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>NetCore</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -137,14 +140,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="exports.cpp" />
-    <ClCompile Include="InitApp.cpp" />
+    <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="RendererWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="exports.h" />
-    <ClInclude Include="InitApp.h" />
+    <ClInclude Include="DirectXRenderer.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RendererWrapper.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

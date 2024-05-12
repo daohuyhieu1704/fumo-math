@@ -4,7 +4,9 @@
 
 #ifndef PCH_H
 #define PCH_H
-
+#include <d3d11.h>
+#include <DirectXMath.h>
+#pragma comment(lib, "d3d11.lib")
 #define MAX_NAME_LENGTH 256
 #define HInstance() GetModuleHandle(NULL)
 
