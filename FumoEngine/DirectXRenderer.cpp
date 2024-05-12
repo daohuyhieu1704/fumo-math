@@ -14,7 +14,26 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     case WM_DESTROY:
         PostQuitMessage(0);
         return 0;
+    case WM_SIZE:
+    {
+        int width = LOWORD(lParam);
+        int height = HIWORD(lParam);
+		SetWindowPos(hwnd, NULL, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE);
+    }
+    break;
+    case WM_DPICHANGED:
+        {
+            RECT* const prcNewWindow = (RECT*)lParam;
 
+            SetWindowPos(hwnd,
+                NULL,
+                prcNewWindow->left,
+                prcNewWindow->top,
+                prcNewWindow->right - prcNewWindow->left,
+                prcNewWindow->bottom - prcNewWindow->top,
+                SWP_NOZORDER | SWP_NOACTIVATE);
+        }
+        break;
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
@@ -37,6 +56,7 @@ HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND p
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
+    wc.hbrBackground = (HBRUSH)CreateSolidBrush(RGB(0, 0, 0));
 
     RegisterClass(&wc);
 
@@ -99,7 +119,8 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
 void DirectXRenderer::DrawCircle(float centerX, float centerY, float radius)
 {
     pRenderTarget->BeginDraw();
-    pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+    pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+	pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
     pRenderTarget->DrawEllipse(
         D2D1::Ellipse(D2D1::Point2F(centerX, centerY), radius, radius),
         pBrush,
@@ -174,6 +195,11 @@ void DirectXRenderer::DiscardDeviceResources()
 
 void DirectXRenderer::CreateDeviceResources()
 {
+}
+
+void DirectXRenderer::ResizeWindow(HWND hwnd, int width, int height)
+{
+    SetWindowPos(hwnd, NULL, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE);
 }
 
 void DirectXRenderer::DiscardDeviceIndependentResources()

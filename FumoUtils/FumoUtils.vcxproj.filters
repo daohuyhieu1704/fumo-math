@@ -7,22 +7,60 @@
     <Filter Include="Common">
       <UniqueIdentifier>{4f767313-9945-4b81-b351-6ccdf4ef4b49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Geometry\Point3d">
+      <UniqueIdentifier>{8298c873-5155-42dc-b13c-d10c42da281b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Velocity2d">
+      <UniqueIdentifier>{8e7dc2ab-2464-4d57-9269-a083d4f64637}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Point2d">
+      <UniqueIdentifier>{d8343b50-32bb-401c-9e2a-b0cfed784267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Velocity3d">
+      <UniqueIdentifier>{754a4020-8588-42f8-a0fe-b425dd3a5ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Extend2d">
+      <UniqueIdentifier>{bf3503cd-a0a9-4fff-8164-70b5d44438c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Extend3d">
+      <UniqueIdentifier>{e256e625-dcac-40fe-9fbd-ed50e6e60d8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Point3d.cpp">
-      <Filter>Geometry</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Point3d.cpp">
+      <Filter>Geometry\Point3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Velocity2d.cpp">
+      <Filter>Geometry\Velocity2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Point2d.cpp">
+      <Filter>Geometry\Point2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Velocity3d.cpp">
+      <Filter>Geometry\Velocity3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Point3d.h">
-      <Filter>Geometry</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="Point3d.h">
+      <Filter>Geometry\Point3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Velocity2d.h">
+      <Filter>Geometry\Velocity2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2d.h">
+      <Filter>Geometry\Point2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Velocity3d.h">
+      <Filter>Geometry\Velocity3d</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

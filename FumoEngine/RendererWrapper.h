@@ -9,7 +9,6 @@ public ref class RendererWrapper
 private:
     DirectXRenderer* m_renderer;
     HWND m_hwnd;
-
 public:
     RendererWrapper() : m_renderer(new DirectXRenderer()) {}
     IntPtr CreateRendererWindow(IntPtr parentHandle);

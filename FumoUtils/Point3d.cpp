@@ -30,4 +30,16 @@ namespace Geometry
 		double dz = this->z - other.z;
 		return sqrt(dx * dx + dy * dy + dz * dz);
 	}
+
+	void Point3d::operator+=(const Point3d& other)
+	{
+		this->x += other.x;
+		this->y += other.y;
+		this->z += other.z;
+	}
+
+	Point3d Point3d::operator*(double scalar) const
+	{
+		return Point3d(this->x * scalar, this->y * scalar, this->z * scalar);
+	}
 }

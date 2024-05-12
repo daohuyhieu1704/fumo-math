@@ -21,11 +21,17 @@
   <ItemGroup>
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Point2d.h" />
     <ClInclude Include="Point3d.h" />
+    <ClInclude Include="Velocity2d.h" />
+    <ClInclude Include="Velocity3d.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Point2d.cpp" />
     <ClCompile Include="Point3d.cpp" />
+    <ClCompile Include="Velocity2d.cpp" />
+    <ClCompile Include="Velocity3d.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
