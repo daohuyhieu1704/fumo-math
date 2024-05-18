@@ -25,11 +25,41 @@
     <Filter Include="Geometry\Extend3d">
       <UniqueIdentifier>{e256e625-dcac-40fe-9fbd-ed50e6e60d8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\DisposableWrapper">
+      <UniqueIdentifier>{2f106cdb-3ea0-45d1-b1e6-1b4245ff4253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\SmartPtr">
+      <UniqueIdentifier>{6b7d86e0-f6ea-433d-8fb5-af0c7c933acf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Object">
+      <UniqueIdentifier>{40f4e43f-44ba-468b-ac5e-69beb6adc562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices">
+      <UniqueIdentifier>{2572db34-086d-4a4d-8dcc-0971e936bd34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices\Transaction">
+      <UniqueIdentifier>{ba3815b4-650c-4bd8-913b-ab61f167ea85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices\Database">
+      <UniqueIdentifier>{a1e8e55c-1aa1-488f-bedc-cee0731f974c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices\TableRecord">
+      <UniqueIdentifier>{9f0db983-3353-414e-8932-0dc5807ada47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\DbObject">
+      <UniqueIdentifier>{7eab4b1b-c049-4f2b-a406-45bd9d945857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\DbObject\Entity">
+      <UniqueIdentifier>{2a07ccb4-acb8-4734-8d57-d2bf587ec1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\DbObject\Object">
+      <UniqueIdentifier>{20c1f761-fac9-4729-8c0c-53d085fa89d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\DbObject\Circle">
+      <UniqueIdentifier>{8ab8cf9e-017c-4987-9ffd-2b777cdc1abb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Point3d.cpp">
       <Filter>Geometry\Point3d</Filter>
     </ClCompile>
@@ -42,11 +72,39 @@
     <ClCompile Include="Velocity3d.cpp">
       <Filter>Geometry\Velocity3d</Filter>
     </ClCompile>
+    <ClCompile Include="DisposableWrapper.cpp">
+      <Filter>Common\DisposableWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="SmartPtr.cpp">
+      <Filter>Common\SmartPtr</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="FmObject.cpp">
+      <Filter>Common\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Transaction.cpp">
+      <Filter>DatabaseServices\Transaction</Filter>
+    </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>DatabaseServices\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="TableRecord.cpp">
+      <Filter>DatabaseServices\TableRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="FmDrawable.cpp">
+      <Filter>Common\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FmDbObject.cpp">
+      <Filter>Common\DbObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FmDbEntity.cpp">
+      <Filter>Common\DbObject\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="FmDbCircle.cpp">
+      <Filter>Common\DbObject\Circle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Point3d.h">
       <Filter>Geometry\Point3d</Filter>
     </ClInclude>
@@ -61,6 +119,40 @@
     </ClInclude>
     <ClInclude Include="Velocity3d.h">
       <Filter>Geometry\Velocity3d</Filter>
+    </ClInclude>
+    <ClInclude Include="DisposableWrapper.h">
+      <Filter>Common\DisposableWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="SmartPtr.h">
+      <Filter>Common\SmartPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="FmObject.h">
+      <Filter>Common\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Transaction.h">
+      <Filter>DatabaseServices\Transaction</Filter>
+    </ClInclude>
+    <ClInclude Include="Database.h">
+      <Filter>DatabaseServices\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="TableRecord.h">
+      <Filter>DatabaseServices\TableRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="FmDrawable.h">
+      <Filter>Common\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="FmDbObject.h">
+      <Filter>Common\DbObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="FmDbEntity.h">
+      <Filter>Common\DbObject\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseServices.h">
+      <Filter>DatabaseServices</Filter>
+    </ClInclude>
+    <ClInclude Include="FmDbCircle.h">
+      <Filter>Common\DbObject\Circle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

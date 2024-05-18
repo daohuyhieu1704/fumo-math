@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -45,33 +47,74 @@ namespace FumoUI.ViewModels
             return true;
         }
 
-        public class RelayCommand : ICommand
+        public class RelayCommand<T>(Predicate<T> canExecute, Action<T> execute) : ICommand
         {
-            private readonly Action<object?> execute;
-            private readonly Func<object?, bool> canExecute;
-
-            public RelayCommand(Action<object?> execute, Func<object?, bool> canExecute)
-            {
-                this.execute = execute;
-                this.canExecute = canExecute;
-            }
-
-            public event EventHandler? CanExecuteChanged;
+            private readonly Predicate<T> _canExecute = canExecute;
+            private readonly Action<T> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
 
             public bool CanExecute(object? parameter)
             {
-                return canExecute(parameter);
+                try
+                {
+                    if (parameter != null)
+                    {
+                        return _canExecute == null || _canExecute((T)parameter);
+                    }
+
+                    return true;
+                }
+                catch
+                {
+                    return true;
+                }
             }
 
             public void Execute(object? parameter)
             {
-                execute(parameter);
+                if (parameter != null)
+                {
+                    _execute((T)parameter);
+                }
             }
 
-            public void RaiseCanExecuteChanged()
+            public event EventHandler? CanExecuteChanged
             {
-                CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                add => CommandManager.RequerySuggested += value;
+                remove => CommandManager.RequerySuggested -= value;
             }
+        }
+
+        public class ActionCommand<T>(Action<T> action) : ICommand
+        {
+            public event EventHandler? CanExecuteChanged;
+            private readonly Action<T> _action = action;
+
+            public bool CanExecute(object parameter) { return true; }
+
+            public void Execute(object parameter)
+            {
+                if (_action != null)
+                {
+                    var castParameter = (T)Convert.ChangeType(parameter, typeof(T));
+                    _action(castParameter);
+                }
+            }
+        }
+
+        protected void ValidateProperty<T>(T value, [CallerMemberName] string? propertyName = null, bool skip = false)
+        {
+            if (skip)
+            {
+                return;
+            }
+
+            Validator.ValidateProperty(value, new ValidationContext(this) { MemberName = propertyName });
+        }
+
+        protected bool TryValidateProperty<T>(T value, out ICollection<ValidationResult> results, [CallerMemberName] string propertyName = null)
+        {
+            results = new List<ValidationResult>();
+            return Validator.TryValidateProperty(value, new ValidationContext(this) { MemberName = propertyName }, results);
         }
     }
 }

@@ -142,15 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DirectXRenderer.cpp" />
-    <ClCompile Include="FumoCircle.cpp" />
-    <ClCompile Include="FumoObject.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="RendererWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXRenderer.h" />
-    <ClInclude Include="FumoCircle.h" />
-    <ClInclude Include="FumoObject.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RendererWrapper.h" />
     <ClInclude Include="resource.h" />

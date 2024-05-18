@@ -19,15 +19,6 @@
     <Filter Include="Common">
       <UniqueIdentifier>{acbbbb29-dcb4-4450-9e60-4e6af5fdfe89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{85c95694-2b5f-471a-a601-c17da9f36e3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Base">
-      <UniqueIdentifier>{8e0361f6-e86c-4aee-9054-21430517c664}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core\Circle">
-      <UniqueIdentifier>{3f769bcf-6c0a-4002-9c3c-c3e46f6b3fb5}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXRenderer.cpp">
@@ -38,12 +29,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="FumoObject.cpp">
-      <Filter>Core\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="FumoCircle.cpp">
-      <Filter>Core\Circle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,12 +43,6 @@
     </ClInclude>
     <ClInclude Include="RendererWrapper.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FumoObject.h">
-      <Filter>Core\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="FumoCircle.h">
-      <Filter>Core\Circle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

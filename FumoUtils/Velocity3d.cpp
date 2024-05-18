@@ -9,7 +9,7 @@ namespace Geometry {
 		y = 0;
 		z = 0;
 	}
-	Velocity3d::Velocity3d(double x, double y, double z)
+	Velocity3d::Velocity3d(float x, float y, float z)
 	{
 		this->x = x;
 		this->y = y;
@@ -20,14 +20,14 @@ namespace Geometry {
 	{
 	}
 
-	double Velocity3d::Magnitude() const
+	float Velocity3d::Magnitude() const
 	{
 		return sqrt(x * x + y * y + z * z);
 	}
 
 	void Velocity3d::Normalize()
 	{
-		double mag = Magnitude();
+		float mag = Magnitude();
 		x /= mag;
 		y /= mag;
 		z /= mag;
@@ -41,7 +41,7 @@ namespace Geometry {
 		return *this;
 	}
 
-	Velocity3d Velocity3d::operator*(double scalar)
+	Velocity3d Velocity3d::operator*(float scalar)
 	{
 		x *= scalar;
 		y *= scalar;

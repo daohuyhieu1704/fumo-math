@@ -19,17 +19,38 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Database.h" />
+    <ClInclude Include="DatabaseServices.h" />
+    <ClInclude Include="DisposableWrapper.h" />
+    <ClInclude Include="FmDbCircle.h" />
+    <ClInclude Include="FmDbEntity.h" />
+    <ClInclude Include="FmDbObject.h" />
+    <ClInclude Include="FmDrawable.h" />
+    <ClInclude Include="FmObject.h" />
+    <ClInclude Include="TableRecord.h" />
+    <ClInclude Include="Transaction.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Point2d.h" />
     <ClInclude Include="Point3d.h" />
+    <ClInclude Include="SmartPtr.h" />
     <ClInclude Include="Velocity2d.h" />
     <ClInclude Include="Velocity3d.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Database.cpp" />
+    <ClCompile Include="DisposableWrapper.cpp" />
+    <ClCompile Include="FmDbCircle.cpp" />
+    <ClCompile Include="FmDbEntity.cpp" />
+    <ClCompile Include="FmDbObject.cpp" />
+    <ClCompile Include="FmDrawable.cpp" />
+    <ClCompile Include="FmObject.cpp" />
+    <ClCompile Include="TableRecord.cpp" />
+    <ClCompile Include="Transaction.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Point2d.cpp" />
     <ClCompile Include="Point3d.cpp" />
+    <ClCompile Include="SmartPtr.cpp" />
     <ClCompile Include="Velocity2d.cpp" />
     <ClCompile Include="Velocity3d.cpp" />
   </ItemGroup>
@@ -124,11 +145,15 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Lib/nlohmann;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>d3d11.lib;dxguid.lib;dxgi.lib;d2d1.lib;%(AdditionalDependencies);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

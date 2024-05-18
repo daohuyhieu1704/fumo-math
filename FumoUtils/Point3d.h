@@ -7,18 +7,18 @@ namespace Geometry
 	{
 	public:
 		Point3d();
-		Point3d(double x, double y, double z);
+		Point3d(float x, float y, float z);
 		~Point3d();
 
-		double DistanceTo(Point3d other) const;
+		float DistanceTo(Point3d other) const;
 
 		void operator+=(const Point3d& other);
 		void operator+=(const Velocity3d& other);
-		Point3d operator*(double scalar) const;
+		Point3d operator*(float scalar) const;
 
-		double x;
-		double y;
-		double z;
+		float x;
+		float y;
+		float z;
 	};
 }
 

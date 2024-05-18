@@ -5,17 +5,17 @@ namespace Geometry
 	{
 	public:
 		Velocity3d();
-		Velocity3d(double x, double y, double z);
+		Velocity3d(float x, float y, float z);
 		~Velocity3d();
 
-		double Magnitude() const;
+		float Magnitude() const;
 		void Normalize();
 		Velocity3d operator+=(const Velocity3d& other);
-		Velocity3d operator*(double scalar);
+		Velocity3d operator*(float scalar);
 
-		double x;
-		double y;
-		double z;
+		float x;
+		float y;
+		float z;
 	};
 }
 
