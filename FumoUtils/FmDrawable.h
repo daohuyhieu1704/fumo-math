@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "FmObject.h"
+#include "DisposableWrapper.h"
 
 class FmDrawable : public FmObject
 {
