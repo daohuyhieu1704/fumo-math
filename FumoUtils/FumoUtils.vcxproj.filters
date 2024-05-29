@@ -43,9 +43,6 @@
     <Filter Include="DatabaseServices\Database">
       <UniqueIdentifier>{a1e8e55c-1aa1-488f-bedc-cee0731f974c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DatabaseServices\TableRecord">
-      <UniqueIdentifier>{9f0db983-3353-414e-8932-0dc5807ada47}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\DbObject">
       <UniqueIdentifier>{7eab4b1b-c049-4f2b-a406-45bd9d945857}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,12 @@
     </Filter>
     <Filter Include="Common\DbObject\Circle">
       <UniqueIdentifier>{8ab8cf9e-017c-4987-9ffd-2b777cdc1abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\WorldDraw">
+      <UniqueIdentifier>{125f968c-b1cb-4457-8c68-d97b5d6d2875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices\DataTableRecord">
+      <UniqueIdentifier>{9f0db983-3353-414e-8932-0dc5807ada47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,8 +91,8 @@
     <ClCompile Include="Database.cpp">
       <Filter>DatabaseServices\Database</Filter>
     </ClCompile>
-    <ClCompile Include="TableRecord.cpp">
-      <Filter>DatabaseServices\TableRecord</Filter>
+    <ClCompile Include="DataTableRecord.cpp">
+      <Filter>DatabaseServices\DataTableRecord</Filter>
     </ClCompile>
     <ClCompile Include="FmDrawable.cpp">
       <Filter>Common\Object</Filter>
@@ -102,6 +105,12 @@
     </ClCompile>
     <ClCompile Include="FmDbCircle.cpp">
       <Filter>Common\DbObject\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldDraw.cpp">
+      <Filter>Geometry\WorldDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Extend2d.cpp">
+      <Filter>Geometry\Extend2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,8 +145,8 @@
     <ClInclude Include="Database.h">
       <Filter>DatabaseServices\Database</Filter>
     </ClInclude>
-    <ClInclude Include="TableRecord.h">
-      <Filter>DatabaseServices\TableRecord</Filter>
+    <ClInclude Include="DataTableRecord.h">
+      <Filter>DatabaseServices\DataTableRecord</Filter>
     </ClInclude>
     <ClInclude Include="FmDrawable.h">
       <Filter>Common\Object</Filter>
@@ -153,6 +162,12 @@
     </ClInclude>
     <ClInclude Include="FmDbCircle.h">
       <Filter>Common\DbObject\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldDraw.h">
+      <Filter>Geometry\WorldDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Extend2d.h">
+      <Filter>Geometry\Extend2d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -116,27 +116,6 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
     return hr;
 }
 
-void DirectXRenderer::DrawCircle(float centerX, float centerY, float radius)
-{
-    pRenderTarget->BeginDraw();
-    pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
-	pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
-    pRenderTarget->DrawEllipse(
-        D2D1::Ellipse(D2D1::Point2F(centerX, centerY), radius, radius),
-        pBrush,
-        1.0f
-    );
-    HRESULT hr = pRenderTarget->EndDraw();
-    if (hr == D2DERR_RECREATE_TARGET)
-	{
-		DiscardDeviceResources();
-    }
-    else if (FAILED(hr))
-    {
-        return;
-    }
-}
-
 void DirectXRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
 {
 	pRenderTarget->BeginDraw();

@@ -8,14 +8,18 @@ class FmDbCircle : public FmDbEntity {
 public:
     static FmDbCircle* CreateObject(float x, float y, float radius);
     void initialize(float x, float y, float radius);
+#pragma region Properties
+    Geometry::Point3d GetCenter() const;
+	void SetCenter(Geometry::Point3d center);
     void setRadius(float r);
     float getRadius() const;
-    void draw(ID3D11DeviceContext* context) override;
+#pragma endregion
+    HRESULT draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget) override;
     FmObject* clone() const override;
     nlohmann::json toJson() const override;
-    FmDbCircle() = default;
+    FmDbCircle();
 private:
-    float radius;
+    float m_radius;
 
     FmDbCircle(const FmDbCircle&) = delete;
     FmDbCircle& operator=(const FmDbCircle&) = delete;

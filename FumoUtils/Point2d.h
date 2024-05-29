@@ -1,11 +1,14 @@
 #pragma once
-class Point2d
+namespace Geometry
 {
-public:
-	Point2d();
-	Point2d(float x, float y);
-	~Point2d();
-	float x;
-	float y;
-};
+	class Point2d
+	{
+	public:
+		Point2d();
+		Point2d(float x, float y);
+		~Point2d();
+		float x;
+		float y;
+	};
+}
 

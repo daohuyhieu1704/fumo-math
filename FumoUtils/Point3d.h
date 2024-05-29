@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "Velocity3d.h"
+#include "Point2d.h"
 namespace Geometry
 {
 	class Point3d
@@ -11,6 +12,7 @@ namespace Geometry
 		~Point3d();
 
 		float DistanceTo(Point3d other) const;
+		Point2d ConvertTo2d();
 
 		void operator+=(const Point3d& other);
 		void operator+=(const Velocity3d& other);

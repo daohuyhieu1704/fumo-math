@@ -9,7 +9,16 @@
 
 class FmObject : public DisposableWrapper
 {
+private:
+    std::string m_objectId;
 public:
+
+#pragma region Properties
+    std::string getObjectId() const;
+	void setObjectId(const std::string& objectId);
+#pragma endregion
+
+
     FmObject(){}
 
     virtual ~FmObject() {}
@@ -20,6 +29,8 @@ public:
 
     virtual void copyFrom(const FmObject& source) = 0;
 };
+
+typedef std::unique_ptr<FmObject> FmObjectPtr;
 
 class ObjectFactory {
 public:

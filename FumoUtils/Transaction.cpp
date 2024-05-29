@@ -1,9 +1,9 @@
 #include "pch.h"
+#include "Database.h"
 #include "Transaction.h"
 #include "FmDrawable.h"
 
 namespace DatabaseServices {
-
     void FmTransaction::StartTransaction() {
         if (transactionActive) {
             throw std::runtime_error("Transaction is already active");
@@ -30,14 +30,12 @@ namespace DatabaseServices {
         transactionActive = false;
     }
 
-    void FmTransaction::Commit(ID3D11DeviceContext* context) {
+    void FmTransaction::Commit() {
         if (!transactionActive) {
             throw std::runtime_error("No active transaction to commit");
         }
-        for (const auto& pair : newlyAddedObjects) {
-			if (auto entity = dynamic_cast<FmDrawable*>(pair.second.get())) {
-				entity->draw(context);
-			}
+        for (auto& pair : newlyAddedObjects) {
+            m_Doc.get()->AppendObject(std::move(pair.second));
         }
         newlyAddedObjects.clear();
         transactionActive = false;

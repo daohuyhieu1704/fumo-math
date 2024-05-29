@@ -3,26 +3,25 @@
 
 namespace DatabaseServices {
 
-    void FmDatabase::addTableRecord(TableRecordPtr record)
-    {
-        records.push_back(std::move(record));
+    FmDatabase::FmDatabase()
+        : TransactionManager(std::make_unique<FmTransaction>(FmDatabasePtr(this, [](FmDatabase*) {})))
+        , m_ObjectRecords(std::make_unique<DataTableRecord>())
+    {}
+
+    void FmDatabase::AppendObject(std::unique_ptr<FmObject> obj) {
+        m_ObjectRecords->addObject(std::move(obj));
     }
 
     void FmDatabase::saveToJson(const std::string& filename) {
         nlohmann::json json;
-        for (const auto& record : records) {
-            json.push_back(record->toJson());
+        for (const auto& record : m_ObjectRecords->GetObjects()) {
+            FmDbObject* dbObj = dynamic_cast<FmDbObject*>(record.get());
+            if (dbObj == nullptr) {
+                continue;
+            }
+            json.push_back(dbObj->toJson());
         }
         std::ofstream file(filename);
         file << json.dump(4);
-    }
-
-    std::vector<TableRecord*> FmDatabase::getTableRecordPointers() const
-    {
-        std::vector<TableRecord*> pointers;
-        for (const auto& record : records) {
-            pointers.push_back(record.get());
-        }
-        return pointers;
     }
 }

@@ -2,25 +2,24 @@
 #include "pch.h"
 #include "DisposableWrapper.h"
 #include "Transaction.h"
-#include "TableRecord.h"
+#include "DataTableRecord.h"
 #include <fstream>
 
 namespace DatabaseServices {
 
+    class FmTransaction;
+
+    typedef std::shared_ptr<class FmDatabase> FmDatabasePtr;
+    typedef std::unique_ptr<FmTransaction> FmTransactionPtr;
+
     class FmDatabase : public DisposableWrapper
     {
-        FmDatabase() : TransactionManager(std::make_unique<FmTransaction>()) {}
-
-        void addTableRecord(TableRecordPtr record);
-
-        void saveToJson(const std::string& filename);
-
-        FmTransactionPtr TransactionManager;
     private:
-        DataTableRecord records;
-
-        std::vector<TableRecord*> getTableRecordPointers() const;
+        DataTableRecordPtr m_ObjectRecords;
+    public:
+        FmDatabase();
+        void AppendObject(std::unique_ptr<FmObject> obj);
+        void saveToJson(const std::string& filename);
+        FmTransactionPtr TransactionManager;
     };
-
-    typedef std::unique_ptr<FmDatabase> FmDatabasePtr;
 }

@@ -22,12 +22,13 @@
     <ClInclude Include="Database.h" />
     <ClInclude Include="DatabaseServices.h" />
     <ClInclude Include="DisposableWrapper.h" />
+    <ClInclude Include="Extend2d.h" />
     <ClInclude Include="FmDbCircle.h" />
     <ClInclude Include="FmDbEntity.h" />
     <ClInclude Include="FmDbObject.h" />
     <ClInclude Include="FmDrawable.h" />
     <ClInclude Include="FmObject.h" />
-    <ClInclude Include="TableRecord.h" />
+    <ClInclude Include="DataTableRecord.h" />
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="pch.h" />
@@ -36,16 +37,18 @@
     <ClInclude Include="SmartPtr.h" />
     <ClInclude Include="Velocity2d.h" />
     <ClInclude Include="Velocity3d.h" />
+    <ClInclude Include="WorldDraw.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DisposableWrapper.cpp" />
+    <ClCompile Include="Extend2d.cpp" />
     <ClCompile Include="FmDbCircle.cpp" />
     <ClCompile Include="FmDbEntity.cpp" />
     <ClCompile Include="FmDbObject.cpp" />
     <ClCompile Include="FmDrawable.cpp" />
     <ClCompile Include="FmObject.cpp" />
-    <ClCompile Include="TableRecord.cpp" />
+    <ClCompile Include="DataTableRecord.cpp" />
     <ClCompile Include="Transaction.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Point2d.cpp" />
@@ -53,6 +56,7 @@
     <ClCompile Include="SmartPtr.cpp" />
     <ClCompile Include="Velocity2d.cpp" />
     <ClCompile Include="Velocity3d.cpp" />
+    <ClCompile Include="WorldDraw.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

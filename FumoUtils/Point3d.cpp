@@ -2,6 +2,7 @@
 #include "Point3d.h"
 #include "math.h"
 #include <ostream>
+#include "Point2d.h"
 
 namespace Geometry
 {
@@ -28,6 +29,11 @@ namespace Geometry
 		float dy = this->y - other.y;
 		float dz = this->z - other.z;
 		return sqrt(dx * dx + dy * dy + dz * dz);
+	}
+
+	Point2d Point3d::ConvertTo2d()
+	{
+		return Point2d(this->x, this->y);
 	}
 
 	void Point3d::operator+=(const Point3d& other)
