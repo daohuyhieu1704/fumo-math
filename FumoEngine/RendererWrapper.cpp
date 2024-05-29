@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "RendererWrapper.h"
+#include "FmDbCircle.h"
 
 IntPtr RendererWrapper::CreateRendererWindow(IntPtr parentHandle)
 {
@@ -18,6 +19,11 @@ void RendererWrapper::DestroyRendererWindow()
 
 void RendererWrapper::DrawCircle(float centerX, float centerY, float radius)
 {
+    FmDbCirclePtr circle = FmDbCircle::CreateObject(centerX, centerY, radius);
+	m_renderer->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+	circle->SetBrush(m_renderer->pBrush);
+	circle->SetCenter(Geometry::Point3d(centerX, centerY, 0));
+	circle->draw(m_renderer->deviceContext, m_renderer->pRenderTarget);
 }
 
 void RendererWrapper::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)

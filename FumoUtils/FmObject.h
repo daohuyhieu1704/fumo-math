@@ -1,32 +1,25 @@
 #pragma once
-#include "pch.h"
 #include "DisposableWrapper.h"
-#include "Geometry.h"
 #include <unordered_map>
 #include <functional>
 #include <memory>
 #include <string>
 
-class FmObject : public DisposableWrapper
-{
+class FmObject : public DisposableWrapper {
 private:
     std::string m_objectId;
 public:
+    FmObject() {}
+    virtual ~FmObject() {}
 
 #pragma region Properties
     std::string getObjectId() const;
-	void setObjectId(const std::string& objectId);
+    void setObjectId(const std::string& objectId);
 #pragma endregion
-
-
-    FmObject(){}
-
-    virtual ~FmObject() {}
 
     static FmObject* create(void* unmanagedPointer);
 
     virtual FmObject* clone() const = 0;
-
     virtual void copyFrom(const FmObject& source) = 0;
 };
 
@@ -51,8 +44,7 @@ private:
 };
 
 template<typename T>
-inline void ObjectFactory::registerType(const std::string& type)
-{
+inline void ObjectFactory::registerType(const std::string& type) {
     creators[type] = []() -> std::unique_ptr<FmObject> {
         return std::make_unique<T>();
         };

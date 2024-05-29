@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 #include <vector>
-#include "FumoObject.h"
 
 class DirectXRenderer
 {

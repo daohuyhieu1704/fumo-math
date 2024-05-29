@@ -3,12 +3,17 @@
 #include "FmDbCircle.h"
 #include "FmObject.h"
 
-std::vector<std::unique_ptr<FmDbCircle>> FmDbCircleFactory::circlePool;
+std::vector<FmDbCirclePtr> FmDbCircleFactory::CirclePool;
 
-FmDbCircle* FmDbCircle::CreateObject(float x, float y, float radius) {
-    auto circle = FmDbCircleFactory::getCircle();
-    circle->initialize(x, y, radius);
-    return circle.release();
+FmDbCirclePtr FmDbCircleFactory::GetCircle() {
+    if (!CirclePool.empty()) {
+        FmDbCirclePtr circle = CirclePool.back();
+        CirclePool.pop_back();
+        return circle;
+    }
+    else {
+        return std::make_shared<FmDbCircle>();
+    }
 }
 
 namespace {
@@ -20,25 +25,26 @@ namespace {
     static CircleRegistrar circleRegistrar;
 }
 
+FmDbCirclePtr FmDbCircle::CreateObject(float x, float y, float radius) {
+    auto circle = FmDbCircleFactory::GetCircle();
+    circle->initialize(x, y, radius);
+    return circle;
+}
+
 void FmDbCircle::initialize(float x, float y, float radius) {
-    setPosition(x, y);
+    SetPosition({ x, y, 0 });
     this->m_radius = radius;
 }
 
-Geometry::Point3d FmDbCircle::GetCenter() const
-{
-	return getPosition();
+Geometry::Point3d FmDbCircle::GetCenter() const {
+    return GetPosition();
 }
 
-void FmDbCircle::SetCenter(Geometry::Point3d center)
-{
-	setPosition(center.x, center.y);
+void FmDbCircle::SetCenter(Geometry::Point3d center) {
+    SetPosition(center.x, center.y);
 }
 
-FmDbCircle::FmDbCircle()
-{
-    m_radius = 0;
-}
+FmDbCircle::FmDbCircle() : m_radius(0) {}
 
 void FmDbCircle::setRadius(float r) {
     m_radius = r;
@@ -52,7 +58,7 @@ HRESULT FmDbCircle::draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* re
     renderTarget->BeginDraw();
     renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
     renderTarget->DrawEllipse(
-        D2D1::Ellipse(D2D1::Point2F(GetCenter().x, GetCenter().x), getRadius(), getRadius()),
+        D2D1::Ellipse(D2D1::Point2F(GetCenter().x, GetCenter().y), getRadius(), getRadius()),
         GetBrush(),
         1.0f
     );
@@ -60,8 +66,7 @@ HRESULT FmDbCircle::draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* re
 }
 
 FmObject* FmDbCircle::clone() const {
-    FmDbCircle* newCircle = CreateObject(getPosition().x, getPosition().y, m_radius);
-    return newCircle;
+    return FmDbCircle::CreateObject(GetPosition().x, GetPosition().y, m_radius).get();
 }
 
 nlohmann::json FmDbCircle::toJson() const {

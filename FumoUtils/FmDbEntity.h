@@ -4,6 +4,8 @@
 class FmDbEntity : public FmDbObject
 {
 public:
-	FmObject* clone() const override;
+
+    FmObject* clone() const override;
+    virtual ~FmDbEntity() = default;
 };
 

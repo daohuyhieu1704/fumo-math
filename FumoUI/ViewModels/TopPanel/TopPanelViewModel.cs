@@ -17,7 +17,7 @@ namespace FumoUI.ViewModels.TopPanel
         }
         public void DrawCircle()
         {
-            DirectXHost.DrawCircle(100, 100, 50);
+            DirectXHost.DrawCircle(100, 200, 50);
         }
 
         public readonly ICommand CancelCmd;

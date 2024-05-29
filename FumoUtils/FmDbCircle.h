@@ -4,13 +4,16 @@
 #include <vector>
 #include <memory>
 
+class FmDbCircle;
+typedef std::shared_ptr<FmDbCircle> FmDbCirclePtr;
+
 class FmDbCircle : public FmDbEntity {
 public:
-    static FmDbCircle* CreateObject(float x, float y, float radius);
+    static FmDbCirclePtr CreateObject(float x, float y, float radius);
     void initialize(float x, float y, float radius);
 #pragma region Properties
     Geometry::Point3d GetCenter() const;
-	void SetCenter(Geometry::Point3d center);
+    void SetCenter(Geometry::Point3d center);
     void setRadius(float r);
     float getRadius() const;
 #pragma endregion
@@ -27,19 +30,8 @@ private:
 
 class FmDbCircleFactory {
 public:
-    static std::unique_ptr<FmDbCircle, void(*)(FmDbCircle*)> getCircle() {
-        if (!circlePool.empty()) {
-            std::unique_ptr<FmDbCircle, void(*)(FmDbCircle*)> circle(circlePool.back().release(), &returnCircle);
-            circlePool.pop_back();
-            return circle;
-        }
-        return std::unique_ptr<FmDbCircle, void(*)(FmDbCircle*)>(new FmDbCircle(), &returnCircle);
-    }
-
-    static void returnCircle(FmDbCircle* circle) {
-        circlePool.push_back(std::unique_ptr<FmDbCircle>(circle));
-    }
-
+    static FmDbCirclePtr GetCircle();
+    static void returnCircle(FmDbCircle* circle);
 private:
-    static std::vector<std::unique_ptr<FmDbCircle>> circlePool;
+    static std::vector<FmDbCirclePtr> CirclePool;
 };

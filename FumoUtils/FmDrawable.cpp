@@ -22,35 +22,21 @@ void FmDrawable::SetRotation(float rotation)
 	this->rotation = rotation;
 }
 
-void FmDrawable::SetBrush(ID2D1SolidColorBrush* brush)
-{
-	brushPtr = std::make_unique<ID2D1SolidColorBrush*>(brush);
+void FmDrawable::SetBrush(ID2D1SolidColorBrush* brush) { 
+    brushPtr.reset(new ID2D1SolidColorBrush * (brush));
 }
 
-ID2D1SolidColorBrush* FmDrawable::GetBrush() const
-{
-	return *brushPtr;
-}
+ID2D1SolidColorBrush* FmDrawable::GetBrush() { return brushPtr ? *brushPtr : nullptr; }
 
-void FmDrawable::setPosition(float x, float y)
-{
-    position.x = x;
-    position.y = y;
-}
+void FmDrawable::SetPosition(float x, float y) {  }
 
 void FmDrawable::copyFrom(const FmObject& source)
 {
-    const FmDrawable& drawable = dynamic_cast<const FmDrawable&>(source);
-	position = drawable.position;
-	rotation = drawable.rotation;
-}
-
-void FmDrawable::setRotation(float angle)
-{
-    rotation = angle;
-}
-
-float FmDrawable::getRotation() const
-{
-    return rotation;
+    if (const FmDrawable* srcDrawable = dynamic_cast<const FmDrawable*>(&source)) {
+        position = srcDrawable->position;
+        rotation = srcDrawable->rotation;
+        if (srcDrawable->brushPtr) {
+            SetBrush(*srcDrawable->brushPtr);
+        }
+    }
 }

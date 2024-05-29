@@ -1,10 +1,9 @@
 #pragma once
-#include "pch.h"
 #include "FmDrawable.h"
+#include "json.hpp"
 
-class FmDbObject : public FmDrawable
-{
+class FmDbObject : public FmDrawable {
 public:
-	virtual nlohmann::json toJson() const;
+    virtual ~FmDbObject() = default;
+    virtual nlohmann::json toJson() const = 0;
 };
-
