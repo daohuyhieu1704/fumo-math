@@ -7,9 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="LightGray">
-        <StackPanel Orientation="Horizontal">
-            <Button
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TabControl ItemsSource="{Binding FileItems}" SelectedItem="{Binding FileSelected}" />
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button
                 Content="Circle" Margin="10" Click="DrawCircle_Click" />
-        </StackPanel>
+                <Button
+                Content="Save" Margin="10" Click="Save_Click" />
+            </StackPanel>
+
+        </Grid>
     </Border>
 </UserControl>

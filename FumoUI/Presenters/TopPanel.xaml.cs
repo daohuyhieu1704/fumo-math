@@ -48,5 +48,10 @@ namespace FumoUI.Presenters
         {
             CommandAction(model => model.DrawCircle());
         }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            CommandAction(model => model.Save());
+        }
     }
 }

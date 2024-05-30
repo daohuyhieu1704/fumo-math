@@ -19,16 +19,28 @@
     <Filter Include="Common">
       <UniqueIdentifier>{acbbbb29-dcb4-4450-9e60-4e6af5fdfe89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{8da789bd-5743-488c-abb5-460da3d35fef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\DirectXRenderer">
+      <UniqueIdentifier>{1f45a228-94bb-40a4-9193-e47a0c6a2c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Database">
+      <UniqueIdentifier>{3a4c7abb-110a-4503-820b-f47f90cd3812}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DirectXRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RendererWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXRenderer.cpp">
+      <Filter>Entities\DirectXRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="RendererWrapper.cpp">
+      <Filter>Entities\DirectXRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseInterop.cpp">
+      <Filter>Entities\Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,10 +51,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectXRenderer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Entities\DirectXRenderer</Filter>
     </ClInclude>
     <ClInclude Include="RendererWrapper.h">
-      <Filter>Header Files</Filter>
+      <Filter>Entities\DirectXRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseInterop.h">
+      <Filter>Entities\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

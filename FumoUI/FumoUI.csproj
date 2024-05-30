@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\fumo-math-old\FumoEngine\fumo-engine.vcxproj" />
+    <ProjectReference Include="$(SolutionDir)FumoEngine\fumo-engine.vcxproj" />
   </ItemGroup>
 
 </Project>
