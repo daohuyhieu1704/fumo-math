@@ -74,6 +74,13 @@ namespace FumoUI.ViewModels.TopPanel
                 }
                 _databaseInterop.SaveToJson(newFileName);
                 MessageBox.Show($"Data has been saved to {newFileName} successfully.");
+
+                int selectedIndex = FileItems.IndexOf(FileSelected);
+                if (selectedIndex >= 0)
+                {
+                    FileItems[selectedIndex] = System.IO.Path.GetFileName(newFileName);
+                    FileSelected = FileItems[selectedIndex];
+                }
             }
             catch (Exception ex)
             {

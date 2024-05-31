@@ -64,10 +64,11 @@ namespace FumoUI.Presenters
                 return;
             }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-
-            saveFileDialog.Filter = "JSON files (*.json)|*.json";
-            saveFileDialog.FileName = viewModel.FileSelected;
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json",
+                FileName = viewModel.FileSelected
+            };
 
             if (saveFileDialog.ShowDialog() == true)
             {
