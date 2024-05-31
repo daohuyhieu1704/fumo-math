@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace FumoUI.Presenters
 {
@@ -44,14 +45,41 @@ namespace FumoUI.Presenters
             }
         }
 
-        private void DrawCircle_Click(object sender, RoutedEventArgs e)
+        private void New_Click(object sender, RoutedEventArgs e)
         {
-            CommandAction(model => model.DrawCircle());
+            string newTabName = "Untitled";
+            CommandAction(model => model.AddNewTab(newTabName));
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            CommandAction(model => model.Save());
+            if (DataContext is not TopPanelViewModel viewModel)
+            {
+                return;
+            }
+
+            if (viewModel.FileSelected == null)
+            {
+                MessageBox.Show("Please select a file to save.");
+                return;
+            }
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "JSON files (*.json)|*.json";
+            saveFileDialog.FileName = viewModel.FileSelected;
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string newFileName = saveFileDialog.FileName;
+                viewModel.Save(newFileName);
+            }
+        }
+
+
+        private void DrawCircle_Click(object sender, RoutedEventArgs e)
+        {
+            CommandAction(model => model.DrawCircle());
         }
     }
 }

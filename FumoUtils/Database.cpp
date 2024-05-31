@@ -24,23 +24,4 @@ namespace DatabaseServices {
         std::ofstream file(filename);
         file << json.dump(4);
     }
-
-    /*void FmDatabase::saveToJson(const std::string& filename) {
-        try {
-            nlohmann::json json;
-            for (const auto& record : records) {
-                json.push_back(record->toJson());
-            }
-            std::ofstream file(filename);
-            if (!file.is_open()) {
-                throw std::runtime_error("Failed to open file for writing.");
-            }
-            file << json.dump(4);
-            file.close();
-        }
-        catch (const std::exception& e) {
-            std::cerr << "Error saving data to JSON file: " << e.what() << std::endl;
-        }
-    }*/
-
 }

@@ -58,7 +58,13 @@ namespace FumoUI.ViewModels.TopPanel
 
         public readonly ICommand CancelCmd;
 
-        public void Save()
+        public void AddNewTab(string newTabName)
+        {
+            FileItems.Add(newTabName);
+            FileSelected = newTabName;
+        }
+
+        public void Save(string newFileName)
         {
             try
             {
@@ -66,8 +72,8 @@ namespace FumoUI.ViewModels.TopPanel
                 {
                     throw new InvalidOperationException("DatabaseInterop is not initialized.");
                 }
-                _databaseInterop.SaveToJson("output.json");
-                MessageBox.Show("Data has been saved to output.json successfully.");
+                _databaseInterop.SaveToJson(newFileName);
+                MessageBox.Show($"Data has been saved to {newFileName} successfully.");
             }
             catch (Exception ex)
             {

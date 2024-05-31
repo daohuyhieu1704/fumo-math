@@ -17,9 +17,11 @@
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
                 <Button
-                    Content="Circle" Margin="10" Padding="10,5" Click="DrawCircle_Click" Height="30" />
+                    Content="New" Margin="10" Padding="10,5" Click="New_Click" Height="30" />
                 <Button
                     Content="Save" Margin="10" Padding="10,5" Click="Save_Click" Height="30" />
+                <Button
+                    Content="Circle" Margin="10" Padding="10,5" Click="DrawCircle_Click" Height="30" />
             </StackPanel>
         </Grid>
     </Border>
