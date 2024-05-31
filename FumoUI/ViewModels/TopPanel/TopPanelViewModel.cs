@@ -62,6 +62,10 @@ namespace FumoUI.ViewModels.TopPanel
         {
             try
             {
+                if (_databaseInterop == null)
+                {
+                    throw new InvalidOperationException("DatabaseInterop is not initialized.");
+                }
                 _databaseInterop.SaveToJson("output.json");
                 MessageBox.Show("Data has been saved to output.json successfully.");
             }

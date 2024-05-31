@@ -9,18 +9,19 @@
     <Border Background="LightGray">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <TabControl ItemsSource="{Binding FileItems}" SelectedItem="{Binding FileSelected}" />
 
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TabControl Grid.Row="0" ItemsSource="{Binding FileItems}" SelectedItem="{Binding FileSelected}" Height="50" />
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
                 <Button
-                Content="Circle" Margin="10" Click="DrawCircle_Click" />
+                    Content="Circle" Margin="10" Padding="10,5" Click="DrawCircle_Click" Height="30" />
                 <Button
-                Content="Save" Margin="10" Click="Save_Click" />
+                    Content="Save" Margin="10" Padding="10,5" Click="Save_Click" Height="30" />
             </StackPanel>
-
         </Grid>
     </Border>
 </UserControl>
+
