@@ -51,6 +51,20 @@ namespace FumoUI.Presenters
             CommandAction(model => model.AddNewTab(newTabName));
         }
 
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "JSON files (*.json)|*.json"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string fileName = openFileDialog.FileName;
+                CommandAction(model => model.Open(fileName));
+            }
+        }
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (DataContext is not TopPanelViewModel viewModel)
@@ -76,7 +90,6 @@ namespace FumoUI.Presenters
                 viewModel.Save(newFileName);
             }
         }
-
 
         private void DrawCircle_Click(object sender, RoutedEventArgs e)
         {

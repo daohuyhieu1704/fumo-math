@@ -50,6 +50,8 @@ namespace FumoUI.ViewModels.TopPanel
             FileSelected = FileItems[0];
 
             _databaseInterop = new DatabaseInterop();
+
+            CloseTabCommand = new RelayCommand<string>((fileName) => true, (fileName) => CloseTab(fileName));
         }
         public void DrawCircle()
         {
@@ -57,11 +59,23 @@ namespace FumoUI.ViewModels.TopPanel
         }
 
         public readonly ICommand CancelCmd;
+        public ICommand CloseTabCommand { get; }
 
         public void AddNewTab(string newTabName)
         {
             FileItems.Add(newTabName);
             FileSelected = newTabName;
+        }
+
+        public void Open(string fileName)
+        {
+            string fileNameWithoutPath = System.IO.Path.GetFileName(fileName);
+
+            if (!_fileItems.Contains(fileNameWithoutPath))
+            {
+                _fileItems.Add(fileNameWithoutPath);
+            }
+            FileSelected = fileNameWithoutPath;
         }
 
         public void Save(string newFileName)
@@ -85,6 +99,22 @@ namespace FumoUI.ViewModels.TopPanel
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to save data: {ex.Message}");
+            }
+        }
+
+        private void CloseTab(string fileName)
+        {
+            if (FileItems.Contains(fileName))
+            {
+                FileItems.Remove(fileName);
+                if (FileItems.Count > 0)
+                {
+                    FileSelected = FileItems[0];
+                }
+                else
+                {
+                    FileSelected = null;
+                }
             }
         }
     }
