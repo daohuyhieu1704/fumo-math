@@ -39,15 +39,27 @@ namespace FumoUI.ViewModels.TopPanel
             }
         }
 
+        private bool _isNewFile;
+        public bool IsNewFile
+        {
+            get => _isNewFile;
+            set
+            {
+                Set(ref _isNewFile, value);
+                OnPropertyChanged(nameof(IsNewFile));
+            }
+        }
+
         public TopPanelViewModel()
         {
             CancelCmd = new RelayCommand<Window>((p) => { return p != null; }, (p) => { p.Close(); });
 
             FileItems = new ObservableCollection<string>();
-            FileItems.Add("Test 1.json");
-            FileItems.Add("Test 2.json");
 
-            FileSelected = FileItems[0];
+            if (FileItems.Count > 0)
+            {
+                FileSelected = FileItems[0];
+            }
 
             _databaseInterop = new DatabaseInterop();
 
@@ -76,6 +88,7 @@ namespace FumoUI.ViewModels.TopPanel
                 _fileItems.Add(fileNameWithoutPath);
             }
             FileSelected = fileNameWithoutPath;
+            IsNewFile = false;
         }
 
         public void Save(string newFileName)
@@ -89,12 +102,16 @@ namespace FumoUI.ViewModels.TopPanel
                 _databaseInterop.SaveToJson(newFileName);
                 MessageBox.Show($"Data has been saved to {newFileName} successfully.");
 
+                string newFileNameWithoutPath = System.IO.Path.GetFileName(newFileName);
+
                 int selectedIndex = FileItems.IndexOf(FileSelected);
                 if (selectedIndex >= 0)
                 {
                     FileItems[selectedIndex] = System.IO.Path.GetFileName(newFileName);
                     FileSelected = FileItems[selectedIndex];
                 }
+
+                IsNewFile = false;
             }
             catch (Exception ex)
             {
@@ -110,10 +127,6 @@ namespace FumoUI.ViewModels.TopPanel
                 if (FileItems.Count > 0)
                 {
                     FileSelected = FileItems[0];
-                }
-                else
-                {
-                    FileSelected = null;
                 }
             }
         }

@@ -48,7 +48,11 @@ namespace FumoUI.Presenters
         private void New_Click(object sender, RoutedEventArgs e)
         {
             string newTabName = "Untitled";
-            CommandAction(model => model.AddNewTab(newTabName));
+            CommandAction(model =>
+            {
+                model.AddNewTab(newTabName);
+                model.IsNewFile = true;
+            });
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -61,7 +65,11 @@ namespace FumoUI.Presenters
             if (openFileDialog.ShowDialog() == true)
             {
                 string fileName = openFileDialog.FileName;
-                CommandAction(model => model.Open(fileName));
+                CommandAction(model =>
+                {
+                    model.Open(fileName);
+                    model.IsNewFile = false;
+                });
             }
         }
 
@@ -78,16 +86,24 @@ namespace FumoUI.Presenters
                 return;
             }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            if (viewModel.IsNewFile)
             {
-                Filter = "JSON files (*.json)|*.json",
-                FileName = viewModel.FileSelected
-            };
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "JSON files (*.json)|*.json",
+                    FileName = viewModel.FileSelected
+                };
 
-            if (saveFileDialog.ShowDialog() == true)
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string newFileName = saveFileDialog.FileName;
+                    viewModel.Save(newFileName);
+                }
+            }
+            else
             {
-                string newFileName = saveFileDialog.FileName;
-                viewModel.Save(newFileName);
+                string existingFileName = viewModel.FileSelected;
+                viewModel.Save(existingFileName);
             }
         }
 
