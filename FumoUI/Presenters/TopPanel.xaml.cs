@@ -48,5 +48,14 @@ namespace FumoUI.Presenters
         {
             CommandAction(model => model.DrawCircle());
         }
+
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

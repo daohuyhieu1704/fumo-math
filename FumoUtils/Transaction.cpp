@@ -40,4 +40,33 @@ namespace DatabaseServices {
         newlyAddedObjects.clear();
         transactionActive = false;
     }
+
+    void FmTransaction::Undo() {
+        if (newlyAddedObjects.empty() || isUndoRedoInProgress) {
+            throw std::runtime_error("Nothing to undo");
+        }
+        isUndoRedoInProgress = true;
+
+        // Remove the last added object
+        auto lastAdded = newlyAddedObjects.rbegin(); // Get the last element in the map
+        undoneObjects.push_back(std::move(lastAdded->second)); // Add it to undoneObjects (std::deque)
+        newlyAddedObjects.erase(lastAdded->first);           // Remove it from the map
+        // You don't need to pass this to the database now
+
+        isUndoRedoInProgress = false;
+    }
+
+    void FmTransaction::Redo() {
+        if (undoneObjects.empty() || isUndoRedoInProgress) {
+            throw std::runtime_error("Nothing to redo");
+        }
+        isUndoRedoInProgress = true;
+
+        // Take the ownership of the object from undoneObjects and reinsert it into newlyAddedObjects
+        auto lastUndone = std::move(undoneObjects.back()); // Move the last undone object
+        newlyAddedObjects[lastUndone->getObjectId()] = std::move(lastUndone);
+        undoneObjects.pop_back();
+
+        isUndoRedoInProgress = false;
+    }
 }
