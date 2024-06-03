@@ -106,5 +106,14 @@ namespace FumoUI.Presenters
                 viewModel.Save(existingFileName);
             }
         }
+
+        private void Undo_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

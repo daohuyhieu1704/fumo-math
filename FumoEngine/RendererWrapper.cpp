@@ -24,6 +24,7 @@ void RendererWrapper::DrawCircle(float centerX, float centerY, float radius)
 	circle->SetBrush(m_renderer->pBrush);
 	circle->SetCenter(Geometry::Point3d(centerX, centerY, 0));
 	circle->draw(m_renderer->deviceContext, m_renderer->pRenderTarget);
+
 }
 
 void RendererWrapper::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)

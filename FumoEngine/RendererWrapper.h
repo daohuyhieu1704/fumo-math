@@ -1,7 +1,6 @@
 #pragma once
 #include "pch.h"
 #include "DirectXRenderer.h"
-
 using namespace System;
 
 public ref class RendererWrapper
@@ -9,6 +8,7 @@ public ref class RendererWrapper
 private:
     DirectXRenderer* m_renderer;
     HWND m_hwnd;
+
 public:
     RendererWrapper() : m_renderer(new DirectXRenderer()) {}
     IntPtr CreateRendererWindow(IntPtr parentHandle);
