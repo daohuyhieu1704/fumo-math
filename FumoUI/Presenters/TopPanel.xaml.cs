@@ -106,10 +106,5 @@ namespace FumoUI.Presenters
                 viewModel.Save(existingFileName);
             }
         }
-
-        private void DrawCircle_Click(object sender, RoutedEventArgs e)
-        {
-            CommandAction(model => model.DrawCircle());
-        }
     }
 }

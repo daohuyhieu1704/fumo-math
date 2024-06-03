@@ -8,6 +8,12 @@
         xmlns:usercontrols="clr-namespace:FumoUI.Presenters"
         d:ResizeMode="NoResize"
         Title="MainWindow" Height="900" Width="1600">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#2c2d2f" Offset="0"/>
+            <GradientStop Color="black" Offset="2"/>
+        </LinearGradientBrush>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,14 +21,13 @@
         </Grid.RowDefinitions>
         
         <usercontrols:TopPanel Grid.Row="0"/>
-
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <usercontrols:LeftSide Grid.Column="0"/>
-            <Border Grid.Column="1" Panel.ZIndex="1" x:Name="hostContainer" Margin="10" />
+            <Border Grid.Column="1" Panel.ZIndex="1" x:Name="hostContainer" Margin="10" BorderBrush="White" />
         </Grid>
     </Grid>
 </Window>

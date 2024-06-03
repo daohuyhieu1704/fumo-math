@@ -5,36 +5,62 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FumoUI.Presenters"
              mc:Ignorable="d" 
+             Background="Transparent"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border Background="LightGray">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="TopPanelDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
 
-            <TabControl Grid.Row="0" ItemsSource="{Binding FileItems}" SelectedItem="{Binding FileSelected}" Height="50">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding}" VerticalAlignment="Center" />
-                            <Button Content="x" Width="20" Height="20" Margin="5,0,0,0" Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=TabControl}}" CommandParameter="{Binding}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-            </TabControl>
-
-            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
-                <Button
-                    Content="New" Margin="10" Padding="10,5" Click="New_Click" Height="30" />
-                <Button
-                    Content="Open" Margin="10" Padding="10,5" Click="Open_Click" Height="30" />
-                <Button
-                    Content="Save" Margin="10" Padding="10,5" Click="Save_Click" Height="30" />
-                <Button
-                    Content="Circle" Margin="10" Padding="10,5" Click="DrawCircle_Click" Height="30" />
-            </StackPanel>
-        </Grid>
-    </Border>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
+            <Button
+                Style="{StaticResource CustomButtonStyle}"
+                Content="New"
+                Click="New_Click" />
+            <GridSplitter Width="1" IsEnabled="False" Height="20" />
+            <Button
+                Style="{StaticResource CustomButtonStyle}"
+                Content="Open"
+                Click="Open_Click" />
+            <GridSplitter Width="1" IsEnabled="False" Height="20" />
+            <Button
+                Style="{StaticResource CustomButtonStyle}"
+                Content="Save"
+                Click="Save_Click" />
+            <GridSplitter Width="1" IsEnabled="False" Height="20" />
+        </StackPanel>
+        <TabControl 
+            Background="Transparent" 
+            Grid.Row="1" 
+            ItemsSource="{Binding FileItems}" 
+            SelectedItem="{Binding FileSelected}" 
+            Height="20" 
+            Visibility="{Binding FileItems, Converter={StaticResource FileItemToVis}}"
+            >
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Background="Transparent">
+                        <TextBlock Text="{Binding}" VerticalAlignment="Center" Foreground="White" Background="Transparent" />
+                        <Button
+                            Style="{StaticResource CustomButtonStyle}"
+                            Background="Transparent"
+                            Content="x"
+                            Width="20"
+                            Height="20"
+                            Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=TabControl}}"
+                            CommandParameter="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
+    </Grid>
 </UserControl>
 
