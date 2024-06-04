@@ -86,6 +86,7 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
+        getInstance()->DrawCoordinate();
         EndPaint(hwnd, &ps);
     }
     return 0;
@@ -161,6 +162,8 @@ HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND p
         DestroyWindow(hwnd);
         return NULL;
     }
+
+    DrawCoordinate();
     return hwnd;
 }
 
@@ -197,6 +200,60 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
     }
 
     return S_OK;
+}
+
+void DirectXRenderer::DrawCoordinate()
+{
+    // Get the size of the render target
+    D2D1_SIZE_F rtSize = getInstance()->pRenderTarget->GetSize();
+
+    // Set the unit size to 20
+    float unitSize = 30.0f;
+
+    // Calculate the number of columns and rows based on the unit size
+    int numColumns = static_cast<int>(rtSize.width / unitSize);
+    int numRows = static_cast<int>(rtSize.height / unitSize);
+
+    // Calculate the center column and row
+    int centerColumn = numColumns / 2;
+    int centerRow = numRows / 2;
+
+    getInstance()->pRenderTarget->BeginDraw();
+    getInstance()->pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+
+    // Draw vertical lines
+    for (int i = 0; i <= numColumns; i++)
+    {
+        float strokeWidth = (i == centerColumn) ? 4.0f : 0.5f; // Thicker line for the center
+        getInstance()->pRenderTarget->DrawLine(
+            D2D1::Point2F(static_cast<FLOAT>(i * unitSize), 0.0f),
+            D2D1::Point2F(static_cast<FLOAT>(i * unitSize), rtSize.height),
+            getInstance()->pBrush,
+            strokeWidth
+        );
+    }
+
+    // Draw horizontal lines
+    for (int i = 0; i <= numRows; i++)
+    {
+        float strokeWidth = (i == centerRow) ? 4.0f : 0.5f; // Thicker line for the center
+        getInstance()->pRenderTarget->DrawLine(
+            D2D1::Point2F(0.0f, static_cast<FLOAT>(i * unitSize)),
+            D2D1::Point2F(rtSize.width, static_cast<FLOAT>(i * unitSize)),
+            getInstance()->pBrush,
+            strokeWidth
+        );
+    }
+
+    HRESULT hr = getInstance()->pRenderTarget->EndDraw();
+    if (hr == D2DERR_RECREATE_TARGET)
+    {
+        DiscardDeviceResources();
+    }
+    else if (FAILED(hr))
+    {
+        return;
+    }
 }
 
 void DirectXRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
