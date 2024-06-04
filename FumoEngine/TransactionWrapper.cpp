@@ -2,16 +2,17 @@
 #include "TransactionWrapper.h"
 #include "DatabaseInterop.h"
 #include "FmObject.h"
+#include "Circle.h"
 
 using namespace DatabaseServices;
 using namespace msclr::interop;
 
 TransactionWrapper::TransactionWrapper()
 {
-    if (DirectXRenderer::getInstance().CurDoc->TransactionManager == nullptr) {
-        DirectXRenderer::getInstance().CurDoc->TransactionManager = std::make_unique<FmTransaction>(DirectXRenderer::getInstance().CurDoc);
+    if (DirectXRenderer::getInstance()->CurDoc->TransactionManager == nullptr) {
+        DirectXRenderer::getInstance()->CurDoc->TransactionManager = std::make_unique<FmTransaction>(DirectXRenderer::getInstance()->CurDoc);
     }
-    transaction = DirectXRenderer::getInstance().CurDoc->TransactionManager.get();
+    transaction = DirectXRenderer::getInstance()->CurDoc->TransactionManager.get();
 }
 
 TransactionWrapper::TransactionWrapper(DatabaseServices::FmDatabasePtr parentDoc)
@@ -30,16 +31,32 @@ TransactionWrapper::!TransactionWrapper()
 
 void TransactionWrapper::StartTransaction()
 {
-    auto context = static_cast<ID3D11DeviceContext*>(DirectXRenderer::getInstance().deviceContext);
-    auto renderTarget = static_cast<ID2D1HwndRenderTarget*>(DirectXRenderer::getInstance().pRenderTarget);
-    transaction->StartTransaction(context, renderTarget);
+    transaction->StartTransaction(DirectXRenderer::getInstance()->deviceContext, DirectXRenderer::getInstance()->pRenderTarget);
 }
 
-void TransactionWrapper::AddNewlyObject(String^ id, IntPtr objPtr)
+void TransactionWrapper::AddNewlyObject(DbObject^ objPtr)
 {
-    std::string idStr = marshal_as<std::string>(id);
-    auto obj = std::unique_ptr<FmObject>(static_cast<FmObject*>(objPtr.ToPointer()));
-    transaction->AddNewlyObject(idStr, std::move(obj));
+    Circle^ circle = safe_cast<Circle^>(objPtr);
+    if (circle == nullptr) {
+        throw gcnew ArgumentException("Invalid objPtr");
+    }
+
+    try {
+        FmDbCircle* imp = circle->GetImpObj();
+        imp->SetPosition({ circle->X, circle->Y, 0 });
+        imp->setRadius(circle->Radius);
+        imp->SetBrush(DirectXRenderer::getInstance()->pBrush);
+        if (imp == nullptr) {
+            return;
+        }
+        transaction->AddNewlyObject(imp->getObjectId(), imp);
+    }
+    catch (const std::exception& e) {
+        throw gcnew InvalidOperationException(gcnew String(e.what()));
+    }
+    catch (...) {
+        throw gcnew InvalidOperationException("An unknown error occurred.");
+    }
 }
 
 void TransactionWrapper::Abort()

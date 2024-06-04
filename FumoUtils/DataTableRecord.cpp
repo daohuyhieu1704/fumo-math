@@ -1,22 +1,22 @@
 #include "pch.h"
 #include "DataTableRecord.h"
 
-std::vector<std::shared_ptr<FmObject>> DataTableRecord::GetObjects() const {
-    std::vector<std::shared_ptr<FmObject>> objects;
+std::vector<FmObject*> DataTableRecord::GetObjects() const {
+    std::vector<FmObject*> objects;
     for (const auto& obj : m_objects) {
-        objects.push_back(std::shared_ptr<FmObject>(obj.second.get(), [](FmObject*) {}));
+        objects.push_back(obj.second);
     }
     return objects;
 }
 
-void DataTableRecord::addObject(std::unique_ptr<FmObject> obj) {
-    m_objects.insert({ obj->getObjectId(), std::move(obj) });
+void DataTableRecord::addObject(FmObject* obj) {
+    m_objects.insert({ obj->getObjectId(), obj });
 }
 
-bool DataTableRecord::GetObjectById(const std::string& id, std::shared_ptr<FmObject>& obj) {
+bool DataTableRecord::GetObjectById(const std::string& id, FmObject* obj) {
     auto it = m_objects.find(id);
     if (it != m_objects.end()) {
-        obj = std::shared_ptr<FmObject>(it->second.get(), [](FmObject*) {});
+        obj = it->second;
         return true;
     }
     return false;
@@ -25,7 +25,7 @@ bool DataTableRecord::GetObjectById(const std::string& id, std::shared_ptr<FmObj
 nlohmann::json DataTableRecord::toJson() const {
     nlohmann::json jsonArray = nlohmann::json::array();
     for (const auto& obj : m_objects) {
-        FmDbObject* dbObj = dynamic_cast<FmDbObject*>(obj.second.get());
+        FmDbObject* dbObj = dynamic_cast<FmDbObject*>(obj.second);
         if (dbObj == nullptr) {
             continue;
         }

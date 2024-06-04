@@ -11,7 +11,7 @@ using namespace System::Runtime::InteropServices;
 public ref class RendererWrapper
 {
 private:
-    static Lazy<RendererWrapper^>^ instance = gcnew Lazy<RendererWrapper^>(gcnew Func<RendererWrapper^>(&RendererWrapper::CreateInstance));
+    static RendererWrapper^ instance;
     HWND m_hwnd;
     RendererWrapper();
     static RendererWrapper^ CreateInstance();

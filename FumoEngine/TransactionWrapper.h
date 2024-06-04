@@ -1,6 +1,7 @@
 #pragma once
 #include "Transaction.h"
 #include "DirectXRenderer.h"
+#include "DbObject.h"
 
 using namespace System;
 
@@ -14,7 +15,7 @@ public:
     ~TransactionWrapper();
     !TransactionWrapper();
     void StartTransaction();
-    void AddNewlyObject(String^ id, IntPtr objPtr);
+    void AddNewlyObject(DbObject^ objPtr);
     void Abort();
     void Commit();
 };

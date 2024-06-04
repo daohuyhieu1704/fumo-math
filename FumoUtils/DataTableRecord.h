@@ -6,17 +6,17 @@
 
 class DataTableRecord : public DisposableWrapper {
 private:
-    std::map<std::string, std::unique_ptr<FmObject>> m_objects;
+    std::map<std::string, FmObject*> m_objects;
 public:
 #pragma region Properties
-    std::vector<std::shared_ptr<FmObject>> GetObjects() const;
+    std::vector<FmObject*> GetObjects() const;
 #pragma endregion
 
-    void addObject(std::unique_ptr<FmObject> obj);
+    void addObject(FmObject* obj);
 
-    bool GetObjectById(const std::string& id, std::shared_ptr<FmObject>& obj);
+    bool GetObjectById(const std::string& id, FmObject* obj);
 
     nlohmann::json toJson() const;
 };
 
-typedef std::unique_ptr<DataTableRecord> DataTableRecordPtr;
+typedef std::shared_ptr<DataTableRecord> DataTableRecordPtr;

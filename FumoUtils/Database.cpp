@@ -11,24 +11,24 @@ namespace DatabaseServices {
 
     FmDatabasePtr FmDatabase::CreateObject() {
         std::shared_ptr<DisposableWrapper> obj = ObjectFactory::instance().createObject("Database");
-        FmDatabasePtr dbPtr = std::dynamic_pointer_cast<FmDatabase>(std::move(obj));
+        FmDatabasePtr dbPtr = std::dynamic_pointer_cast<FmDatabase>(obj);
 
         return dbPtr;
     }
 
     FmDatabase::FmDatabase()
-        : TransactionManager(std::make_unique<FmTransaction>(FmDatabasePtr(this, [](FmDatabase*) {})))
-        , m_ObjectRecords(std::make_unique<DataTableRecord>())
+        : TransactionManager(std::make_shared<FmTransaction>(FmDatabasePtr(this, [](FmDatabase*) {})))
+        , m_ObjectRecords(std::make_shared<DataTableRecord>())
     {}
 
-    void FmDatabase::AppendObject(std::unique_ptr<FmObject> obj) {
-        m_ObjectRecords->addObject(std::move(obj));
+    void FmDatabase::AppendObject(FmObject* obj) {
+        m_ObjectRecords->addObject(obj);
     }
 
     void FmDatabase::saveToJson(const std::string& filename) {
         nlohmann::json json;
         for (const auto& record : m_ObjectRecords->GetObjects()) {
-            FmDbObject* dbObj = dynamic_cast<FmDbObject*>(record.get());
+            FmDbObject* dbObj = dynamic_cast<FmDbObject*>(record);
             if (dbObj == nullptr) {
                 continue;
             }
@@ -44,7 +44,7 @@ namespace DatabaseServices {
         }
 
         for (const auto& obj : m_ObjectRecords->GetObjects()) {
-            FmDrawable* drawable = dynamic_cast<FmDrawable*>(obj.get());
+            FmDrawable* drawable = dynamic_cast<FmDrawable*>(obj);
             if (drawable == nullptr) {
                 continue;
             }

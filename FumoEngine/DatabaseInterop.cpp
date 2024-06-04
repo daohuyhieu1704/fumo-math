@@ -6,12 +6,12 @@
 using namespace msclr::interop;
 
 DatabaseInterop::DatabaseInterop() {
-    DatabaseServices::FmDatabasePtr CurDoc = DirectXRenderer::getInstance().CurDoc;
-    std::vector<DatabaseServices::FmDatabasePtr> Dbs = DirectXRenderer::getInstance().Dbs;
+    DatabaseServices::FmDatabasePtr CurDoc = DirectXRenderer::getInstance()->CurDoc;
+    std::vector<DatabaseServices::FmDatabasePtr> Dbs = DirectXRenderer::getInstance()->Dbs;
     if (CurDoc == nullptr || Dbs.size() == 0) {
         Dbs.push_back(DatabaseServices::FmDatabase::CreateObject());
     }
-    CurDoc = DirectXRenderer::getInstance().Dbs.back();
+    CurDoc = DirectXRenderer::getInstance()->Dbs.back();
     database = CurDoc.get();
 }
 

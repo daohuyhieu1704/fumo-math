@@ -8,7 +8,7 @@
 class DirectXRenderer
 {
 public:
-    static DirectXRenderer& getInstance();
+    static DirectXRenderer* getInstance();
     static LRESULT CALLBACK StaticWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
     LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
     void OnMouseMove(int x, int y);
@@ -34,6 +34,7 @@ public:
     int GetMode();
     void SetMode(int value);
 private:
+    static DirectXRenderer* m_instance;
     std::chrono::steady_clock::time_point lastMouseMoveTime;
 
     static std::string generate_short_id();

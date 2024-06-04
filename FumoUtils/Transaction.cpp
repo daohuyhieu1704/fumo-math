@@ -14,18 +14,18 @@ namespace DatabaseServices {
 
         this->context = context;
         this->renderTarget = renderTarget;
-        transactionActive = true;
+        this->transactionActive = true;
         newlyAddedObjects.clear();
     }
 
-    void FmTransaction::AddNewlyObject(const std::string& id, std::unique_ptr<FmObject> obj) {
-        if (!transactionActive) {
-            throw std::runtime_error("No active transaction");
-        }
-        if (newlyAddedObjects.find(id) != newlyAddedObjects.end()) {
-            throw std::runtime_error("Object with the given ID already exists");
-        }
-        newlyAddedObjects[id] = std::move(obj);
+    void FmTransaction::AddNewlyObject(const std::string& id, FmObject* obj) {
+        //if (!transactionActive) {
+        //    throw std::runtime_error("No active transaction");
+        //}
+        //if (newlyAddedObjects.find(id) != newlyAddedObjects.end()) {
+        //    throw std::runtime_error("Object with the given ID already exists");
+        //}
+        newlyAddedObjects[id] = obj;
     }
 
     void FmTransaction::Abort() {
@@ -37,15 +37,18 @@ namespace DatabaseServices {
     }
 
     void FmTransaction::Commit() {
-        if (!transactionActive) {
-            throw std::runtime_error("No active transaction to commit");
-        }
+        //if (!transactionActive) {
+        //    throw std::runtime_error("No active transaction to commit");
+        //}
+        //for (auto& pair : newlyAddedObjects) {
+        //    m_Doc.get()->AppendObject(pair.second);
+        //}
         for (auto& pair : newlyAddedObjects) {
-            m_Doc.get()->AppendObject(std::move(pair.second));
+            static_cast<FmDrawable*>(pair.second)->draw(context, renderTarget);
         }
-        m_Doc.get()->Render(context, renderTarget);
+        //m_Doc.get()->Render(context, renderTarget);
         newlyAddedObjects.clear();
-        transactionActive = false;
+        //transactionActive = false;
     }
 
     void FmTransaction::Undo() {
@@ -55,7 +58,7 @@ namespace DatabaseServices {
         isUndoRedoInProgress = true;
 
         auto lastAdded = newlyAddedObjects.rbegin();
-        undoneObjects.push_back(std::move(lastAdded->second));
+        undoneObjects.push_back(lastAdded->second);
         newlyAddedObjects.erase(lastAdded->first);
 
         isUndoRedoInProgress = false;
@@ -67,8 +70,8 @@ namespace DatabaseServices {
         }
         isUndoRedoInProgress = true;
 
-        auto lastUndone = std::move(undoneObjects.back());
-        newlyAddedObjects[lastUndone->getObjectId()] = std::move(lastUndone);
+        auto lastUndone = undoneObjects.back();
+        newlyAddedObjects[lastUndone->getObjectId()] = lastUndone;
         undoneObjects.pop_back();
 
         isUndoRedoInProgress = false;

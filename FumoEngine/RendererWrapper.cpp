@@ -7,7 +7,7 @@
 IntPtr RendererWrapper::CreateRendererWindow(IntPtr parentHandle)
 {
     HINSTANCE hInstance = GetModuleHandle(nullptr);
-    m_hwnd = DirectXRenderer::getInstance().InitializeWindow(hInstance, SW_SHOW, static_cast<HWND>(parentHandle.ToPointer()));
+    m_hwnd = DirectXRenderer::getInstance()->InitializeWindow(hInstance, SW_SHOW, static_cast<HWND>(parentHandle.ToPointer()));
     return IntPtr(m_hwnd);
 }
 
@@ -28,15 +28,11 @@ void RendererWrapper::AddEntity()
         tr->StartTransaction();
         try
         {
-            Circle^ circle = gcnew Circle(DirectXRenderer::getInstance().MouseXY[0].x,
-                DirectXRenderer::getInstance().MouseXY[0].y,
+            Circle^ circle = gcnew Circle(DirectXRenderer::getInstance()->MouseXY[0].x,
+                DirectXRenderer::getInstance()->MouseXY[0].y,
                 40
             );
-
-            GCHandle handle = GCHandle::Alloc(circle);
-            IntPtr ptr = GCHandle::ToIntPtr(handle);
-
-            tr->AddNewlyObject(circle->Id, ptr);
+            tr->AddNewlyObject(circle);
             tr->Commit();
             break;
         }
@@ -53,6 +49,7 @@ void RendererWrapper::AddEntity()
 
 RendererWrapper::RendererWrapper()
 {
+    DirectXRenderer::getInstance()->SetMode(0);
 }
 
 RendererWrapper^ RendererWrapper::CreateInstance()
@@ -67,7 +64,9 @@ RendererWrapper::~RendererWrapper()
 
 Point3d^ RendererWrapper::CurrentMouse::get()
 {
-    return gcnew Point3d(DirectXRenderer::getInstance().MouseXY.back().x, DirectXRenderer::getInstance().MouseXY.back().y, DirectXRenderer::getInstance().MouseXY.back().z);
+    return gcnew Point3d(DirectXRenderer::getInstance()->MouseXY.back().x,
+        DirectXRenderer::getInstance()->MouseXY.back().y,
+        DirectXRenderer::getInstance()->MouseXY.back().z);
 }
 
 DatabaseInterop^ RendererWrapper::CurDoc::get()
@@ -77,15 +76,18 @@ DatabaseInterop^ RendererWrapper::CurDoc::get()
 
 RendererWrapper^ RendererWrapper::Instance::get()
 {
-    return instance->Value;
+    if (instance == nullptr) {
+        instance = gcnew RendererWrapper();
+    }
+    return instance;
 }
 
 int RendererWrapper::Mode::get()
 {
-    return DirectXRenderer::getInstance().GetMode();
+    return DirectXRenderer::getInstance()->GetMode();
 }
 
 void RendererWrapper::Mode::set(int value)
 {
-    DirectXRenderer::getInstance().SetMode(value);
+    DirectXRenderer::getInstance()->SetMode(value);
 }

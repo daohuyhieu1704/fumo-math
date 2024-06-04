@@ -5,16 +5,18 @@
 
 using namespace Geometry;
 
-DirectXRenderer& DirectXRenderer::getInstance()
+DirectXRenderer* DirectXRenderer::m_instance = nullptr;
+
+DirectXRenderer* DirectXRenderer::getInstance()
 {
-    static DirectXRenderer instance;
-    if (instance.Dbs.size() == 0) {
-        instance.Dbs.push_back(DatabaseServices::FmDatabase::CreateObject());
-        instance.CurDoc = instance.Dbs[0];
-        instance.MouseXY;
-        instance.MouseXY.push_back({ 0, 0, 0 });
+    if (m_instance == nullptr) {
+        m_instance = new DirectXRenderer();
+        m_instance->Dbs.push_back(DatabaseServices::FmDatabase::CreateObject());
+        m_instance->CurDoc = m_instance->Dbs[0];
+        m_instance->MouseXY;
+        m_instance->MouseXY.push_back({ 0, 0, 0 }); 
     }
-    return instance;
+    return m_instance;
 }
 
 LRESULT CALLBACK DirectXRenderer::StaticWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -97,18 +99,18 @@ void DirectXRenderer::OnMouseMove(int x, int y) {
     switch (GetMode())
     {
     case 0: {
-        this->MouseXY.clear();
-        this->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
+        getInstance()->MouseXY.clear();
+        getInstance()->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
         break;
         }
     case 1: {
-        this->MouseXY.clear();
-        if (this->MouseXY.size() == 2) {
-            this->MouseXY[1].x = x;
-            this->MouseXY[1].y = y;
+        getInstance()->MouseXY.clear();
+        if (getInstance()->MouseXY.size() == 2) {
+            getInstance()->MouseXY[1].x = x;
+            getInstance()->MouseXY[1].y = y;
         }
         else {
-            this->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
+            getInstance()->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
         }
         break;
     }
@@ -154,61 +156,72 @@ HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND p
     }
 
     ShowWindow(hwnd, nCmdShow);
-    InitializeDirect2D(hwnd);
+
+    if (FAILED(InitializeDirect2D(hwnd))) {
+        DestroyWindow(hwnd);
+        return NULL;
+    }
     return hwnd;
 }
 
 HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
 {
+    DirectXRenderer* instance = getInstance();
 
-    HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &pFactory);
-    if (SUCCEEDED(hr))
-    {
-        RECT rc;
-        GetClientRect(hwnd, &rc);
-        D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
-
-        hr = pFactory->CreateHwndRenderTarget(
-            D2D1::RenderTargetProperties(),
-            D2D1::HwndRenderTargetProperties(hwnd, size),
-            &pRenderTarget
-        );
-
-        if (SUCCEEDED(hr))
-        {
-            hr = pRenderTarget->CreateSolidColorBrush(
-                D2D1::ColorF(D2D1::ColorF::Black),
-                &pBrush
-            );
-        }
+    HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &instance->pFactory);
+    if (FAILED(hr)) {
+        return hr;
     }
 
-    return hr;
+    RECT rc;
+    GetClientRect(hwnd, &rc);
+    D2D1_SIZE_U size = D2D1::SizeU(rc.right - rc.left, rc.bottom - rc.top);
+
+    hr = instance->pFactory->CreateHwndRenderTarget(
+        D2D1::RenderTargetProperties(),
+        D2D1::HwndRenderTargetProperties(hwnd, size),
+        &instance->pRenderTarget
+    );
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    hr = instance->pRenderTarget->CreateSolidColorBrush(
+        D2D1::ColorF(D2D1::ColorF::Black),
+        &instance->pBrush
+    );
+
+    if (FAILED(hr)) {
+        return hr;
+    }
+
+    return S_OK;
 }
 
 void DirectXRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
 {
-	pRenderTarget->BeginDraw();
-	pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+    getInstance()->pRenderTarget->BeginDraw();
+    getInstance()->pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 	for (int i = 0; i < numColumns; i++)
 	{
-		pRenderTarget->DrawLine(
+        getInstance()->pRenderTarget->DrawLine(
 			D2D1::Point2F(i * cellWidth, 0),
 			D2D1::Point2F(i * cellWidth, numRows * cellHeight),
-			pBrush,
+            getInstance()->pBrush,
 			0.5f
 		);
 	}
 	for (int i = 0; i < numRows; i++)
 	{
-		pRenderTarget->DrawLine(
+        getInstance()->pRenderTarget->DrawLine(
 			D2D1::Point2F(0, i * cellHeight),
 			D2D1::Point2F(numColumns * cellWidth, i * cellHeight),
-			pBrush,
+            getInstance()->pBrush,
 			1.0f
 		);
 	}
-	HRESULT hr = pRenderTarget->EndDraw();
+	HRESULT hr = getInstance()->pRenderTarget->EndDraw();
 	if (hr == D2DERR_RECREATE_TARGET)
 	{
 		DiscardDeviceResources();
@@ -225,20 +238,20 @@ void DirectXRenderer::CreateDeviceIndependentResources()
 
 void DirectXRenderer::DiscardDeviceResources()
 {
-	if (pRenderTarget)
+	if (getInstance()->pRenderTarget)
 	{
-		pRenderTarget->Release();
-		pRenderTarget = nullptr;
+        getInstance()->pRenderTarget->Release();
+        getInstance()->pRenderTarget = nullptr;
 	}
-	if (pBrush)
+	if (getInstance()->pBrush)
 	{
-		pBrush->Release();
-		pBrush = nullptr;
+        getInstance()->pBrush->Release();
+        getInstance()->pBrush = nullptr;
 	}
-	if (pFactory)
+	if (getInstance()->pFactory)
 	{
-		pFactory->Release();
-		pFactory = nullptr;
+        getInstance()->pFactory->Release();
+        getInstance()->pFactory = nullptr;
 	}
 }
 
@@ -253,17 +266,17 @@ void DirectXRenderer::ResizeWindow(HWND hwnd, int width, int height)
 
 void DirectXRenderer::DiscardDeviceIndependentResources()
 {
-    if (pFactory)
+    if (getInstance()->pFactory)
     {
-        pFactory->Release();
-        pFactory = nullptr;
+        getInstance()->pFactory->Release();
+        getInstance()->pFactory = nullptr;
     }
 }
 
 int DirectXRenderer::GetMode() {
-    return m_mode;
+    return getInstance()->m_mode;
 }
 
 void DirectXRenderer::SetMode(int value) {
-    this->m_mode = value;
+    getInstance()->m_mode = value;
 }

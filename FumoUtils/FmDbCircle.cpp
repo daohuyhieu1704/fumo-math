@@ -57,7 +57,7 @@ float FmDbCircle::getRadius() const {
 
 HRESULT FmDbCircle::draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget) {
     renderTarget->BeginDraw();
-    renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+    // renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
     renderTarget->DrawEllipse(
         D2D1::Ellipse(D2D1::Point2F(GetCenter().x, GetCenter().y), getRadius(), getRadius()),
         GetBrush(),
