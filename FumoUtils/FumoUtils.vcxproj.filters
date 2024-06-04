@@ -63,16 +63,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Point3d.cpp">
+    <ClCompile Include="FmGePoint3d.cpp">
       <Filter>Geometry\Point3d</Filter>
     </ClCompile>
-    <ClCompile Include="Velocity2d.cpp">
+    <ClCompile Include="FmGeVelocity2d.cpp">
       <Filter>Geometry\Velocity2d</Filter>
     </ClCompile>
-    <ClCompile Include="Point2d.cpp">
+    <ClCompile Include="FmGePoint2d.cpp">
       <Filter>Geometry\Point2d</Filter>
     </ClCompile>
-    <ClCompile Include="Velocity3d.cpp">
+    <ClCompile Include="FmGeVelocity3d.cpp">
       <Filter>Geometry\Velocity3d</Filter>
     </ClCompile>
     <ClCompile Include="DisposableWrapper.cpp">
@@ -106,27 +106,27 @@
     <ClCompile Include="FmDbCircle.cpp">
       <Filter>Common\DbObject\Circle</Filter>
     </ClCompile>
-    <ClCompile Include="WorldDraw.cpp">
+    <ClCompile Include="FmGeWorldDraw.cpp">
       <Filter>Geometry\WorldDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Extend2d.cpp">
+    <ClCompile Include="FmGeExtend2d.cpp">
       <Filter>Geometry\Extend2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Point3d.h">
+    <ClInclude Include="FmGePoint3d.h">
       <Filter>Geometry\Point3d</Filter>
     </ClInclude>
-    <ClInclude Include="Velocity2d.h">
+    <ClInclude Include="FmGeVelocity2d.h">
       <Filter>Geometry\Velocity2d</Filter>
     </ClInclude>
-    <ClInclude Include="Point2d.h">
+    <ClInclude Include="FmGePoint2d.h">
       <Filter>Geometry\Point2d</Filter>
     </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Velocity3d.h">
+    <ClInclude Include="FmGeVelocity3d.h">
       <Filter>Geometry\Velocity3d</Filter>
     </ClInclude>
     <ClInclude Include="DisposableWrapper.h">
@@ -163,10 +163,10 @@
     <ClInclude Include="FmDbCircle.h">
       <Filter>Common\DbObject\Circle</Filter>
     </ClInclude>
-    <ClInclude Include="WorldDraw.h">
+    <ClInclude Include="FmGeWorldDraw.h">
       <Filter>Geometry\WorldDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Extend2d.h">
+    <ClInclude Include="FmGeExtend2d.h">
       <Filter>Geometry\Extend2d</Filter>
     </ClInclude>
   </ItemGroup>

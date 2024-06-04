@@ -4,10 +4,16 @@
 #include "FmDrawable.h"
 
 namespace DatabaseServices {
-    void FmTransaction::StartTransaction() {
+    void FmTransaction::StartTransaction(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget) {
         if (transactionActive) {
             throw std::runtime_error("Transaction is already active");
         }
+        if (context == nullptr || renderTarget == nullptr) {
+            return;
+        }
+
+        this->context = context;
+        this->renderTarget = renderTarget;
         transactionActive = true;
         newlyAddedObjects.clear();
     }
@@ -37,6 +43,7 @@ namespace DatabaseServices {
         for (auto& pair : newlyAddedObjects) {
             m_Doc.get()->AppendObject(std::move(pair.second));
         }
+        m_Doc.get()->Render(context, renderTarget);
         newlyAddedObjects.clear();
         transactionActive = false;
     }
@@ -47,11 +54,9 @@ namespace DatabaseServices {
         }
         isUndoRedoInProgress = true;
 
-        // Remove the last added object
-        auto lastAdded = newlyAddedObjects.rbegin(); // Get the last element in the map
-        undoneObjects.push_back(std::move(lastAdded->second)); // Add it to undoneObjects (std::deque)
-        newlyAddedObjects.erase(lastAdded->first);           // Remove it from the map
-        // You don't need to pass this to the database now
+        auto lastAdded = newlyAddedObjects.rbegin();
+        undoneObjects.push_back(std::move(lastAdded->second));
+        newlyAddedObjects.erase(lastAdded->first);
 
         isUndoRedoInProgress = false;
     }
@@ -62,8 +67,7 @@ namespace DatabaseServices {
         }
         isUndoRedoInProgress = true;
 
-        // Take the ownership of the object from undoneObjects and reinsert it into newlyAddedObjects
-        auto lastUndone = std::move(undoneObjects.back()); // Move the last undone object
+        auto lastUndone = std::move(undoneObjects.back());
         newlyAddedObjects[lastUndone->getObjectId()] = std::move(lastUndone);
         undoneObjects.pop_back();
 

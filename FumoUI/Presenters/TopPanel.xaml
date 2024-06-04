@@ -18,8 +18,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
             <Button
                 Style="{StaticResource CustomButtonStyle}"
@@ -37,9 +37,21 @@
                 Click="Save_Click" />
             <GridSplitter Width="1" IsEnabled="False" Height="20" />
         </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
+            <Button
+                Style="{StaticResource CustomButtonStyle}"
+                Content="Circle"
+                Click="CircleMode_Click" />
+            <GridSplitter Width="1" IsEnabled="False" Height="20" />
+            <Button
+                Style="{StaticResource CustomButtonStyle}"
+                Content="Line"
+                Click="Open_Click" />
+            <GridSplitter Width="1" IsEnabled="False" Height="20" />
+        </StackPanel>
         <TabControl 
             Background="Transparent" 
-            Grid.Row="1" 
+            Grid.Row="2" 
             ItemsSource="{Binding FileItems}" 
             SelectedItem="{Binding FileSelected}" 
             Height="20" 

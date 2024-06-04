@@ -17,9 +17,11 @@ namespace DatabaseServices
         std::map<std::string, std::unique_ptr<FmObject>> newlyAddedObjects;
         bool isUndoRedoInProgress = false;
         std::deque<std::unique_ptr<FmObject>> undoneObjects;
+        ID3D11DeviceContext* context = nullptr;
+        ID2D1HwndRenderTarget* renderTarget = nullptr;
     public:
         FmTransaction(FmDatabasePtr parentDoc) : transactionActive(false), m_Doc(parentDoc) {}
-        void StartTransaction();
+        void StartTransaction(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget);
         void AddNewlyObject(const std::string& id, std::unique_ptr<FmObject> obj);
         void Abort();
         void Commit();

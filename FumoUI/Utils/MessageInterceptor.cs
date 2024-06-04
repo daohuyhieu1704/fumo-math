@@ -43,7 +43,7 @@ namespace FumoUI.Utils
         {
             if (msg == WM_MY_MESSAGE)
             {
-                DirectXHost.DrawCircle(0, 0, 50);
+                RendererWrapper.Instance.AddEntity();
                 handled = true;
             }
             return IntPtr.Zero;

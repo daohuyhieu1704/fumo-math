@@ -16,7 +16,7 @@ namespace FumoUI.Utils
 
         protected override HandleRef BuildWindowCore(HandleRef hwndParent)
         {
-            rendererWrapper = new RendererWrapper();
+            rendererWrapper = RendererWrapper.Instance;
             hwndHost = rendererWrapper.CreateRendererWindow(hwndParent.Handle);
             return new HandleRef(this, hwndHost);
         }
@@ -28,7 +28,6 @@ namespace FumoUI.Utils
 
         public static void DrawCircle(float centerX, float centerY, float radius)
         {
-            rendererWrapper?.DrawCircle(centerX, centerY, radius);
         }
     }
 }

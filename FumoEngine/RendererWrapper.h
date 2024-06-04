@@ -1,20 +1,45 @@
 #pragma once
 #include "pch.h"
 #include "DirectXRenderer.h"
+#include "Point3d.h"
+#include "DatabaseInterop.h"
+
 using namespace System;
+using namespace ManagedGeometry;
+using namespace System::Runtime::InteropServices;
 
 public ref class RendererWrapper
 {
 private:
-    DirectXRenderer* m_renderer;
+    static Lazy<RendererWrapper^>^ instance = gcnew Lazy<RendererWrapper^>(gcnew Func<RendererWrapper^>(&RendererWrapper::CreateInstance));
     HWND m_hwnd;
-
+    RendererWrapper();
+    static RendererWrapper^ CreateInstance();
 public:
-    RendererWrapper() : m_renderer(new DirectXRenderer()) {}
+    static property RendererWrapper^ Instance
+    {
+        RendererWrapper^ get();
+    }
+   
+    ~RendererWrapper();
     IntPtr CreateRendererWindow(IntPtr parentHandle);
     void DestroyRendererWindow();
-	void DrawCircle(float centerX, float centerY, float radius);
-	void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
-    ~RendererWrapper();
+
+    property Point3d^ CurrentMouse
+    {
+        Point3d^ get();
+    }
+
+    property DatabaseInterop^ CurDoc
+    {
+        DatabaseInterop^ get();
+    }
+
+    property int Mode {
+        int get();
+        void set(int value);
+    }
+
+    void AddEntity();
 };
 

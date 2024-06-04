@@ -143,17 +143,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="DbObject.cpp" />
     <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="DatabaseInterop.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="Point3d.cpp" />
     <ClCompile Include="RendererWrapper.cpp" />
+    <ClCompile Include="TransactionWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Circle.h" />
+    <ClInclude Include="DbObject.h" />
     <ClInclude Include="DirectXRenderer.h" />
     <ClInclude Include="DatabaseInterop.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Point3d.h" />
     <ClInclude Include="RendererWrapper.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="TransactionWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico" />

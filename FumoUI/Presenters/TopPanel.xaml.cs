@@ -115,5 +115,15 @@ namespace FumoUI.Presenters
         {
 
         }
+
+        private void CircleMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is not TopPanelViewModel viewModel)
+            {
+                return;
+            }
+            CommandAction(model => { viewModel.SetMode(1); });
+
+        }
     }
 }

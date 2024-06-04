@@ -52,10 +52,11 @@ namespace FumoUI.ViewModels.TopPanel
 
         public TopPanelViewModel()
         {
+            TransactionWrapper transactionWrapper = new TransactionWrapper();
             CancelCmd = new RelayCommand<Window>((p) => { return p != null; }, (p) => { p.Close(); });
             FileItems = new ObservableCollection<string>();
 
-            _databaseInterop = new DatabaseInterop();
+            _databaseInterop = RendererWrapper.Instance.CurDoc;
 
             CloseTabCommand = new RelayCommand<string>((fileName) => true, (fileName) => CloseTab(fileName));
 
@@ -122,6 +123,11 @@ namespace FumoUI.ViewModels.TopPanel
                     FileSelected = FileItems[0];
                 }
             }
+        }
+
+        public void SetMode(int v)
+        {
+            RendererWrapper.Instance.Mode = v;
         }
     }
 }

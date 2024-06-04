@@ -12,8 +12,8 @@ public:
     static FmDbCirclePtr CreateObject(float x, float y, float radius);
     void initialize(float x, float y, float radius);
 #pragma region Properties
-    Geometry::Point3d GetCenter() const;
-    void SetCenter(Geometry::Point3d center);
+    Geometry::FmGePoint3d GetCenter() const;
+    void SetCenter(Geometry::FmGePoint3d center);
     void setRadius(float r);
     float getRadius() const;
 #pragma endregion
@@ -31,7 +31,6 @@ private:
 class FmDbCircleFactory {
 public:
     static FmDbCirclePtr GetCircle();
-    static void returnCircle(FmDbCircle* circle);
 private:
     static std::vector<FmDbCirclePtr> CirclePool;
 };

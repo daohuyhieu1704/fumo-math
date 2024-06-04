@@ -1,15 +1,61 @@
 #include "pch.h"
 #include "DirectXRenderer.h"
+#include <windowsx.h> 
+#include <chrono>
 
 using namespace Geometry;
+
+DirectXRenderer& DirectXRenderer::getInstance()
+{
+    static DirectXRenderer instance;
+    if (instance.Dbs.size() == 0) {
+        instance.Dbs.push_back(DatabaseServices::FmDatabase::CreateObject());
+        instance.CurDoc = instance.Dbs[0];
+        instance.MouseXY;
+        instance.MouseXY.push_back({ 0, 0, 0 });
+    }
+    return instance;
+}
+
+LRESULT CALLBACK DirectXRenderer::StaticWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    DirectXRenderer* pThis = nullptr;
+
+    if (uMsg == WM_NCCREATE) {
+        CREATESTRUCT* pCreate = (CREATESTRUCT*)lParam;
+        pThis = (DirectXRenderer*)pCreate->lpCreateParams;
+        SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)pThis);
+    }
+    else {
+        pThis = (DirectXRenderer*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+    }
+
+    return pThis->WindowProc(hwnd, uMsg, wParam, lParam);
+}
 
 LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg) {
+    case WM_MOUSEMOVE: {
+        //int xPos = GET_X_LPARAM(lParam);
+        //int yPos = GET_Y_LPARAM(lParam);
+
+        //auto now = std::chrono::steady_clock::now();
+        //auto durationSinceLastMove = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMouseMoveTime).count();
+
+        //if (durationSinceLastMove >= throttleIntervalMs) {
+        //    lastMouseMoveTime = now;
+        //    OnMouseMove(xPos, yPos);
+        //}
+        //OnMouseMove(xPos, yPos);
+        return 0;
+    }
     case WM_LBUTTONDOWN:
     {
+        int xPos = GET_X_LPARAM(lParam);
+        int yPos = GET_Y_LPARAM(lParam);
+        OnMouseMove(xPos, yPos);
         PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
-        return 0; // Return 0 if you handle this message.
+        return 0;
     }
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -47,13 +93,37 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     }
 }
 
+void DirectXRenderer::OnMouseMove(int x, int y) {
+    switch (GetMode())
+    {
+    case 0: {
+        this->MouseXY.clear();
+        this->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
+        break;
+        }
+    case 1: {
+        this->MouseXY.clear();
+        if (this->MouseXY.size() == 2) {
+            this->MouseXY[1].x = x;
+            this->MouseXY[1].y = y;
+        }
+        else {
+            this->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}
+
 HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND parentHwnd)
 {
     const wchar_t CLASS_NAME[] = L"DirectXWindowClass";
 
     // Register the window class.
     WNDCLASS wc = {};
-    wc.lpfnWndProc = WindowProc;
+    wc.lpfnWndProc = StaticWindowProc;
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
     wc.hbrBackground = (HBRUSH)CreateSolidBrush(RGB(0, 0, 0));
@@ -188,4 +258,12 @@ void DirectXRenderer::DiscardDeviceIndependentResources()
         pFactory->Release();
         pFactory = nullptr;
     }
+}
+
+int DirectXRenderer::GetMode() {
+    return m_mode;
+}
+
+void DirectXRenderer::SetMode(int value) {
+    this->m_mode = value;
 }

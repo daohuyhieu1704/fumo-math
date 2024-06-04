@@ -28,6 +28,21 @@
     <Filter Include="Entities\Database">
       <UniqueIdentifier>{3a4c7abb-110a-4503-820b-f47f90cd3812}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{714d24b1-03ae-4c7b-b04c-8b1983978be2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Point3d">
+      <UniqueIdentifier>{7c6f0a4f-81ca-4c65-8106-66b4e191ec44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Transaction">
+      <UniqueIdentifier>{838ea57e-e92f-4ab3-ba67-d68cc6c3b243}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Circle">
+      <UniqueIdentifier>{47c51a6f-2bec-4989-a3bc-f87c19c9889b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\DbObject">
+      <UniqueIdentifier>{8f0328fa-8320-4ba2-b05b-e62162cb56c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -41,6 +56,18 @@
     </ClCompile>
     <ClCompile Include="DatabaseInterop.cpp">
       <Filter>Entities\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Point3d.cpp">
+      <Filter>Geometry\Point3d</Filter>
+    </ClCompile>
+    <ClCompile Include="TransactionWrapper.cpp">
+      <Filter>Entities\Transaction</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Entities\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="DbObject.cpp">
+      <Filter>Entities\DbObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +85,18 @@
     </ClInclude>
     <ClInclude Include="DatabaseInterop.h">
       <Filter>Entities\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Point3d.h">
+      <Filter>Geometry\Point3d</Filter>
+    </ClInclude>
+    <ClInclude Include="TransactionWrapper.h">
+      <Filter>Entities\Transaction</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Entities\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="DbObject.h">
+      <Filter>Entities\DbObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

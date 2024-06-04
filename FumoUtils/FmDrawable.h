@@ -7,7 +7,7 @@
 
 class FmDrawable : public FmObject {
 protected:
-    Geometry::Point3d position;
+    Geometry::FmGePoint3d position;
     float rotation;
     std::unique_ptr<ID2D1SolidColorBrush*> brushPtr;
 
@@ -16,8 +16,8 @@ public:
     virtual ~FmDrawable() = default;
 
 #pragma region Properties
-    Geometry::Point3d GetPosition() const;
-    void SetPosition(Geometry::Point3d pos);
+    Geometry::FmGePoint3d GetPosition() const;
+    void SetPosition(Geometry::FmGePoint3d pos);
     void SetPosition(float x, float y);
     float GetRotation() const;
     void SetRotation(float rot);

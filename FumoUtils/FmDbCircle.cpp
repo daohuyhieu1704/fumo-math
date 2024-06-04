@@ -28,6 +28,7 @@ namespace {
 FmDbCirclePtr FmDbCircle::CreateObject(float x, float y, float radius) {
     auto circle = FmDbCircleFactory::GetCircle();
     circle->initialize(x, y, radius);
+    circle->setObjectId(DisposableWrapper::generate_short_id());
     return circle;
 }
 
@@ -36,11 +37,11 @@ void FmDbCircle::initialize(float x, float y, float radius) {
     this->m_radius = radius;
 }
 
-Geometry::Point3d FmDbCircle::GetCenter() const {
+Geometry::FmGePoint3d FmDbCircle::GetCenter() const {
     return GetPosition();
 }
 
-void FmDbCircle::SetCenter(Geometry::Point3d center) {
+void FmDbCircle::SetCenter(Geometry::FmGePoint3d center) {
     SetPosition(center.x, center.y);
 }
 
