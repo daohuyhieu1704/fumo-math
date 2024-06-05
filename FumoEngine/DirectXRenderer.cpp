@@ -86,7 +86,7 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
-        getInstance()->DrawCoordinate();
+       getInstance()->DrawUserCoordinateSystem();
         EndPaint(hwnd, &ps);
     }
     return 0;
@@ -163,7 +163,7 @@ HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND p
         return NULL;
     }
 
-    DrawCoordinate();
+    
     return hwnd;
 }
 
@@ -202,7 +202,7 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
     return S_OK;
 }
 
-void DirectXRenderer::DrawCoordinate()
+void DirectXRenderer::DrawUserCoordinateSystem()
 {
     // Get the size of the render target
     D2D1_SIZE_F rtSize = getInstance()->pRenderTarget->GetSize();

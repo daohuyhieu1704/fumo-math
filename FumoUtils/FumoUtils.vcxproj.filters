@@ -112,6 +112,9 @@
     <ClCompile Include="FmGeExtend2d.cpp">
       <Filter>Geometry\Extend2d</Filter>
     </ClCompile>
+    <ClCompile Include="UserCoordinateSystem.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FmGePoint3d.h">
@@ -169,5 +172,12 @@
     <ClInclude Include="FmGeExtend2d.h">
       <Filter>Geometry\Extend2d</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="UserCoordinateSystem.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FumoUtils.rc" />
   </ItemGroup>
 </Project>

@@ -29,6 +29,7 @@
     <ClInclude Include="FmDrawable.h" />
     <ClInclude Include="FmObject.h" />
     <ClInclude Include="DataTableRecord.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="pch.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="FmGeVelocity2d.h" />
     <ClInclude Include="FmGeVelocity3d.h" />
     <ClInclude Include="FmGeWorldDraw.h" />
+    <ClInclude Include="UserCoordinateSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Database.cpp" />
@@ -57,6 +59,10 @@
     <ClCompile Include="FmGeVelocity2d.cpp" />
     <ClCompile Include="FmGeVelocity3d.cpp" />
     <ClCompile Include="FmGeWorldDraw.cpp" />
+    <ClCompile Include="UserCoordinateSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FumoUtils.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

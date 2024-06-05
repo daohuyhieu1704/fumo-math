@@ -4,6 +4,7 @@
 #include <chrono>
 #include <FmGePoint3d.h>
 #include <Database.h>
+#include <UserCoordinateSystem.h>
 
 class DirectXRenderer
 {
@@ -16,7 +17,7 @@ public:
     void ResizeWindow(HWND hwnd, int width, int height);
     HRESULT InitializeDirect2D(HWND hwnd);
     void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
-    void DrawCoordinate();
+    void DrawUserCoordinateSystem();
     void CreateDeviceIndependentResources();
     void CreateDeviceResources();
     void DiscardDeviceIndependentResources();
