@@ -25,12 +25,6 @@
     <Filter Include="Geometry\Extend3d">
       <UniqueIdentifier>{e256e625-dcac-40fe-9fbd-ed50e6e60d8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\DisposableWrapper">
-      <UniqueIdentifier>{2f106cdb-3ea0-45d1-b1e6-1b4245ff4253}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\SmartPtr">
-      <UniqueIdentifier>{6b7d86e0-f6ea-433d-8fb5-af0c7c933acf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Object">
       <UniqueIdentifier>{40f4e43f-44ba-468b-ac5e-69beb6adc562}</UniqueIdentifier>
     </Filter>
@@ -46,20 +40,23 @@
     <Filter Include="Common\DbObject">
       <UniqueIdentifier>{7eab4b1b-c049-4f2b-a406-45bd9d945857}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\DbObject\Entity">
-      <UniqueIdentifier>{2a07ccb4-acb8-4734-8d57-d2bf587ec1cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\DbObject\Object">
-      <UniqueIdentifier>{20c1f761-fac9-4729-8c0c-53d085fa89d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\DbObject\Circle">
-      <UniqueIdentifier>{8ab8cf9e-017c-4987-9ffd-2b777cdc1abb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Geometry\WorldDraw">
       <UniqueIdentifier>{125f968c-b1cb-4457-8c68-d97b5d6d2875}</UniqueIdentifier>
     </Filter>
     <Filter Include="DatabaseServices\DataTableRecord">
       <UniqueIdentifier>{9f0db983-3353-414e-8932-0dc5807ada47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Drawable">
+      <UniqueIdentifier>{cbae3f4b-470b-486e-8fc8-fdf45b0eeae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities">
+      <UniqueIdentifier>{04fcd7af-f9f0-44c6-913f-3bcd88889674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Entity">
+      <UniqueIdentifier>{2a07ccb4-acb8-4734-8d57-d2bf587ec1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Circle">
+      <UniqueIdentifier>{8ab8cf9e-017c-4987-9ffd-2b777cdc1abb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,12 +72,6 @@
     <ClCompile Include="Velocity3d.cpp">
       <Filter>Geometry\Velocity3d</Filter>
     </ClCompile>
-    <ClCompile Include="DisposableWrapper.cpp">
-      <Filter>Common\DisposableWrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="SmartPtr.cpp">
-      <Filter>Common\SmartPtr</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="FmObject.cpp">
       <Filter>Common\Object</Filter>
@@ -94,23 +85,23 @@
     <ClCompile Include="DataTableRecord.cpp">
       <Filter>DatabaseServices\DataTableRecord</Filter>
     </ClCompile>
-    <ClCompile Include="FmDrawable.cpp">
-      <Filter>Common\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="FmDbObject.cpp">
-      <Filter>Common\DbObject\Object</Filter>
-    </ClCompile>
     <ClCompile Include="FmDbEntity.cpp">
-      <Filter>Common\DbObject\Entity</Filter>
+      <Filter>Entities\Entity</Filter>
     </ClCompile>
     <ClCompile Include="FmDbCircle.cpp">
-      <Filter>Common\DbObject\Circle</Filter>
+      <Filter>Entities\Circle</Filter>
     </ClCompile>
     <ClCompile Include="WorldDraw.cpp">
       <Filter>Geometry\WorldDraw</Filter>
     </ClCompile>
     <ClCompile Include="Extend2d.cpp">
       <Filter>Geometry\Extend2d</Filter>
+    </ClCompile>
+    <ClCompile Include="FmDrawable.cpp">
+      <Filter>Common\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="FmDbObject.cpp">
+      <Filter>Common\DbObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,12 +120,6 @@
     <ClInclude Include="Velocity3d.h">
       <Filter>Geometry\Velocity3d</Filter>
     </ClInclude>
-    <ClInclude Include="DisposableWrapper.h">
-      <Filter>Common\DisposableWrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="SmartPtr.h">
-      <Filter>Common\SmartPtr</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="FmObject.h">
       <Filter>Common\Object</Filter>
@@ -148,26 +133,26 @@
     <ClInclude Include="DataTableRecord.h">
       <Filter>DatabaseServices\DataTableRecord</Filter>
     </ClInclude>
-    <ClInclude Include="FmDrawable.h">
-      <Filter>Common\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="FmDbObject.h">
-      <Filter>Common\DbObject\Object</Filter>
-    </ClInclude>
     <ClInclude Include="FmDbEntity.h">
-      <Filter>Common\DbObject\Entity</Filter>
+      <Filter>Entities\Entity</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseServices.h">
       <Filter>DatabaseServices</Filter>
     </ClInclude>
     <ClInclude Include="FmDbCircle.h">
-      <Filter>Common\DbObject\Circle</Filter>
+      <Filter>Entities\Circle</Filter>
     </ClInclude>
     <ClInclude Include="WorldDraw.h">
       <Filter>Geometry\WorldDraw</Filter>
     </ClInclude>
     <ClInclude Include="Extend2d.h">
       <Filter>Geometry\Extend2d</Filter>
+    </ClInclude>
+    <ClInclude Include="FmDrawable.h">
+      <Filter>Common\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="FmDbObject.h">
+      <Filter>Common\DbObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

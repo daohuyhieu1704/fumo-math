@@ -10,16 +10,16 @@ typedef std::shared_ptr<FmDbCircle> FmDbCirclePtr;
 class FmDbCircle : public FmDbEntity {
 public:
     static FmDbCirclePtr CreateObject(float x, float y, float radius);
-    void initialize(float x, float y, float radius);
+    void Initialize(float x, float y, float radius);
 #pragma region Properties
     Geometry::Point3d GetCenter() const;
     void SetCenter(Geometry::Point3d center);
-    void setRadius(float r);
-    float getRadius() const;
+    void SetRadius(float r);
+    float GetRadius() const;
 #pragma endregion
-    HRESULT draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget) override;
-    FmObject* clone() const override;
-    nlohmann::json toJson() const override;
+    HRESULT Draw(ID2D1HwndRenderTarget* renderTarget) override;
+    FmObject* Clone() const override;
+    nlohmann::json ToJson() const override;
     FmDbCircle();
 private:
     float m_radius;
@@ -31,7 +31,6 @@ private:
 class FmDbCircleFactory {
 public:
     static FmDbCirclePtr GetCircle();
-    static void returnCircle(FmDbCircle* circle);
 private:
     static std::vector<FmDbCirclePtr> CirclePool;
 };

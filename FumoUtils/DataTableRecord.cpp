@@ -9,8 +9,8 @@ std::vector<std::shared_ptr<FmObject>> DataTableRecord::GetObjects() const {
     return objects;
 }
 
-void DataTableRecord::addObject(std::unique_ptr<FmObject> obj) {
-    m_objects.insert({ obj->getObjectId(), std::move(obj) });
+void DataTableRecord::AddObject(std::unique_ptr<FmObject> obj) {
+    m_objects.insert({ obj->GetObjectId(), std::move(obj) });
 }
 
 bool DataTableRecord::GetObjectById(const std::string& id, std::shared_ptr<FmObject>& obj) {
@@ -22,14 +22,19 @@ bool DataTableRecord::GetObjectById(const std::string& id, std::shared_ptr<FmObj
     return false;
 }
 
-nlohmann::json DataTableRecord::toJson() const {
+nlohmann::json DataTableRecord::ToJson() const {
     nlohmann::json jsonArray = nlohmann::json::array();
     for (const auto& obj : m_objects) {
         FmDbObject* dbObj = dynamic_cast<FmDbObject*>(obj.second.get());
         if (dbObj == nullptr) {
             continue;
         }
-        jsonArray.push_back(dbObj->toJson());
+        jsonArray.push_back(dbObj->ToJson());
     }
     return jsonArray;
+}
+
+FmObject* DataTableRecord::Clone() const
+{
+    return nullptr;
 }

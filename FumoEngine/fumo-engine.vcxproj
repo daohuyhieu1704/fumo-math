@@ -145,12 +145,14 @@
   <ItemGroup>
     <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="DatabaseInterop.cpp" />
+    <ClCompile Include="DisposableWrapper.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="RendererWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXRenderer.h" />
     <ClInclude Include="DatabaseInterop.h" />
+    <ClInclude Include="DisposableWrapper.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RendererWrapper.h" />
     <ClInclude Include="resource.h" />

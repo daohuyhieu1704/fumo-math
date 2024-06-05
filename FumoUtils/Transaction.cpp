@@ -5,68 +5,69 @@
 
 namespace DatabaseServices {
     void FmTransaction::StartTransaction() {
-        if (transactionActive) {
+        if (m_transactionActive) {
             throw std::runtime_error("Transaction is already active");
         }
-        transactionActive = true;
-        newlyAddedObjects.clear();
+        m_transactionActive = true;
+        m_newlyAddedObjects.clear();
     }
 
     void FmTransaction::AddNewlyObject(const std::string& id, std::unique_ptr<FmObject> obj) {
-        if (!transactionActive) {
+        if (!m_transactionActive) {
             throw std::runtime_error("No active transaction");
         }
-        if (newlyAddedObjects.find(id) != newlyAddedObjects.end()) {
+        if (m_newlyAddedObjects.find(id) != m_newlyAddedObjects.end()) {
             throw std::runtime_error("Object with the given ID already exists");
         }
-        newlyAddedObjects[id] = std::move(obj);
+        m_newlyAddedObjects[id] = std::move(obj);
     }
 
     void FmTransaction::Abort() {
-        if (!transactionActive) {
+        if (!m_transactionActive) {
             throw std::runtime_error("No active transaction to abort");
         }
-        newlyAddedObjects.clear();
-        transactionActive = false;
+        m_newlyAddedObjects.clear();
+        m_transactionActive = false;
     }
 
     void FmTransaction::Commit() {
-        if (!transactionActive) {
+        if (!m_transactionActive) {
             throw std::runtime_error("No active transaction to commit");
         }
-        for (auto& pair : newlyAddedObjects) {
+        for (auto& pair : m_newlyAddedObjects) {
             m_Doc.get()->AppendObject(std::move(pair.second));
         }
-        newlyAddedObjects.clear();
-        transactionActive = false;
+        m_newlyAddedObjects.clear();
+        m_transactionActive = false;
     }
 
     void FmTransaction::Undo() {
-        if (newlyAddedObjects.empty() || isUndoRedoInProgress) {
+        if (m_newlyAddedObjects.empty() || m_isUndoRedoInProgress) {
             throw std::runtime_error("Nothing to undo");
         }
-        isUndoRedoInProgress = true;
+        m_isUndoRedoInProgress = true;
 
-        // Remove the last added object
-        auto lastAdded = newlyAddedObjects.rbegin(); // Get the last element in the map
-        undoneObjects.push_back(std::move(lastAdded->second)); // Add it to undoneObjects (std::deque)
-        newlyAddedObjects.erase(lastAdded->first);           // Remove it from the map
-        // You don't need to pass this to the database now
+        auto lastAdded = m_newlyAddedObjects.rbegin();
+        m_undoneObjects.push_back(std::move(lastAdded->second));
+        m_newlyAddedObjects.erase(lastAdded->first);
 
-        isUndoRedoInProgress = false;
+        m_isUndoRedoInProgress = false;
     }
 
     void FmTransaction::Redo() {
-        if (undoneObjects.empty() || isUndoRedoInProgress) {
+        if (m_undoneObjects.empty() || m_isUndoRedoInProgress) {
             throw std::runtime_error("Nothing to redo");
         }
-        isUndoRedoInProgress = true;
+        m_isUndoRedoInProgress = true;
 
-        // Take the ownership of the object from undoneObjects and reinsert it into newlyAddedObjects
-        auto lastUndone = std::move(undoneObjects.back()); // Move the last undone object
-        newlyAddedObjects[lastUndone->getObjectId()] = std::move(lastUndone);
-        undoneObjects.pop_back();
+        auto lastUndone = std::move(m_undoneObjects.back());
+        m_newlyAddedObjects[lastUndone->GetObjectId()] = std::move(lastUndone);
+        m_undoneObjects.pop_back();
 
-        isUndoRedoInProgress = false;
+        m_isUndoRedoInProgress = false;
+    }
+    FmObject* FmTransaction::Clone() const
+    {
+        return nullptr;
     }
 }

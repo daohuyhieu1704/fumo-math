@@ -4,39 +4,35 @@
 
 Geometry::Point3d FmDrawable::GetPosition() const
 {
-	return position;
+	return m_position;
 }
 
 void FmDrawable::SetPosition(Geometry::Point3d position)
 {
-	this->position = position;
+	m_position = position;
 }
 
 float FmDrawable::GetRotation() const
 {
-	return rotation;
+	return m_rotation;
 }
 
 void FmDrawable::SetRotation(float rotation)
 {
-	this->rotation = rotation;
+	m_rotation = rotation;
 }
 
-void FmDrawable::SetBrush(ID2D1SolidColorBrush* brush) { 
-    brushPtr.reset(new ID2D1SolidColorBrush * (brush));
+void FmDrawable::SetBrush(ID2D1SolidColorBrush* brush)
+{ 
+	m_brush = brush;
 }
 
-ID2D1SolidColorBrush* FmDrawable::GetBrush() { return brushPtr ? *brushPtr : nullptr; }
+ID2D1SolidColorBrush* FmDrawable::GetBrush()
+{ 
+	return m_brush; 
+}
 
-void FmDrawable::SetPosition(float x, float y) {  }
-
-void FmDrawable::copyFrom(const FmObject& source)
+void FmDrawable::SetPosition(float x, float y)
 {
-    if (const FmDrawable* srcDrawable = dynamic_cast<const FmDrawable*>(&source)) {
-        position = srcDrawable->position;
-        rotation = srcDrawable->rotation;
-        if (srcDrawable->brushPtr) {
-            SetBrush(*srcDrawable->brushPtr);
-        }
-    }
+	m_position = { x, y, 0 };
 }

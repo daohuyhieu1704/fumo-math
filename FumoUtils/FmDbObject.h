@@ -5,5 +5,5 @@
 class FmDbObject : public FmDrawable {
 public:
     virtual ~FmDbObject() = default;
-    virtual nlohmann::json toJson() const = 0;
+    virtual nlohmann::json ToJson() const;
 };

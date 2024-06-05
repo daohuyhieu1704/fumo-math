@@ -9,19 +9,24 @@ namespace DatabaseServices {
     {}
 
     void FmDatabase::AppendObject(std::unique_ptr<FmObject> obj) {
-        m_ObjectRecords->addObject(std::move(obj));
+        m_ObjectRecords->AddObject(std::move(obj));
     }
 
-    void FmDatabase::saveToJson(const std::string& filename) {
+    void FmDatabase::SaveToJson(const std::string& filename) {
         nlohmann::json json;
         for (const auto& record : m_ObjectRecords->GetObjects()) {
             FmDbObject* dbObj = dynamic_cast<FmDbObject*>(record.get());
             if (dbObj == nullptr) {
                 continue;
             }
-            json.push_back(dbObj->toJson());
+            json.push_back(dbObj->ToJson());
         }
         std::ofstream file(filename);
         file << json.dump(4);
+    }
+
+    FmObject* FmDatabase::Clone() const
+    {
+        return nullptr;
     }
 }

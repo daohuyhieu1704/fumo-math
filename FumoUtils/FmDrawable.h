@@ -7,12 +7,12 @@
 
 class FmDrawable : public FmObject {
 protected:
-    Geometry::Point3d position;
-    float rotation;
-    std::unique_ptr<ID2D1SolidColorBrush*> brushPtr;
+    Geometry::Point3d m_position;
+    float m_rotation;
+    ID2D1SolidColorBrush* m_brush;
 
 public:
-    FmDrawable() : position(0, 0, 0), rotation(0) {}
+    FmDrawable() : m_position(0, 0, 0), m_rotation(0), m_brush(nullptr) {}
     virtual ~FmDrawable() = default;
 
 #pragma region Properties
@@ -21,9 +21,9 @@ public:
     void SetPosition(float x, float y);
     float GetRotation() const;
     void SetRotation(float rot);
-    void SetBrush(ID2D1SolidColorBrush* brush);
     ID2D1SolidColorBrush* GetBrush();
+    void SetBrush(ID2D1SolidColorBrush* brush);
 #pragma endregion
-    virtual HRESULT draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget) = 0;
-    virtual void copyFrom(const FmObject& source) override;
+    virtual HRESULT Draw(ID2D1HwndRenderTarget* renderTarget) = 0;
+    virtual FmObject* Clone() const = 0;
 };

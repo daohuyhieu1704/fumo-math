@@ -1,11 +1,10 @@
 #pragma once
-#include "DisposableWrapper.h"
 #include <unordered_map>
 #include <functional>
 #include <memory>
 #include <string>
 
-class FmObject : public DisposableWrapper {
+class FmObject {
 private:
     std::string m_objectId;
 public:
@@ -13,14 +12,10 @@ public:
     virtual ~FmObject() {}
 
 #pragma region Properties
-    std::string getObjectId() const;
-    void setObjectId(const std::string& objectId);
+    std::string GetObjectId() const;
+    void SetObjectId(const std::string& objectId);
 #pragma endregion
-
-    static FmObject* create(void* unmanagedPointer);
-
-    virtual FmObject* clone() const = 0;
-    virtual void copyFrom(const FmObject& source) = 0;
+    virtual FmObject* Clone() const = 0;
 };
 
 typedef std::unique_ptr<FmObject> FmObjectPtr;
@@ -29,12 +24,12 @@ class ObjectFactory {
 public:
     using CreatorFunc = std::function<std::unique_ptr<FmObject>()>;
 
-    static ObjectFactory& instance();
+    static ObjectFactory& Instance();
 
     template<typename T>
-    void registerType(const std::string& type);
+    void RegisterType(const std::string& type);
 
-    std::unique_ptr<FmObject> createObject(const std::string& type) const;
+    std::unique_ptr<FmObject> CreateObject(const std::string& type) const;
 
 private:
     std::unordered_map<std::string, CreatorFunc> creators;
@@ -44,7 +39,7 @@ private:
 };
 
 template<typename T>
-inline void ObjectFactory::registerType(const std::string& type) {
+inline void ObjectFactory::RegisterType(const std::string& type) {
     creators[type] = []() -> std::unique_ptr<FmObject> {
         return std::make_unique<T>();
         };

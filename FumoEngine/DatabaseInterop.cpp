@@ -13,5 +13,5 @@ DatabaseInterop::~DatabaseInterop() {
 
 void DatabaseInterop::SaveToJson(String^ filename) {
     std::string nativeFilename = marshal_as<std::string>(filename);
-    database->saveToJson(nativeFilename);
+    database->SaveToJson(nativeFilename);
 }

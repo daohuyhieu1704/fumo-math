@@ -28,6 +28,12 @@
     <Filter Include="Entities\Database">
       <UniqueIdentifier>{3a4c7abb-110a-4503-820b-f47f90cd3812}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\DisposableWrapper">
+      <UniqueIdentifier>{1fb00b89-b5f3-4fb0-b55d-d8e4c413b502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\FmObject">
+      <UniqueIdentifier>{110aa689-6903-4efe-8712-18d1b5221bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -41,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="DatabaseInterop.cpp">
       <Filter>Entities\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="DisposableWrapper.cpp">
+      <Filter>Common\DisposableWrapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="DatabaseInterop.h">
       <Filter>Entities\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="DisposableWrapper.h">
+      <Filter>Common\DisposableWrapper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

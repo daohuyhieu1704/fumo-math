@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "FmDbObject.h"
 
-nlohmann::json FmDbObject::toJson() const
+nlohmann::json FmDbObject::ToJson() const
 {
     return 
     {
-        {"position", {position.x, position.y}},
-        {"rotation", rotation},
+        {"position", {m_position.x, m_position.y}},
+        {"rotation", m_rotation},
     };
 }

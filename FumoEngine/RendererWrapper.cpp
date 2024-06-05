@@ -23,7 +23,7 @@ void RendererWrapper::DrawCircle(float centerX, float centerY, float radius)
 	m_renderer->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
 	circle->SetBrush(m_renderer->pBrush);
 	circle->SetCenter(Geometry::Point3d(centerX, centerY, 0));
-	circle->draw(m_renderer->deviceContext, m_renderer->pRenderTarget);
+	circle->Draw(m_renderer->pRenderTarget);
 
 }
 
