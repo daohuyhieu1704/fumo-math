@@ -2,6 +2,7 @@
 #include "DirectXRenderer.h"
 #include <windowsx.h> 
 #include <chrono>
+#include <iostream> // For logging
 
 using namespace Geometry;
 
@@ -14,10 +15,15 @@ DirectXRenderer* DirectXRenderer::getInstance()
         m_instance->Dbs.push_back(DatabaseServices::FmDatabase::CreateObject());
         m_instance->CurDoc = m_instance->Dbs[0];
         m_instance->MouseXY;
-        m_instance->MouseXY.push_back({ 0, 0, 0 }); 
+        m_instance->MouseXY.push_back({ 0, 0, 0 });
+        m_instance->ucs = std::make_unique<UserCoordinateSystem>();
     }
     return m_instance;
 }
+
+DirectXRenderer::DirectXRenderer() = default;
+
+DirectXRenderer::~DirectXRenderer() = default;
 
 LRESULT CALLBACK DirectXRenderer::StaticWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     DirectXRenderer* pThis = nullptr;
@@ -38,17 +44,6 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 {
     switch (uMsg) {
     case WM_MOUSEMOVE: {
-        //int xPos = GET_X_LPARAM(lParam);
-        //int yPos = GET_Y_LPARAM(lParam);
-
-        //auto now = std::chrono::steady_clock::now();
-        //auto durationSinceLastMove = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastMouseMoveTime).count();
-
-        //if (durationSinceLastMove >= throttleIntervalMs) {
-        //    lastMouseMoveTime = now;
-        //    OnMouseMove(xPos, yPos);
-        //}
-        //OnMouseMove(xPos, yPos);
         return 0;
     }
     case WM_LBUTTONDOWN:
@@ -66,27 +61,27 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     {
         int width = LOWORD(lParam);
         int height = HIWORD(lParam);
-		SetWindowPos(hwnd, NULL, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE);
+        SetWindowPos(hwnd, NULL, 0, 0, width, height, SWP_NOZORDER | SWP_NOMOVE);
     }
     break;
     case WM_DPICHANGED:
-        {
-            RECT* const prcNewWindow = (RECT*)lParam;
+    {
+        RECT* const prcNewWindow = (RECT*)lParam;
 
-            SetWindowPos(hwnd,
-                NULL,
-                prcNewWindow->left,
-                prcNewWindow->top,
-                prcNewWindow->right - prcNewWindow->left,
-                prcNewWindow->bottom - prcNewWindow->top,
-                SWP_NOZORDER | SWP_NOACTIVATE);
-        }
-        break;
+        SetWindowPos(hwnd,
+            NULL,
+            prcNewWindow->left,
+            prcNewWindow->top,
+            prcNewWindow->right - prcNewWindow->left,
+            prcNewWindow->bottom - prcNewWindow->top,
+            SWP_NOZORDER | SWP_NOACTIVATE);
+    }
+    break;
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hwnd, &ps);
-       getInstance()->DrawUserCoordinateSystem();
+        DrawUserCoordinateSystem();
         EndPaint(hwnd, &ps);
     }
     return 0;
@@ -100,18 +95,18 @@ void DirectXRenderer::OnMouseMove(int x, int y) {
     switch (GetMode())
     {
     case 0: {
-        getInstance()->MouseXY.clear();
-        getInstance()->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
+        MouseXY.clear();
+        MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
         break;
-        }
+    }
     case 1: {
-        getInstance()->MouseXY.clear();
-        if (getInstance()->MouseXY.size() == 2) {
-            getInstance()->MouseXY[1].x = x;
-            getInstance()->MouseXY[1].y = y;
+        MouseXY.clear();
+        if (MouseXY.size() == 2) {
+            MouseXY[1].x = x;
+            MouseXY[1].y = y;
         }
         else {
-            getInstance()->MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
+            MouseXY.push_back(FmGePoint3d({ static_cast<float>(x), static_cast<float>(y), 0.0 }));
         }
         break;
     }
@@ -134,36 +129,36 @@ HWND DirectXRenderer::InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND p
     RegisterClass(&wc);
 
     RECT rc{};
-	GetClientRect(parentHwnd, &rc);
-	LONG width = rc.right - rc.left;
+    GetClientRect(parentHwnd, &rc);
+    LONG width = rc.right - rc.left;
     LONG height = rc.bottom - rc.top;
-
 
     // Create the window.
     HWND hwnd = CreateWindowEx(
         WS_EX_CLIENTEDGE,              // Extended window styles.
         CLASS_NAME,                    // Window class
-        L"Drawing App",        // Window text
+        L"Drawing App",                // Window text
         WS_CHILD | WS_VISIBLE,         // Window style - make it a child window that is visible
-        0, 0, width, height,                // Position and dimensions
+        0, 0, width, height,           // Position and dimensions
         parentHwnd,                    // Parent window    
         NULL,                          // Menu
         hInstance,                     // Instance handle
-        NULL                           // Additional application data
+        this                           // Additional application data
     );
 
     if (hwnd == NULL) {
+        std::cerr << "Failed to create window." << std::endl;
         return NULL;
     }
 
     ShowWindow(hwnd, nCmdShow);
 
     if (FAILED(InitializeDirect2D(hwnd))) {
+        std::cerr << "Failed to initialize Direct2D." << std::endl;
         DestroyWindow(hwnd);
         return NULL;
     }
 
-    
     return hwnd;
 }
 
@@ -173,6 +168,7 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
 
     HRESULT hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &instance->pFactory);
     if (FAILED(hr)) {
+        std::cerr << "Failed to create D2D1Factory. HRESULT: " << hr << std::endl;
         return hr;
     }
 
@@ -187,6 +183,7 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
     );
 
     if (FAILED(hr)) {
+        std::cerr << "Failed to create HwndRenderTarget. HRESULT: " << hr << std::endl;
         return hr;
     }
 
@@ -196,97 +193,24 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
     );
 
     if (FAILED(hr)) {
+        std::cerr << "Failed to create SolidColorBrush. HRESULT: " << hr << std::endl;
         return hr;
     }
+
+    // Set the brush for UserCoordinateSystem
+    instance->ucs->SetBrush(instance->pBrush);
 
     return S_OK;
 }
 
 void DirectXRenderer::DrawUserCoordinateSystem()
 {
-    // Get the size of the render target
-    D2D1_SIZE_F rtSize = getInstance()->pRenderTarget->GetSize();
-
-    // Set the unit size to 20
-    float unitSize = 30.0f;
-
-    // Calculate the number of columns and rows based on the unit size
-    int numColumns = static_cast<int>(rtSize.width / unitSize);
-    int numRows = static_cast<int>(rtSize.height / unitSize);
-
-    // Calculate the center column and row
-    int centerColumn = numColumns / 2;
-    int centerRow = numRows / 2;
-
-    getInstance()->pRenderTarget->BeginDraw();
-    getInstance()->pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
-
-    // Draw vertical lines
-    for (int i = 0; i <= numColumns; i++)
-    {
-        float strokeWidth = (i == centerColumn) ? 4.0f : 0.5f; // Thicker line for the center
-        getInstance()->pRenderTarget->DrawLine(
-            D2D1::Point2F(static_cast<FLOAT>(i * unitSize), 0.0f),
-            D2D1::Point2F(static_cast<FLOAT>(i * unitSize), rtSize.height),
-            getInstance()->pBrush,
-            strokeWidth
-        );
-    }
-
-    // Draw horizontal lines
-    for (int i = 0; i <= numRows; i++)
-    {
-        float strokeWidth = (i == centerRow) ? 4.0f : 0.5f; // Thicker line for the center
-        getInstance()->pRenderTarget->DrawLine(
-            D2D1::Point2F(0.0f, static_cast<FLOAT>(i * unitSize)),
-            D2D1::Point2F(rtSize.width, static_cast<FLOAT>(i * unitSize)),
-            getInstance()->pBrush,
-            strokeWidth
-        );
-    }
-
-    HRESULT hr = getInstance()->pRenderTarget->EndDraw();
-    if (hr == D2DERR_RECREATE_TARGET)
-    {
-        DiscardDeviceResources();
-    }
-    else if (FAILED(hr))
-    {
+    if (!pRenderTarget || !pBrush) {
+        std::cerr << "pRenderTarget or pBrush is null." << std::endl;
         return;
     }
-}
 
-void DirectXRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
-{
-    getInstance()->pRenderTarget->BeginDraw();
-    getInstance()->pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
-	for (int i = 0; i < numColumns; i++)
-	{
-        getInstance()->pRenderTarget->DrawLine(
-			D2D1::Point2F(i * cellWidth, 0),
-			D2D1::Point2F(i * cellWidth, numRows * cellHeight),
-            getInstance()->pBrush,
-			0.5f
-		);
-	}
-	for (int i = 0; i < numRows; i++)
-	{
-        getInstance()->pRenderTarget->DrawLine(
-			D2D1::Point2F(0, i * cellHeight),
-			D2D1::Point2F(numColumns * cellWidth, i * cellHeight),
-            getInstance()->pBrush,
-			1.0f
-		);
-	}
-	HRESULT hr = getInstance()->pRenderTarget->EndDraw();
-	if (hr == D2DERR_RECREATE_TARGET)
-	{
-		DiscardDeviceResources();
-	}
-	else if (FAILED(hr))
-	{
-		return;
-	}
+    ucs->draw(deviceContext, pRenderTarget);
 }
 
 void DirectXRenderer::CreateDeviceIndependentResources()
@@ -295,21 +219,21 @@ void DirectXRenderer::CreateDeviceIndependentResources()
 
 void DirectXRenderer::DiscardDeviceResources()
 {
-	if (getInstance()->pRenderTarget)
-	{
-        getInstance()->pRenderTarget->Release();
-        getInstance()->pRenderTarget = nullptr;
-	}
-	if (getInstance()->pBrush)
-	{
-        getInstance()->pBrush->Release();
-        getInstance()->pBrush = nullptr;
-	}
-	if (getInstance()->pFactory)
-	{
-        getInstance()->pFactory->Release();
-        getInstance()->pFactory = nullptr;
-	}
+    if (pRenderTarget)
+    {
+        pRenderTarget->Release();
+        pRenderTarget = nullptr;
+    }
+    if (pBrush)
+    {
+        pBrush->Release();
+        pBrush = nullptr;
+    }
+    if (pFactory)
+    {
+        pFactory->Release();
+        pFactory = nullptr;
+    }
 }
 
 void DirectXRenderer::CreateDeviceResources()
@@ -323,10 +247,10 @@ void DirectXRenderer::ResizeWindow(HWND hwnd, int width, int height)
 
 void DirectXRenderer::DiscardDeviceIndependentResources()
 {
-    if (getInstance()->pFactory)
+    if (pFactory)
     {
-        getInstance()->pFactory->Release();
-        getInstance()->pFactory = nullptr;
+        pFactory->Release();
+        pFactory = nullptr;
     }
 }
 

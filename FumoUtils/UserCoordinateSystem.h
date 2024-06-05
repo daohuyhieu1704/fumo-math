@@ -1,13 +1,13 @@
-// UserCoordinateSystem.h
 #pragma once
+#include "FmDrawable.h"
 #include <d2d1.h>
 
-
-class UserCoordinateSystem {
+class UserCoordinateSystem : public FmDrawable {
 public:
     UserCoordinateSystem();
-    void Draw(ID2D1HwndRenderTarget* pRenderTarget, ID2D1SolidColorBrush* pBrush);
-
+    HRESULT draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget) override;
+    void copyFrom(const FmObject& source) override;
+    FmObject* clone() const override;
 private:
     float unitSize;
 };
