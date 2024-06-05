@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace FumoUI.Presenters
 {
-    /// <summary>
-    /// Interaction logic for LeftSide.xaml
-    /// </summary>
     public partial class LeftSide : UserControl
     {
         public LeftSide()
