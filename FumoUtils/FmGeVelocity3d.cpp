@@ -1,31 +1,31 @@
 #include "pch.h"
-#include "Velocity3d.h"
+#include "FmGeVelocity3d.h"
 #include <cmath>
 
 namespace Geometry {
-	Velocity3d::Velocity3d()
+	FmGeVelocity3d::FmGeVelocity3d()
 	{
 		x = 0;
 		y = 0;
 		z = 0;
 	}
-	Velocity3d::Velocity3d(float x, float y, float z)
+	FmGeVelocity3d::FmGeVelocity3d(float x, float y, float z)
 	{
 		this->x = x;
 		this->y = y;
 		this->z = z;
 	}
 
-	Velocity3d::~Velocity3d()
+	FmGeVelocity3d::~FmGeVelocity3d()
 	{
 	}
 
-	float Velocity3d::Magnitude() const
+	float FmGeVelocity3d::Magnitude() const
 	{
 		return sqrt(x * x + y * y + z * z);
 	}
 
-	void Velocity3d::Normalize()
+	void FmGeVelocity3d::Normalize()
 	{
 		float mag = Magnitude();
 		x /= mag;
@@ -33,7 +33,7 @@ namespace Geometry {
 		z /= mag;
 	}
 
-	Velocity3d Velocity3d::operator+=(const Velocity3d& velocity)
+	FmGeVelocity3d FmGeVelocity3d::operator+=(const FmGeVelocity3d& velocity)
 	{
 		x += velocity.x;
 		y += velocity.y;
@@ -41,7 +41,7 @@ namespace Geometry {
 		return *this;
 	}
 
-	Velocity3d Velocity3d::operator*(float scalar)
+	FmGeVelocity3d FmGeVelocity3d::operator*(float scalar)
 	{
 		x *= scalar;
 		y *= scalar;

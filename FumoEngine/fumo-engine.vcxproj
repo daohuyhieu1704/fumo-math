@@ -143,19 +143,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="Db.cpp" />
+    <ClCompile Include="DbObject.cpp" />
     <ClCompile Include="DirectXRenderer.cpp" />
-    <ClCompile Include="DatabaseInterop.cpp" />
     <ClCompile Include="DisposableWrapper.cpp" />
+    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="Dtr.cpp" />
+    <ClCompile Include="DbEntity.cpp" />
+    <ClCompile Include="Extend2d.cpp" />
+    <ClCompile Include="ObjectBase.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="RendererWrapper.cpp" />
+    <ClCompile Include="FmRenderer.cpp" />
+    <ClCompile Include="Point2d.cpp" />
+    <ClCompile Include="Point3d.cpp" />
+    <ClCompile Include="Trans.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Circle.h" />
+    <ClInclude Include="Db.h" />
+    <ClInclude Include="DbObject.h" />
     <ClInclude Include="DirectXRenderer.h" />
-    <ClInclude Include="DatabaseInterop.h" />
     <ClInclude Include="DisposableWrapper.h" />
+    <ClInclude Include="Drawable.h" />
+    <ClInclude Include="Dtr.h" />
+    <ClInclude Include="DbEntity.h" />
+    <ClInclude Include="Extend2d.h" />
+    <ClInclude Include="ObjectBase.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="RendererWrapper.h" />
+    <ClInclude Include="FmRenderer.h" />
+    <ClInclude Include="Point2d.h" />
+    <ClInclude Include="Point3d.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Trans.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico" />

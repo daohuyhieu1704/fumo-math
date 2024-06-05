@@ -19,40 +19,38 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Database.h" />
+    <ClInclude Include="FmDatabase.h" />
     <ClInclude Include="DatabaseServices.h" />
-    <ClInclude Include="Extend2d.h" />
+    <ClInclude Include="FmGeExtend2d.h" />
     <ClInclude Include="FmDbCircle.h" />
     <ClInclude Include="FmDbEntity.h" />
     <ClInclude Include="FmDbObject.h" />
     <ClInclude Include="FmDrawable.h" />
-    <ClInclude Include="FmObject.h" />
+    <ClInclude Include="FmObjectBase.h" />
     <ClInclude Include="DataTableRecord.h" />
-    <ClInclude Include="Transaction.h" />
+    <ClInclude Include="FmTransaction.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Point2d.h" />
-    <ClInclude Include="Point3d.h" />
-    <ClInclude Include="Velocity2d.h" />
-    <ClInclude Include="Velocity3d.h" />
-    <ClInclude Include="WorldDraw.h" />
+    <ClInclude Include="FmGePoint2d.h" />
+    <ClInclude Include="FmGePoint3d.h" />
+    <ClInclude Include="FmGeVelocity2d.h" />
+    <ClInclude Include="FmGeVelocity3d.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Database.cpp" />
-    <ClCompile Include="Extend2d.cpp" />
+    <ClCompile Include="FmDatabase.cpp" />
     <ClCompile Include="FmDbCircle.cpp" />
     <ClCompile Include="FmDbEntity.cpp" />
     <ClCompile Include="FmDbObject.cpp" />
     <ClCompile Include="FmDrawable.cpp" />
-    <ClCompile Include="FmObject.cpp" />
+    <ClCompile Include="FmGeExtend2d.cpp" />
+    <ClCompile Include="FmObjectBase.cpp" />
     <ClCompile Include="DataTableRecord.cpp" />
-    <ClCompile Include="Transaction.cpp" />
+    <ClCompile Include="FmTransaction.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Point2d.cpp" />
-    <ClCompile Include="Point3d.cpp" />
-    <ClCompile Include="Velocity2d.cpp" />
-    <ClCompile Include="Velocity3d.cpp" />
-    <ClCompile Include="WorldDraw.cpp" />
+    <ClCompile Include="FmGePoint2d.cpp" />
+    <ClCompile Include="FmGePoint3d.cpp" />
+    <ClCompile Include="FmGeVelocity2d.cpp" />
+    <ClCompile Include="FmGeVelocity3d.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

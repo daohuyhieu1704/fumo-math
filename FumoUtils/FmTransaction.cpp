@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "Database.h"
-#include "Transaction.h"
+#include "FmDatabase.h"
+#include "FmTransaction.h"
 #include "FmDrawable.h"
 
 namespace DatabaseServices {
@@ -12,7 +12,7 @@ namespace DatabaseServices {
         m_newlyAddedObjects.clear();
     }
 
-    void FmTransaction::AddNewlyObject(const std::string& id, std::unique_ptr<FmObject> obj) {
+    void FmTransaction::AddNewlyObject(const std::string& id, std::unique_ptr<FmObjectBase> obj) {
         if (!m_transactionActive) {
             throw std::runtime_error("No active transaction");
         }
@@ -66,7 +66,7 @@ namespace DatabaseServices {
 
         m_isUndoRedoInProgress = false;
     }
-    FmObject* FmTransaction::Clone() const
+    FmObjectBase* FmTransaction::Clone() const
     {
         return nullptr;
     }

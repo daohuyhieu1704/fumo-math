@@ -25,9 +25,6 @@
     <Filter Include="Geometry\Extend3d">
       <UniqueIdentifier>{e256e625-dcac-40fe-9fbd-ed50e6e60d8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Object">
-      <UniqueIdentifier>{40f4e43f-44ba-468b-ac5e-69beb6adc562}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DatabaseServices">
       <UniqueIdentifier>{2572db34-086d-4a4d-8dcc-0971e936bd34}</UniqueIdentifier>
     </Filter>
@@ -39,9 +36,6 @@
     </Filter>
     <Filter Include="Common\DbObject">
       <UniqueIdentifier>{7eab4b1b-c049-4f2b-a406-45bd9d945857}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Geometry\WorldDraw">
-      <UniqueIdentifier>{125f968c-b1cb-4457-8c68-d97b5d6d2875}</UniqueIdentifier>
     </Filter>
     <Filter Include="DatabaseServices\DataTableRecord">
       <UniqueIdentifier>{9f0db983-3353-414e-8932-0dc5807ada47}</UniqueIdentifier>
@@ -58,28 +52,31 @@
     <Filter Include="Entities\Circle">
       <UniqueIdentifier>{8ab8cf9e-017c-4987-9ffd-2b777cdc1abb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\ObjectBase">
+      <UniqueIdentifier>{40f4e43f-44ba-468b-ac5e-69beb6adc562}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Point3d.cpp">
+    <ClCompile Include="FmGePoint3d.cpp">
       <Filter>Geometry\Point3d</Filter>
     </ClCompile>
-    <ClCompile Include="Velocity2d.cpp">
+    <ClCompile Include="FmGeVelocity2d.cpp">
       <Filter>Geometry\Velocity2d</Filter>
     </ClCompile>
-    <ClCompile Include="Point2d.cpp">
+    <ClCompile Include="FmGePoint2d.cpp">
       <Filter>Geometry\Point2d</Filter>
     </ClCompile>
-    <ClCompile Include="Velocity3d.cpp">
+    <ClCompile Include="FmGeVelocity3d.cpp">
       <Filter>Geometry\Velocity3d</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="FmObject.cpp">
-      <Filter>Common\Object</Filter>
+    <ClCompile Include="FmObjectBase.cpp">
+      <Filter>Common\ObjectBase</Filter>
     </ClCompile>
-    <ClCompile Include="Transaction.cpp">
+    <ClCompile Include="FmTransaction.cpp">
       <Filter>DatabaseServices\Transaction</Filter>
     </ClCompile>
-    <ClCompile Include="Database.cpp">
+    <ClCompile Include="FmDatabase.cpp">
       <Filter>DatabaseServices\Database</Filter>
     </ClCompile>
     <ClCompile Include="DataTableRecord.cpp">
@@ -91,43 +88,40 @@
     <ClCompile Include="FmDbCircle.cpp">
       <Filter>Entities\Circle</Filter>
     </ClCompile>
-    <ClCompile Include="WorldDraw.cpp">
-      <Filter>Geometry\WorldDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Extend2d.cpp">
-      <Filter>Geometry\Extend2d</Filter>
-    </ClCompile>
     <ClCompile Include="FmDrawable.cpp">
       <Filter>Common\Drawable</Filter>
     </ClCompile>
     <ClCompile Include="FmDbObject.cpp">
       <Filter>Common\DbObject</Filter>
     </ClCompile>
+    <ClCompile Include="FmGeExtend2d.cpp">
+      <Filter>Geometry\Extend2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Point3d.h">
+    <ClInclude Include="FmGePoint3d.h">
       <Filter>Geometry\Point3d</Filter>
     </ClInclude>
-    <ClInclude Include="Velocity2d.h">
+    <ClInclude Include="FmGeVelocity2d.h">
       <Filter>Geometry\Velocity2d</Filter>
     </ClInclude>
-    <ClInclude Include="Point2d.h">
+    <ClInclude Include="FmGePoint2d.h">
       <Filter>Geometry\Point2d</Filter>
     </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Velocity3d.h">
+    <ClInclude Include="FmGeVelocity3d.h">
       <Filter>Geometry\Velocity3d</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="FmObject.h">
-      <Filter>Common\Object</Filter>
+    <ClInclude Include="FmObjectBase.h">
+      <Filter>Common\ObjectBase</Filter>
     </ClInclude>
-    <ClInclude Include="Transaction.h">
+    <ClInclude Include="FmTransaction.h">
       <Filter>DatabaseServices\Transaction</Filter>
     </ClInclude>
-    <ClInclude Include="Database.h">
+    <ClInclude Include="FmDatabase.h">
       <Filter>DatabaseServices\Database</Filter>
     </ClInclude>
     <ClInclude Include="DataTableRecord.h">
@@ -142,10 +136,7 @@
     <ClInclude Include="FmDbCircle.h">
       <Filter>Entities\Circle</Filter>
     </ClInclude>
-    <ClInclude Include="WorldDraw.h">
-      <Filter>Geometry\WorldDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="Extend2d.h">
+    <ClInclude Include="FmGeExtend2d.h">
       <Filter>Geometry\Extend2d</Filter>
     </ClInclude>
     <ClInclude Include="FmDrawable.h">

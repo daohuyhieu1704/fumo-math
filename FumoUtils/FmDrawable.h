@@ -1,13 +1,15 @@
 #pragma once
-#include "FmObject.h"
+#include "FmObjectBase.h"
 #include "Geometry.h"
 #include <d2d1.h>
 #include <d3d11.h>
 #include <memory>
 
-class FmDrawable : public FmObject {
+using namespace Geometry;
+
+class FmDrawable : public FmObjectBase {
 protected:
-    Geometry::Point3d m_position;
+    FmGePoint3d m_position;
     float m_rotation;
     ID2D1SolidColorBrush* m_brush;
 
@@ -16,8 +18,8 @@ public:
     virtual ~FmDrawable() = default;
 
 #pragma region Properties
-    Geometry::Point3d GetPosition() const;
-    void SetPosition(Geometry::Point3d pos);
+    FmGePoint3d GetPosition() const;
+    void SetPosition(FmGePoint3d pos);
     void SetPosition(float x, float y);
     float GetRotation() const;
     void SetRotation(float rot);
@@ -25,5 +27,5 @@ public:
     void SetBrush(ID2D1SolidColorBrush* brush);
 #pragma endregion
     virtual HRESULT Draw(ID2D1HwndRenderTarget* renderTarget) = 0;
-    virtual FmObject* Clone() const = 0;
+    virtual FmObjectBase* Clone() const = 0;
 };

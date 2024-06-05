@@ -1,7 +1,7 @@
 #pragma once
 
 #include <msclr/marshal_cppstd.h>
-#include "Database.h"
+#include "FmDatabase.h"
 
 using namespace System;
 

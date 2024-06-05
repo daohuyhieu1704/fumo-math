@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Database.h"
+#include "FmDatabase.h"
 
 namespace DatabaseServices {
 
@@ -8,7 +8,7 @@ namespace DatabaseServices {
         , m_ObjectRecords(std::make_unique<DataTableRecord>())
     {}
 
-    void FmDatabase::AppendObject(std::unique_ptr<FmObject> obj) {
+    void FmDatabase::AppendObject(std::unique_ptr<FmObjectBase> obj) {
         m_ObjectRecords->AddObject(std::move(obj));
     }
 
@@ -25,7 +25,7 @@ namespace DatabaseServices {
         file << json.dump(4);
     }
 
-    FmObject* FmDatabase::Clone() const
+    FmObjectBase* FmDatabase::Clone() const
     {
         return nullptr;
     }

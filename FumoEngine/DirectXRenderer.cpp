@@ -3,6 +3,8 @@
 
 using namespace Geometry;
 
+DirectXRenderer* DirectXRenderer::m_instance = nullptr;
+
 LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg) {

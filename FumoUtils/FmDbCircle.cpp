@@ -1,7 +1,10 @@
 #include "pch.h"
 #include <Windows.h>
 #include "FmDbCircle.h"
-#include "FmObject.h"
+#include "FmObjectBase.h"
+#include "FmGePoint3d.h"
+
+using namespace Geometry;
 
 std::vector<FmDbCirclePtr> FmDbCircleFactory::CirclePool;
 
@@ -18,7 +21,7 @@ FmDbCirclePtr FmDbCircleFactory::GetCircle() {
 namespace {
     struct CircleRegistrar {
         CircleRegistrar() {
-            ObjectFactory::Instance().RegisterType<FmDbCircle>("Circle");
+            ObjectBaseFactory::Instance().RegisterType<FmDbCircle>("Circle");
         }
     };
     static CircleRegistrar circleRegistrar;
@@ -35,11 +38,11 @@ void FmDbCircle::Initialize(float x, float y, float radius) {
     this->m_radius = radius;
 }
 
-Geometry::Point3d FmDbCircle::GetCenter() const {
+FmGePoint3d FmDbCircle::GetCenter() const {
     return GetPosition();
 }
 
-void FmDbCircle::SetCenter(Geometry::Point3d center) {
+void FmDbCircle::SetCenter(FmGePoint3d center) {
     SetPosition(center.x, center.y);
 }
 
@@ -64,7 +67,7 @@ HRESULT FmDbCircle::Draw(ID2D1HwndRenderTarget* renderTarget) {
     return renderTarget->EndDraw();
 }
 
-FmObject* FmDbCircle::Clone() const {
+FmObjectBase* FmDbCircle::Clone() const {
     return FmDbCircle::CreateObject(GetPosition().x, GetPosition().y, m_radius).get();
 }
 

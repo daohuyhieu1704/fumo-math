@@ -4,7 +4,18 @@
 
 class DirectXRenderer
 {
+    static DirectXRenderer* m_instance;
+    DirectXRenderer() {}
 public:
+    static DirectXRenderer* GetInstance()
+    {
+        if (m_instance == nullptr)
+        {
+            m_instance = new DirectXRenderer();
+        }
+        return m_instance;
+    }
+
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	HWND InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND parentHwnd);
     void ResizeWindow(HWND hwnd, int width, int height);
@@ -21,4 +32,3 @@ public:
 	ID2D1HwndRenderTarget* pRenderTarget;
     ID2D1SolidColorBrush* pBrush;
 };
-

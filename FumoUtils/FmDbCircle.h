@@ -4,6 +4,8 @@
 #include <vector>
 #include <memory>
 
+using namespace Geometry;
+
 class FmDbCircle;
 typedef std::shared_ptr<FmDbCircle> FmDbCirclePtr;
 
@@ -12,13 +14,13 @@ public:
     static FmDbCirclePtr CreateObject(float x, float y, float radius);
     void Initialize(float x, float y, float radius);
 #pragma region Properties
-    Geometry::Point3d GetCenter() const;
-    void SetCenter(Geometry::Point3d center);
+    FmGePoint3d GetCenter() const;
+    void SetCenter(FmGePoint3d center);
     void SetRadius(float r);
     float GetRadius() const;
 #pragma endregion
     HRESULT Draw(ID2D1HwndRenderTarget* renderTarget) override;
-    FmObject* Clone() const override;
+    FmObjectBase* Clone() const override;
     nlohmann::json ToJson() const override;
     FmDbCircle();
 private:

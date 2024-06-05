@@ -22,17 +22,50 @@
     <Filter Include="Entities">
       <UniqueIdentifier>{8da789bd-5743-488c-abb5-460da3d35fef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\DirectXRenderer">
-      <UniqueIdentifier>{1f45a228-94bb-40a4-9193-e47a0c6a2c3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entities\Database">
-      <UniqueIdentifier>{3a4c7abb-110a-4503-820b-f47f90cd3812}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\DisposableWrapper">
       <UniqueIdentifier>{1fb00b89-b5f3-4fb0-b55d-d8e4c413b502}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entities\FmObject">
-      <UniqueIdentifier>{110aa689-6903-4efe-8712-18d1b5221bbc}</UniqueIdentifier>
+    <Filter Include="Common\ObjectBase">
+      <UniqueIdentifier>{1a74205b-f0ca-4e8f-86c2-c5ceb0ff8a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Drawable">
+      <UniqueIdentifier>{d27a8332-edad-41be-a491-80a6bd036e08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\DbObject">
+      <UniqueIdentifier>{5511ac4b-f54c-4fb9-bc5a-65eb40ce9862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{03858a4b-c074-4432-a03a-6bda9f3b58ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Point2d">
+      <UniqueIdentifier>{15d6aa84-469c-41eb-9ee0-c5c574e54ea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Point3d">
+      <UniqueIdentifier>{969ef2a3-9e34-453d-8c77-079d358562dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices">
+      <UniqueIdentifier>{50c08b7d-dceb-460b-b7d5-26b88aa18949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices\Database">
+      <UniqueIdentifier>{73f4644d-f9f2-414e-b1c0-f18d5a52e408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices\Transaction">
+      <UniqueIdentifier>{b0ec7885-7309-4135-922d-c61826a2ecd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DatabaseServices\DataTableRecord">
+      <UniqueIdentifier>{47e6dcc9-c0c4-4cb0-b4f9-5036cf710f29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\DirectXRenderer">
+      <UniqueIdentifier>{1f45a228-94bb-40a4-9193-e47a0c6a2c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Circle">
+      <UniqueIdentifier>{ecc66cd2-2625-49a2-8ca1-f39824e943c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entities\Entity">
+      <UniqueIdentifier>{34793cdf-cd5c-4c4b-9505-317e100e9137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\Extend2d">
+      <UniqueIdentifier>{777f3d0a-6496-46a0-b188-a27f67410124}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,16 +73,46 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="DirectXRenderer.cpp">
-      <Filter>Entities\DirectXRenderer</Filter>
+      <Filter>Common\DirectXRenderer</Filter>
     </ClCompile>
-    <ClCompile Include="RendererWrapper.cpp">
-      <Filter>Entities\DirectXRenderer</Filter>
-    </ClCompile>
-    <ClCompile Include="DatabaseInterop.cpp">
-      <Filter>Entities\Database</Filter>
+    <ClCompile Include="FmRenderer.cpp">
+      <Filter>Common\DirectXRenderer</Filter>
     </ClCompile>
     <ClCompile Include="DisposableWrapper.cpp">
       <Filter>Common\DisposableWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectBase.cpp">
+      <Filter>Common\ObjectBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Common\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="DbObject.cpp">
+      <Filter>Common\DbObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Point2d.cpp">
+      <Filter>Geometry\Point2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Point3d.cpp">
+      <Filter>Geometry\Point3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Db.cpp">
+      <Filter>DatabaseServices\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Trans.cpp">
+      <Filter>DatabaseServices\Transaction</Filter>
+    </ClCompile>
+    <ClCompile Include="Dtr.cpp">
+      <Filter>DatabaseServices\DataTableRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="Extend2d.cpp">
+      <Filter>Geometry\Extend2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Entities\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="DbEntity.cpp">
+      <Filter>Entities\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,16 +123,46 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DirectXRenderer.h">
-      <Filter>Entities\DirectXRenderer</Filter>
+      <Filter>Common\DirectXRenderer</Filter>
     </ClInclude>
-    <ClInclude Include="RendererWrapper.h">
-      <Filter>Entities\DirectXRenderer</Filter>
-    </ClInclude>
-    <ClInclude Include="DatabaseInterop.h">
-      <Filter>Entities\Database</Filter>
+    <ClInclude Include="FmRenderer.h">
+      <Filter>Common\DirectXRenderer</Filter>
     </ClInclude>
     <ClInclude Include="DisposableWrapper.h">
       <Filter>Common\DisposableWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectBase.h">
+      <Filter>Common\ObjectBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>Common\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="DbObject.h">
+      <Filter>Common\DbObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2d.h">
+      <Filter>Geometry\Point2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Point3d.h">
+      <Filter>Geometry\Point3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Db.h">
+      <Filter>DatabaseServices\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Trans.h">
+      <Filter>DatabaseServices\Transaction</Filter>
+    </ClInclude>
+    <ClInclude Include="Dtr.h">
+      <Filter>DatabaseServices\DataTableRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="Extend2d.h">
+      <Filter>Geometry\Extend2d</Filter>
+    </ClInclude>
+    <ClInclude Include="DbEntity.h">
+      <Filter>Entities\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Entities\Circle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

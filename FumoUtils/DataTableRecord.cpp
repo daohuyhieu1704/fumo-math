@@ -1,22 +1,25 @@
 #include "pch.h"
 #include "DataTableRecord.h"
 
-std::vector<std::shared_ptr<FmObject>> DataTableRecord::GetObjects() const {
-    std::vector<std::shared_ptr<FmObject>> objects;
-    for (const auto& obj : m_objects) {
-        objects.push_back(std::shared_ptr<FmObject>(obj.second.get(), [](FmObject*) {}));
+std::vector<std::shared_ptr<FmObjectBase>> DataTableRecord::GetObjects() const
+{
+    std::vector<std::shared_ptr<FmObjectBase>> objects;
+    for (const auto& pair : m_objects) {
+        objects.push_back(std::shared_ptr<FmObjectBase>(pair.second.get()));
     }
     return objects;
 }
 
-void DataTableRecord::AddObject(std::unique_ptr<FmObject> obj) {
-    m_objects.insert({ obj->GetObjectId(), std::move(obj) });
+void DataTableRecord::AddObject(std::unique_ptr<FmObjectBase> obj)
+{
+    std::string id = obj->GetObjectId();
+    m_objects[id] = std::move(obj);
 }
 
-bool DataTableRecord::GetObjectById(const std::string& id, std::shared_ptr<FmObject>& obj) {
+bool DataTableRecord::GetObjectById(const std::string& id, std::shared_ptr<FmObjectBase>& obj) {
     auto it = m_objects.find(id);
     if (it != m_objects.end()) {
-        obj = std::shared_ptr<FmObject>(it->second.get(), [](FmObject*) {});
+        obj = std::shared_ptr<FmObjectBase>(it->second.get(), [](FmObjectBase*) {});
         return true;
     }
     return false;
@@ -34,7 +37,7 @@ nlohmann::json DataTableRecord::ToJson() const {
     return jsonArray;
 }
 
-FmObject* DataTableRecord::Clone() const
+FmObjectBase* DataTableRecord::Clone() const
 {
     return nullptr;
 }

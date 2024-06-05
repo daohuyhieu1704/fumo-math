@@ -1,4 +1,5 @@
 ﻿using FumoUI.Utils;
+using FumoWrapper.DbServices;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,7 @@ namespace FumoUI.ViewModels.TopPanel
 {
     public class TopPanelViewModel : ViewModelBase
     {
-        private DatabaseInterop? _databaseInterop;
+        private Db? _databaseInterop;
 
         private ObservableCollection<string> _fileItems;
 
@@ -55,7 +56,7 @@ namespace FumoUI.ViewModels.TopPanel
             CancelCmd = new RelayCommand<Window>((p) => { return p != null; }, (p) => { p.Close(); });
             FileItems = new ObservableCollection<string>();
 
-            _databaseInterop = new DatabaseInterop();
+            _databaseInterop = new Db();
 
             CloseTabCommand = new RelayCommand<string>((fileName) => true, (fileName) => CloseTab(fileName));
 

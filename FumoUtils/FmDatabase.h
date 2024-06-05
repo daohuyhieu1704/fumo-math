@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "Transaction.h"
+#include "FmTransaction.h"
 #include "DataTableRecord.h"
 #include <fstream>
 
@@ -11,15 +11,15 @@ namespace DatabaseServices {
     typedef std::shared_ptr<class FmDatabase> FmDatabasePtr;
     typedef std::unique_ptr<FmTransaction> FmTransactionPtr;
 
-    class FmDatabase : public FmObject
+    class FmDatabase : public FmObjectBase
     {
     private:
         DataTableRecordPtr m_ObjectRecords;
     public:
         FmDatabase();
-        void AppendObject(std::unique_ptr<FmObject> obj);
+        void AppendObject(std::unique_ptr<FmObjectBase> obj);
         void SaveToJson(const std::string& filename);
         FmTransactionPtr TransactionManager;
-        FmObject* Clone() const override;
+        FmObjectBase* Clone() const override;
     };
 }

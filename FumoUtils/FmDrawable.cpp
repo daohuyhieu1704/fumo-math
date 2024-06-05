@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "FmDrawable.h"
+#include "FmGePoint3d.h"
 
 
-Geometry::Point3d FmDrawable::GetPosition() const
+FmGePoint3d FmDrawable::GetPosition() const
 {
 	return m_position;
 }
 
-void FmDrawable::SetPosition(Geometry::Point3d position)
+void FmDrawable::SetPosition(FmGePoint3d position)
 {
 	m_position = position;
 }
