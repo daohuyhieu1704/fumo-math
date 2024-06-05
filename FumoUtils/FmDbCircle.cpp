@@ -28,6 +28,7 @@ namespace {
 FmDbCirclePtr FmDbCircle::CreateObject(float x, float y, float radius) {
     auto circle = FmDbCircleFactory::GetCircle();
     circle->initialize(x, y, radius);
+    circle->setObjectId(DisposableWrapper::generate_short_id());
     return circle;
 }
 
@@ -36,11 +37,11 @@ void FmDbCircle::initialize(float x, float y, float radius) {
     this->m_radius = radius;
 }
 
-Geometry::Point3d FmDbCircle::GetCenter() const {
+Geometry::FmGePoint3d FmDbCircle::GetCenter() const {
     return GetPosition();
 }
 
-void FmDbCircle::SetCenter(Geometry::Point3d center) {
+void FmDbCircle::SetCenter(Geometry::FmGePoint3d center) {
     SetPosition(center.x, center.y);
 }
 
@@ -56,7 +57,7 @@ float FmDbCircle::getRadius() const {
 
 HRESULT FmDbCircle::draw(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget) {
     renderTarget->BeginDraw();
-    renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+    // renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
     renderTarget->DrawEllipse(
         D2D1::Ellipse(D2D1::Point2F(GetCenter().x, GetCenter().y), getRadius(), getRadius()),
         GetBrush(),

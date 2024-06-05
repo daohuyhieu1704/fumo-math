@@ -107,9 +107,23 @@ namespace FumoUI.Presenters
             }
         }
 
-        private void DrawCircle_Click(object sender, RoutedEventArgs e)
+        private void Undo_Click(object sender, RoutedEventArgs e)
         {
-            CommandAction(model => model.DrawCircle());
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CircleMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is not TopPanelViewModel viewModel)
+            {
+                return;
+            }
+            CommandAction(model => { viewModel.SetMode(1); });
+
         }
     }
 }

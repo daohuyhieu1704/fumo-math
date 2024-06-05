@@ -52,28 +52,22 @@ namespace FumoUI.ViewModels.TopPanel
 
         public TopPanelViewModel()
         {
+            TransactionWrapper transactionWrapper = new TransactionWrapper();
             CancelCmd = new RelayCommand<Window>((p) => { return p != null; }, (p) => { p.Close(); });
-
             FileItems = new ObservableCollection<string>();
 
-            if (FileItems.Count > 0)
-            {
-                FileSelected = FileItems[0];
-            }
-
-            _databaseInterop = new DatabaseInterop();
+            _databaseInterop = RendererWrapper.Instance.CurDoc;
 
             CloseTabCommand = new RelayCommand<string>((fileName) => true, (fileName) => CloseTab(fileName));
-        }
-        public void DrawCircle()
-        {
-            DirectXHost.DrawCircle(100, 200, 50);
+
+            AddNewTab();
+            FileSelected = FileItems[0];
         }
 
         public readonly ICommand CancelCmd;
         public ICommand CloseTabCommand { get; }
 
-        public void AddNewTab(string newTabName)
+        public void AddNewTab(string newTabName = "Untitled")
         {
             FileItems.Add(newTabName);
             FileSelected = newTabName;
@@ -129,6 +123,11 @@ namespace FumoUI.ViewModels.TopPanel
                     FileSelected = FileItems[0];
                 }
             }
+        }
+
+        public void SetMode(int v)
+        {
+            RendererWrapper.Instance.Mode = v;
         }
     }
 }

@@ -2,12 +2,12 @@
 #include "FmDrawable.h"
 
 
-Geometry::Point3d FmDrawable::GetPosition() const
+Geometry::FmGePoint3d FmDrawable::GetPosition() const
 {
 	return position;
 }
 
-void FmDrawable::SetPosition(Geometry::Point3d position)
+void FmDrawable::SetPosition(Geometry::FmGePoint3d position)
 {
 	this->position = position;
 }

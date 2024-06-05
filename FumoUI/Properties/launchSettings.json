@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FumoUI": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

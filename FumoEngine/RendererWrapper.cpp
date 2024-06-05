@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "RendererWrapper.h"
-#include "FmDbCircle.h"
+#include "TransactionWrapper.h"
+#include "Circle.h"
+#include "FmGePoint3d.h"
 
 IntPtr RendererWrapper::CreateRendererWindow(IntPtr parentHandle)
 {
     HINSTANCE hInstance = GetModuleHandle(nullptr);
-    m_hwnd = m_renderer->InitializeWindow(hInstance, SW_SHOW, static_cast<HWND>(parentHandle.ToPointer()));
+    m_hwnd = DirectXRenderer::getInstance()->InitializeWindow(hInstance, SW_SHOW, static_cast<HWND>(parentHandle.ToPointer()));
     return IntPtr(m_hwnd);
 }
 
@@ -17,22 +19,75 @@ void RendererWrapper::DestroyRendererWindow()
     }
 }
 
-void RendererWrapper::DrawCircle(float centerX, float centerY, float radius)
+void RendererWrapper::AddEntity()
 {
-    FmDbCirclePtr circle = FmDbCircle::CreateObject(centerX, centerY, radius);
-	m_renderer->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-	circle->SetBrush(m_renderer->pBrush);
-	circle->SetCenter(Geometry::Point3d(centerX, centerY, 0));
-	circle->draw(m_renderer->deviceContext, m_renderer->pRenderTarget);
+    switch (Mode)
+    {
+    case 1: {
+        auto tr = CurDoc->TransactionManager;
+        tr->StartTransaction();
+        try
+        {
+            Circle^ circle = gcnew Circle(DirectXRenderer::getInstance()->MouseXY[0].x,
+                DirectXRenderer::getInstance()->MouseXY[0].y,
+                40
+            );
+            tr->AddNewlyObject(circle);
+            tr->Commit();
+            break;
+        }
+        catch (const std::exception&)
+        {
+            tr->Abort();
+        }
+        break;
+    }
+    default:
+        break;
+    }
 }
 
-void RendererWrapper::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
+RendererWrapper::RendererWrapper()
 {
-	m_renderer->DrawGrid(cellWidth, cellHeight, numColumns, numRows);
+    DirectXRenderer::getInstance()->SetMode(0);
+}
+
+RendererWrapper^ RendererWrapper::CreateInstance()
+{
+    return gcnew RendererWrapper();
 }
 
 RendererWrapper::~RendererWrapper()
 {
-    delete m_renderer;
     DestroyRendererWindow();
+}
+
+Point3d^ RendererWrapper::CurrentMouse::get()
+{
+    return gcnew Point3d(DirectXRenderer::getInstance()->MouseXY.back().x,
+        DirectXRenderer::getInstance()->MouseXY.back().y,
+        DirectXRenderer::getInstance()->MouseXY.back().z);
+}
+
+DatabaseInterop^ RendererWrapper::CurDoc::get()
+{
+    return gcnew DatabaseInterop();
+}
+
+RendererWrapper^ RendererWrapper::Instance::get()
+{
+    if (instance == nullptr) {
+        instance = gcnew RendererWrapper();
+    }
+    return instance;
+}
+
+int RendererWrapper::Mode::get()
+{
+    return DirectXRenderer::getInstance()->GetMode();
+}
+
+void RendererWrapper::Mode::set(int value)
+{
+    DirectXRenderer::getInstance()->SetMode(value);
 }

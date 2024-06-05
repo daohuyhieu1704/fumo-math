@@ -2,6 +2,7 @@
 #include "DisposableWrapper.h"
 #include "DataTableRecord.h"
 #include "Database.h" 
+#include <deque>
 
 namespace DatabaseServices 
 {
@@ -13,14 +14,20 @@ namespace DatabaseServices
     private:
         bool transactionActive;
         FmDatabasePtr m_Doc;
-        std::map<std::string, std::unique_ptr<FmObject>> newlyAddedObjects;
+        std::map<std::string, FmObject*> newlyAddedObjects;
+        bool isUndoRedoInProgress = false;
+        std::deque<FmObject*> undoneObjects;
+        ID3D11DeviceContext* context = nullptr;
+        ID2D1HwndRenderTarget* renderTarget = nullptr;
     public:
         FmTransaction(FmDatabasePtr parentDoc) : transactionActive(false), m_Doc(parentDoc) {}
-        void StartTransaction();
-        void AddNewlyObject(const std::string& id, std::unique_ptr<FmObject> obj);
+        void StartTransaction(ID3D11DeviceContext* context, ID2D1HwndRenderTarget* renderTarget);
+        void AddNewlyObject(const std::string& id, FmObject* obj);
         void Abort();
         void Commit();
+        void Undo();
+        void Redo();
     };
 
-    typedef std::unique_ptr<FmTransaction> FmTransactionPtr;
+    typedef std::shared_ptr<FmTransaction> FmTransactionPtr;
 }
