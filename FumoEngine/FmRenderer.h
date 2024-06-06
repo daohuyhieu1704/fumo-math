@@ -24,6 +24,12 @@ namespace FumoWrapper
                 return m_instance;
             }
         }
+
+        property String^ CurrDbName 
+        {
+            String^ get();
+        }
+
         IntPtr CreateRendererWindow(IntPtr parentHandle);
         void DestroyRendererWindow();
         void DrawCircle(float centerX, float centerY, float radius);

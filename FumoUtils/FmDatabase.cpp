@@ -2,11 +2,22 @@
 #include "FmDatabase.h"
 
 namespace DatabaseServices {
+    std::string FmDatabase::GetName() const {
+        return m_name;
+    };
 
+    void FmDatabase::SetName(const std::string& name) {
+        m_name = name;
+    };
     FmDatabase::FmDatabase()
         : TransactionManager(std::make_unique<FmTransaction>(FmDatabasePtr(this, [](FmDatabase*) {})))
         , m_ObjectRecords(std::make_unique<DataTableRecord>())
     {}
+
+    FmDatabasePtr FmDatabase::CreateObject()
+    {
+        return std::make_shared<FmDatabase>();
+    }
 
     void FmDatabase::AppendObject(std::unique_ptr<FmObjectBase> obj) {
         m_ObjectRecords->AddObject(std::move(obj));

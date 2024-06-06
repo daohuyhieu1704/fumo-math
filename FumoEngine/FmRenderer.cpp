@@ -44,4 +44,9 @@ namespace FumoWrapper
         delete GetNativePointer();
         DestroyRendererWindow();
     }
+
+    String^ FmRenderer::CurrDbName::get()
+    {
+        return gcnew String(GetNativePointer()->GetInstance()->CurDoc()->GetName().c_str());
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using FumoUI.Utils;
+using FumoWrapper;
 using FumoWrapper.DbServices;
 using System;
 using System.Collections.Generic;
@@ -55,13 +56,8 @@ namespace FumoUI.ViewModels.TopPanel
         {
             CancelCmd = new RelayCommand<Window>((p) => { return p != null; }, (p) => { p.Close(); });
             FileItems = new ObservableCollection<string>();
-
-            _databaseInterop = new Db();
-
             CloseTabCommand = new RelayCommand<string>((fileName) => true, (fileName) => CloseTab(fileName));
-
-            AddNewTab();
-            FileSelected = FileItems[0];
+            FileItems.Add(FmRenderer.Instance.CurrDbName);
         }
 
         public readonly ICommand CancelCmd;

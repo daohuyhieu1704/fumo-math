@@ -14,13 +14,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-        </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
             <Button
                 Style="{StaticResource CustomButtonStyle}"
                 Content="New"
@@ -37,30 +32,33 @@
                 Click="Save_Click" />
             <GridSplitter Width="1" IsEnabled="False" Height="20" />
         </StackPanel>
-        <TabControl 
-            Background="Transparent" 
-            Grid.Row="1" 
-            ItemsSource="{Binding FileItems}" 
-            SelectedItem="{Binding FileSelected}" 
-            Height="20" 
-            Visibility="{Binding FileItems, Converter={StaticResource FileItemToVis}}"
-            >
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Background="Transparent">
-                        <TextBlock Text="{Binding}" VerticalAlignment="Center" Foreground="White" Background="Transparent" />
-                        <Button
-                            Style="{StaticResource CustomButtonStyle}"
-                            Background="Transparent"
-                            Content="x"
-                            Width="20"
-                            Height="20"
-                            Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=TabControl}}"
-                            CommandParameter="{Binding}" />
-                    </StackPanel>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-        </TabControl>
-    </Grid>
+        <TabControl
+                Background="Transparent" 
+                ItemsSource="{Binding FileItems}" 
+                SelectedItem="{Binding FileSelected}" 
+                Height="20" 
+                Visibility="{Binding FileItems, Converter={StaticResource FileItemToVis}}"
+                >
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                    <Border BorderBrush="White" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal" Background="Transparent" Width="60">
+                            <TextBlock Text="{Binding}" VerticalAlignment="Center" Foreground="White" Background="Transparent" />
+                            <Button
+                                Background="Transparent"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Content="x"
+                                Width="20"
+                                Height="20"
+                                Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=TabControl}}"
+                                CommandParameter="{Binding}" />
+                        </StackPanel>
+                    </Border>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+            </TabControl>
+        <Separator Height="1" Foreground="White" />
+    </StackPanel>
 </UserControl>
 
