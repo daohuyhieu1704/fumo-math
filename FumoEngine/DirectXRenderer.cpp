@@ -16,14 +16,30 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     switch (uMsg) {
     case WM_LBUTTONDOWN:
     {
-        int xPos = GET_X_LPARAM(lParam);
-        int yPos = GET_Y_LPARAM(lParam);
-        m_instance->m_mouse_fp.push_back(FmGePoint2d(static_cast<float>(xPos), static_cast<float>(yPos)));
-        if (m_instance->m_mouse_fp.size() > 0)
+        POINT pt;
+        if (GetInstance()->pRenderTarget != nullptr && GetCursorPos(&pt))
         {
-            PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
+            DirectXRenderer* ins = GetInstance();
+            ScreenToClient(hwnd, &pt);
+            int xPos = pt.x * 4 / 5;
+            int yPos = pt.y * 4 / 5;
+            ins->pRenderTarget->BeginDraw();
+            ins->pRenderTarget->DrawLine(
+                D2D1::Point2F(0, 0),
+                D2D1::Point2F(xPos, yPos),
+                ins->pBrush,
+                0.5f
+            );
+            ins->pRenderTarget->EndDraw();
+            ins->pRenderTarget->EndDraw();
+            ins->m_mouse_fp.push_back(FmGePoint2d(static_cast<float>(xPos), static_cast<float>(yPos)));
+            if (ins->m_mouse_fp.size() > 0)
+            {
+                PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
+            }
+            return 0;
         }
-        return 0;
+        break;
     }
     case WM_DESTROY:
         PostQuitMessage(0);

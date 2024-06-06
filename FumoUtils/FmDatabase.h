@@ -23,7 +23,7 @@ namespace DatabaseServices {
         void SetName(const std::string& name);
 #pragma endregion
         static FmDatabasePtr CreateObject();
-        void AppendObject(std::unique_ptr<FmObjectBase> obj);
+        void AppendObject(std::shared_ptr<FmObjectBase> obj);
         void SaveToJson(const std::string& filename);
         FmTransactionPtr TransactionManager;
         FmObjectBase* Clone() const override;

@@ -7,14 +7,17 @@ using namespace DatabaseServices;
 
 class DirectXRenderer
 {
+private:
     static DirectXRenderer* m_instance;
     std::vector<FmDatabasePtr> m_dbs;
     std::vector<FmGePoint2d> m_mouse_fp;
     unsigned int m_curDocIndex;
+    HWND m_directWindow;
+    HWND m_parent;
     DirectXRenderer()
     {
         FmDatabasePtr newDb = FmDatabase::CreateObject();
-        newDb->SetName("Minxu");
+        newDb->SetName("No_name");
         m_dbs.push_back(newDb);
         m_curDocIndex = 0;
     }

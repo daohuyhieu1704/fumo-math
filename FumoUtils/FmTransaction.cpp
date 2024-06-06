@@ -12,14 +12,14 @@ namespace DatabaseServices {
         m_newlyAddedObjects.clear();
     }
 
-    void FmTransaction::AddNewlyObject(const std::string& id, std::unique_ptr<FmObjectBase> obj) {
+    void FmTransaction::AddNewlyObject(const std::string& id, std::shared_ptr<FmObjectBase> obj) {
         if (!m_transactionActive) {
             throw std::runtime_error("No active transaction");
         }
         if (m_newlyAddedObjects.find(id) != m_newlyAddedObjects.end()) {
             throw std::runtime_error("Object with the given ID already exists");
         }
-        m_newlyAddedObjects[id] = std::move(obj);
+        m_newlyAddedObjects[id] = obj;
     }
 
     void FmTransaction::Abort() {
@@ -35,7 +35,7 @@ namespace DatabaseServices {
             throw std::runtime_error("No active transaction to commit");
         }
         for (auto& pair : m_newlyAddedObjects) {
-            m_Doc.get()->AppendObject(std::move(pair.second));
+            m_Doc.get()->AppendObject(pair.second);
         }
         m_newlyAddedObjects.clear();
         m_transactionActive = false;
@@ -48,7 +48,7 @@ namespace DatabaseServices {
         m_isUndoRedoInProgress = true;
 
         auto lastAdded = m_newlyAddedObjects.rbegin();
-        m_undoneObjects.push_back(std::move(lastAdded->second));
+        m_undoneObjects.push_back(lastAdded->second);
         m_newlyAddedObjects.erase(lastAdded->first);
 
         m_isUndoRedoInProgress = false;

@@ -5,13 +5,13 @@
 
 class DataTableRecord : public FmObjectBase {
 private:
-    std::map<std::string, std::unique_ptr<FmObjectBase>> m_objects;
+    std::map<std::string, std::shared_ptr<FmObjectBase>> m_objects;
 public:
 #pragma region Properties
     std::vector<std::shared_ptr<FmObjectBase>> GetObjects() const;
 #pragma endregion
 
-    void AddObject(std::unique_ptr<FmObjectBase> obj);
+    void AddObject(std::shared_ptr<FmObjectBase> obj);
 
     bool GetObjectById(const std::string& id, std::shared_ptr<FmObjectBase>& obj);
 

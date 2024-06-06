@@ -10,10 +10,10 @@ std::vector<std::shared_ptr<FmObjectBase>> DataTableRecord::GetObjects() const
     return objects;
 }
 
-void DataTableRecord::AddObject(std::unique_ptr<FmObjectBase> obj)
+void DataTableRecord::AddObject(std::shared_ptr<FmObjectBase> obj)
 {
     std::string id = obj->GetObjectId();
-    m_objects[id] = std::move(obj);
+    m_objects[id] = obj;
 }
 
 bool DataTableRecord::GetObjectById(const std::string& id, std::shared_ptr<FmObjectBase>& obj) {

@@ -19,8 +19,8 @@ namespace DatabaseServices {
         return std::make_shared<FmDatabase>();
     }
 
-    void FmDatabase::AppendObject(std::unique_ptr<FmObjectBase> obj) {
-        m_ObjectRecords->AddObject(std::move(obj));
+    void FmDatabase::AppendObject(std::shared_ptr<FmObjectBase> obj) {
+        m_ObjectRecords->AddObject(obj);
     }
 
     void FmDatabase::SaveToJson(const std::string& filename) {

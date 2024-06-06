@@ -32,6 +32,9 @@ namespace FumoWrapper
         circle->SetCenter(Geometry::FmGePoint3d(pnt.x, pnt.y, 0));
         circle->Draw(GetNativePointer()->pRenderTarget);
 
+        GetNativePointer()->CurDoc()->TransactionManager->StartTransaction();
+        GetNativePointer()->CurDoc()->TransactionManager->AddNewlyObject(circle->GetObjectId(), circle);
+        GetNativePointer()->CurDoc()->TransactionManager->Commit();
     }
 
     void FmRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
