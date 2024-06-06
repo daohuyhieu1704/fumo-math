@@ -26,7 +26,10 @@ namespace FumoWrapper
         FmDbCirclePtr circle = FmDbCircle::CreateObject(centerX, centerY, radius);
         GetNativePointer()->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
         circle->SetBrush(GetNativePointer()->pBrush);
-        circle->SetCenter(Geometry::FmGePoint3d(centerX, centerY, 0));
+
+        DirectXRenderer* ins = GetNativePointer();
+        Geometry::FmGePoint2d pnt = ins->MouseXY().back();
+        circle->SetCenter(Geometry::FmGePoint3d(pnt.x, pnt.y, 0));
         circle->Draw(GetNativePointer()->pRenderTarget);
 
     }

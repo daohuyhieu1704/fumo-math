@@ -1,17 +1,29 @@
 #include "pch.h"
+#include "windowsx.h"
 #include "DirectXRenderer.h"
 
 using namespace Geometry;
 
 DirectXRenderer* DirectXRenderer::m_instance = nullptr;
 
+std::vector<FmGePoint2d> DirectXRenderer::MouseXY() const
+{
+    return m_mouse_fp;
+}
+
 LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg) {
     case WM_LBUTTONDOWN:
     {
-        PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
-        return 0; // Return 0 if you handle this message.
+        int xPos = GET_X_LPARAM(lParam);
+        int yPos = GET_Y_LPARAM(lParam);
+        m_instance->m_mouse_fp.push_back(FmGePoint2d(static_cast<float>(xPos), static_cast<float>(yPos)));
+        if (m_instance->m_mouse_fp.size() > 0)
+        {
+            PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
+        }
+        return 0;
     }
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -172,6 +184,16 @@ void DirectXRenderer::DiscardDeviceResources()
 		pFactory->Release();
 		pFactory = nullptr;
 	}
+}
+
+FmDatabasePtr DirectXRenderer::CurDoc()
+{
+    if (m_dbs.size() == 0 || m_curDocIndex < 0 || m_curDocIndex >= m_dbs.size())
+    {
+        return nullptr;
+    }
+
+    return m_dbs[m_curDocIndex];
 }
 
 void DirectXRenderer::CreateDeviceResources()
