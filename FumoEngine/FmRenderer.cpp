@@ -30,7 +30,6 @@ namespace FumoWrapper
         DirectXRenderer* ins = GetNativePointer();
         Geometry::FmGePoint2d pnt = ins->MouseXY().back();
         circle->SetCenter(Geometry::FmGePoint3d(pnt.x, pnt.y, 0));
-        circle->Draw(GetNativePointer()->pRenderTarget);
 
         GetNativePointer()->CurDoc()->TransactionManager->StartTransaction();
         GetNativePointer()->CurDoc()->TransactionManager->AddNewlyObject(circle->GetObjectId(), circle);

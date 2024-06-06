@@ -14,7 +14,7 @@ protected:
     ID2D1SolidColorBrush* m_brush;
 
 public:
-    FmDrawable() : m_position(0, 0, 0), m_rotation(0), m_brush(nullptr) {}
+    FmDrawable() : FmObjectBase(), m_position(0, 0, 0), m_rotation(0), m_brush(nullptr) {}
     virtual ~FmDrawable() = default;
 
 #pragma region Properties

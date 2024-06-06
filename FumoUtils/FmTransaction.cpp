@@ -36,6 +36,9 @@ namespace DatabaseServices {
         }
         for (auto& pair : m_newlyAddedObjects) {
             m_Doc.get()->AppendObject(pair.second);
+            FmDrawable* drawable = dynamic_cast<FmDrawable*>(pair.second.get());
+            if (drawable != nullptr) {
+            }
         }
         m_newlyAddedObjects.clear();
         m_transactionActive = false;

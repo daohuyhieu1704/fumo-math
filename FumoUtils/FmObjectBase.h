@@ -8,13 +8,14 @@ class FmObjectBase {
 private:
     std::string m_objectId;
 public:
-    FmObjectBase() {}
+    FmObjectBase() : m_objectId(GenerateShortId()) {}
     virtual ~FmObjectBase() {}
 
 #pragma region Properties
     std::string GetObjectId() const;
     void SetObjectId(const std::string& objectId);
 #pragma endregion
+    static std::string GenerateShortId();
     virtual FmObjectBase* Clone() const = 0;
 };
 
