@@ -10,7 +10,7 @@ class FmDbEntity : public FmDbObject
 private:
     FmGeExtend2d m_boundary;
 public:
-    FmDbEntity() : m_boundary(FmGeExtend2d(FmGePoint2d({ 0,0 }), FmGePoint2d({ 0,0 }))){}
+    FmDbEntity() : FmDbObject(), m_boundary(FmGeExtend2d(FmGePoint2d({ 0,0 }), FmGePoint2d({ 0,0 }))){}
 #pragma region Properties
     FmGeExtend2d GetBoundary() const;
     void SetBoundary(FmGeExtend2d boundary);

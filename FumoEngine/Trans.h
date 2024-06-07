@@ -8,44 +8,44 @@ namespace FumoWrapper {
         public ref class Trans : public ObjectBase
         {
         public:
-            Trans() : ObjectBase(FmRenderer::Instance->GetNativePointer()->CurDoc()->TransactionManager.get()) {}
-            Trans(DatabaseServices::FmTransaction* ptr) : ObjectBase(ptr) {}
+            Trans(IntPtr unmanagedObjPtr, bool autoDelete) : ObjectBase(System::IntPtr(unmanagedObjPtr), autoDelete) {}
+            Trans() : ObjectBase(System::IntPtr(FmRenderer::Instance->GetImpObj()->CurDoc()->TransactionManager.get()), true) {}
 
             void StartTransaction()
             {
-                GetNativePointer()->StartTransaction(FmRenderer::Instance->GetNativePointer()->pRenderTarget);
+                GetImpObj()->StartTransaction(FmRenderer::Instance->GetImpObj()->pRenderTarget);
             }
 
-            void AddNewlyObject(System::String^ id, ObjectBase^ obj)
+            void AddNewlyObject(ObjectBase^ obj)
             {
-                std::string nativeId = msclr::interop::marshal_as<std::string>(id);
-                GetNativePointer()->AddNewlyObject(nativeId, std::shared_ptr<FmObjectBase>(obj->GetNativePointer()));
+                GetImpObj()->AddNewlyObject(std::shared_ptr<FmObjectBase>(obj->GetImpObj()));
             }
 
             void Abort()
             {
-                GetNativePointer()->Abort();
+                GetImpObj()->Abort();
             }
 
             void Commit()
             {
-                GetNativePointer()->Commit();
+                GetImpObj()->Commit();
             }
 
             void Undo()
             {
-                GetNativePointer()->Undo();
+                GetImpObj()->Undo();
             }
 
             void Redo()
             {
-                GetNativePointer()->Redo();
+                GetImpObj()->Redo();
             }
 
         private:
-            DatabaseServices::FmTransaction* GetNativePointer()
+            DatabaseServices::FmTransaction* GetImpObj()
             {
-                return static_cast<DatabaseServices::FmTransaction*>(DisposableWrapper<FmObjectBase>::GetNativePointer());
+                void* obj = DisposableWrapper::GetImpObj();
+                return static_cast<DatabaseServices::FmTransaction*>(obj);
             }
         };
     }

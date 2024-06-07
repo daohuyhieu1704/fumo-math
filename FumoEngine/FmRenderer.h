@@ -6,12 +6,12 @@ using namespace System;
 
 namespace FumoWrapper 
 {
-    public ref class FmRenderer : DisposableWrapper<DirectXRenderer>
+    public ref class FmRenderer : DisposableWrapper
     {
     private:
         HWND m_hwnd;
         static FmRenderer^ m_instance;
-        FmRenderer() : DisposableWrapper(DirectXRenderer::GetInstance()) {}
+        FmRenderer() : DisposableWrapper(System::IntPtr(DirectXRenderer::GetInstance()), true) {}
     public:
         static property FmRenderer^ Instance
         {
@@ -40,6 +40,11 @@ namespace FumoWrapper
         void DrawCircle(float centerX, float centerY, float radius);
         void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
         ~FmRenderer();
+
+        DirectXRenderer* GetImpObj()
+        {
+            return static_cast<DirectXRenderer*>(DisposableWrapper::GetImpObj());
+        };
     };
 }
 

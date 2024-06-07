@@ -9,19 +9,23 @@ namespace FumoWrapper {
     public ref class Circle : public DbEntity
     {
     public:
-        Circle() : DbEntity(FmDbCircle::CreateObject(0,0,0).get()) {}
-        Circle(FmDbCircle* ptr) : DbEntity(ptr) {}
-
-        property Point3d^ Center
+        Circle(IntPtr unmanagedObjPtr, bool autoDelete) : DbEntity(System::IntPtr(unmanagedObjPtr), autoDelete) {}
+        Circle(Point3d center, double radius) 
+            : Circle(System::IntPtr(new FmDbCircle()), true)
         {
-            Point3d^ get()
+            Center = center;
+            Radius = radius;
+        }
+        ~Circle(){}
+        property Point3d Center
+        {
+            Point3d get()
             {
-                Geometry::FmGePoint3d pnt = GetNativePointer()->GetCenter();
-                return gcnew Point3d(pnt.x, pnt.y, pnt.z);
+                return Point3d::FromNative(GetImpObj()->GetCenter());
             }
-            void set(Point3d^ value)
+            void set(Point3d value)
             {
-                GetNativePointer()->SetCenter(*value->GetNativePointer());
+                GetImpObj()->SetCenter(value.ToNative());
             }
         }
 
@@ -29,38 +33,40 @@ namespace FumoWrapper {
         {
             float get()
             {
-                return GetNativePointer()->GetRadius();
+                return GetImpObj()->GetRadius();
             }
             void set(float value)
             {
-                GetNativePointer()->SetRadius(value);
+                GetImpObj()->SetRadius(value);
             }
         }
 
         void Draw(IntPtr renderTarget)
         {
-            GetNativePointer()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
+            GetImpObj()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
         }
 
-        Circle^ Clone()
+        ObjectBase^ Clone() override
         {
-            return gcnew Circle(dynamic_cast<FmDbCircle*>(GetNativePointer()->Clone()));
+            return gcnew ObjectBase(System::IntPtr(GetImpObj()->Clone()), true);
         }
 
         property System::String^ Json
         {
             System::String^ get()
             {
-                nlohmann::json json = GetNativePointer()->ToJson();
+                nlohmann::json json = GetImpObj()->ToJson();
                 std::string jsonString = json.dump();
                 return gcnew System::String(jsonString.c_str());
             }
         }
 
     private:
-        FmDbCircle* GetNativePointer()
+        FmDbCircle* GetImpObj()
         {
-            return static_cast<FmDbCircle*>(DisposableWrapper<FmObjectBase>::GetNativePointer());
+            void* obj = ObjectBase::GetImpObj();
+            FmDbCircle* circle = static_cast<FmDbCircle*>(obj);
+            return circle;
         }
     };
 }

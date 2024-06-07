@@ -1,5 +1,5 @@
 #pragma once
-#include "ObjectBase.h"
+#include "DbObject.h"
 #include "FmDbEntity.h"
 #include "Point2d.h"
 #include "Extend2d.h"
@@ -8,30 +8,32 @@
 namespace FumoWrapper {
     using namespace Geo;
 
-    public ref class DbEntity : public ObjectBase
+    public ref class DbEntity : public DbObject
     {
     public:
-        DbEntity(FmDbEntity* ptr) : ObjectBase(ptr) {}
-
-        property Extend2d^ Boundary
+        DbEntity(IntPtr unmanagedObjPtr, bool autoDelete) : DbObject(System::IntPtr(unmanagedObjPtr), autoDelete) {}
+        ~DbEntity(){}
+        property Extend2d Boundary
         {
-            Extend2d^ get()
+            Extend2d get()
             {
-                Geometry::FmGeExtend2d ext = GetNativePointer()->GetBoundary();
-                Geometry::FmGePoint2d extMin = ext.GetMinPnt();
-                Geometry::FmGePoint2d extMax = ext.GetMaxPnt();
-                return gcnew Extend2d(gcnew Point2d(extMin.x, extMin.y), gcnew Point2d(extMax.x, extMax.y));
+                return Extend2d::FromNative(GetImpObj()->GetBoundary());
             }
-            void set(Extend2d^ value)
+            void set(Extend2d value)
             {
-                GetNativePointer()->SetBoundary(*value->GetNativePointer());
+                GetImpObj()->SetBoundary(value.ToNative());
             }
         }
 
     private:
-        FmDbEntity* GetNativePointer()
+        FmDbEntity* GetImpObj()
         {
-            return static_cast<FmDbEntity*>(DisposableWrapper<FmObjectBase>::GetNativePointer());
+            void* obj = DisposableWrapper::GetImpObj();
+            FmObjectBase* objBase = static_cast<FmObjectBase*>(obj);
+            FmDrawable* objDrawable = static_cast<FmDrawable*>(objBase);
+            FmDbObject* objDb = static_cast<FmDbObject*>(objDrawable);
+            FmDbEntity* objEntity = static_cast<FmDbEntity*>(objDb);
+            return objEntity;
         }
     };
 }

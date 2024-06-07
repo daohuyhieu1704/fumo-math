@@ -5,47 +5,50 @@ namespace FumoWrapper
 {
     float Drawable::PositionX::get()
     {
-        return GetNativePointer()->GetPosition().x;
+        return GetImpObj()->GetPosition().x;
     }
     
     void Drawable::PositionX::set(float value)
     {
-        GetNativePointer()->SetPosition(value, GetNativePointer()->GetPosition().y);
+        GetImpObj()->SetPosition(value, GetImpObj()->GetPosition().y);
     }
     
     void Drawable::Draw(IntPtr renderTarget)
     {
-        GetNativePointer()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
+        GetImpObj()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
     }
 
-    FmDrawable* Drawable::GetNativePointer()
+    FmDrawable* Drawable::GetImpObj()
     {
-        return static_cast<FmDrawable*>(DisposableWrapper<FmObjectBase>::GetNativePointer());
+        void* obj = DisposableWrapper::GetImpObj();
+        FmObjectBase* objBase = static_cast<FmObjectBase*>(obj);
+        FmDrawable* objDrawable = static_cast<FmDrawable*>(objBase);
+        return objDrawable;
     }
     
     float Drawable::PositionY::get()
     {
-        return GetNativePointer()->GetPosition().y;
+        return GetImpObj()->GetPosition().y;
     }
     
     void Drawable::PositionY::set(float value)
     {
-        GetNativePointer()->SetPosition(GetNativePointer()->GetPosition().x, value);
+        GetImpObj()->SetPosition(GetImpObj()->GetPosition().x, value);
     }
     float Drawable::Rotation::get()
     {
-        return GetNativePointer()->GetRotation();
+        return GetImpObj()->GetRotation();
     }
     void Drawable::Rotation::set(float value)
     {
-        GetNativePointer()->SetRotation(value);
+        GetImpObj()->SetRotation(value);
     }
     IntPtr Drawable::Brush::get()
     {
-        return IntPtr(GetNativePointer()->GetBrush());
+        return IntPtr(GetImpObj()->GetBrush());
     }
     void Drawable::Brush::set(IntPtr value)
     {
-        GetNativePointer()->SetBrush(static_cast<ID2D1SolidColorBrush*>(value.ToPointer()));
+        GetImpObj()->SetBrush(static_cast<ID2D1SolidColorBrush*>(value.ToPointer()));
     }
 }

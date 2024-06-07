@@ -9,21 +9,22 @@ namespace FumoWrapper {
         public ref class Dtr : public ObjectBase
         {
         public:
-            Dtr() : ObjectBase(new DataTableRecord()) {}
+            Dtr(IntPtr unmanagedObjPtr, bool autoDelete) : ObjectBase(System::IntPtr(unmanagedObjPtr), autoDelete) {}
+            Dtr() : ObjectBase(System::IntPtr(new DataTableRecord()), true) {}
 
             void AddObject(ObjectBase^ obj)
             {
-                GetNativePointer()->AddObject(std::unique_ptr<FmObjectBase>(obj->GetNativePointer()));
+                GetImpObj()->AddObject(std::unique_ptr<FmObjectBase>(obj->GetImpObj()));
             }
 
             bool GetObjectById(System::String^ id, ObjectBase^% obj)
             {
                 std::string nativeId = msclr::interop::marshal_as<std::string>(id);
                 std::shared_ptr<FmObjectBase> nativeObj;
-                bool result = GetNativePointer()->GetObjectById(nativeId, nativeObj);
+                bool result = GetImpObj()->GetObjectById(nativeId, nativeObj);
                 if (result)
                 {
-                    obj = gcnew ObjectBase(nativeObj.get());
+                    obj = gcnew ObjectBase(System::IntPtr(nativeObj.get()), true);
                 }
                 return result;
             }
@@ -32,11 +33,11 @@ namespace FumoWrapper {
             {
                 List<ObjectBase^>^ get()
                 {
-                    auto objects = GetNativePointer()->GetObjects();
-                    List<ObjectBase^>^ list = gcnew List<ObjectBase^>();
+                    auto objects = GetImpObj()->GetObjects();
+                    List<ObjectBase^>^ list = gcnew List<ObjectBase^>(objects.size());
                     for (const auto& obj : objects)
                     {
-                        list->Add(gcnew ObjectBase(obj.get()));
+                        list->Add(gcnew ObjectBase(System::IntPtr(obj.get()), true));
                     }
                     return list;
                 }
@@ -46,16 +47,16 @@ namespace FumoWrapper {
             {
                 System::String^ get()
                 {
-                    nlohmann::json json = GetNativePointer()->ToJson();
+                    nlohmann::json json = GetImpObj()->ToJson();
                     std::string jsonString = json.dump();
                     return gcnew System::String(jsonString.c_str());
                 }
             }
 
         private:
-            DataTableRecord* GetNativePointer()
+            DataTableRecord* GetImpObj()
             {
-                return static_cast<DataTableRecord*>(DisposableWrapper<FmObjectBase>::GetNativePointer());
+                return static_cast<DataTableRecord*>(ObjectBase::GetImpObj());
             }
         };
     }

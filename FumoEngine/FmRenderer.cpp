@@ -12,58 +12,52 @@ namespace FumoWrapper
 
     void FmRenderer::AddEntity()
     {
-        DirectXRenderer* ins = GetNativePointer();
+        DirectXRenderer* ins = GetImpObj();
         std::vector<Geometry::FmGePoint2d> pntList = ins->MouseXY();
         if (pntList.size() < 2) {
             return;
         }
-        //Trans^ trans = gcnew Trans();
-        //trans->StartTransaction();
+        Trans^ trans = gcnew Trans();
+        trans->StartTransaction();
         switch (Mode)
         {
         case 1: {
             try
             {
-                DrawCircle(10, 10, 50);
-                //Circle^ circle = gcnew Circle();
-                //Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
-                //Geometry::FmGePoint2d pnt2 = pntList.back();
-                //circle->Center->X = pntList[pntList.size() - 2].x;
-                //circle->Center->Y = pntList[pntList.size() - 2].y;
-                //// Point3d^ p2 = gcnew Point3d(pntList.back().x, pntList.back().y, 0);
-                //circle->Radius = 50;
-                //// p2->Dispose();
-                //trans->AddNewlyObject(circle->ObjectId, circle);
-                //trans->Commit();
+                // DrawCircle(10, 10, 50);
+                Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
+                Geometry::FmGePoint2d pnt2 = pntList.back();
+                Point3d center = Point3d(pnt1.x, pnt1.y, 0);
+                Point3d boundPnt = Point3d(pnt2.x, pnt2.y, 0);
+                Circle^ circle = gcnew Circle(center, center.DistanceTo(boundPnt));
+                trans->AddNewlyObject(circle);
+                trans->Commit();
                 break;
             }
             catch (const std::exception&)
             {
-                //trans->Abort();
+                trans->Abort();
             }
             break;
         }
         case 2: {
-            //Trans^ trans = gcnew Trans();
-            //try
-            //{
-            //    Line^ line = gcnew Line();
+            try
+            {
+                DirectXRenderer* ins = GetImpObj();
+                Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
+                Geometry::FmGePoint2d pnt2 = pntList.back();
+                Point3d StartPnt = Point3d(pnt1.x, pnt1.y, 0);
+                Point3d EndPnt = Point3d(pnt2.x, pnt2.y, 0);
 
-            //    DirectXRenderer* ins = GetNativePointer();
-            //    Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
-            //    Geometry::FmGePoint2d pnt2 = pntList.back();
-            //    line->StartPnt = gcnew Point3d(pnt1.x, pnt1.y, 0);
-            //    line->EndPnt = gcnew Point3d(pnt2.x, pnt2.y, 0);
-            //    line->Draw(IntPtr(GetNativePointer()->pRenderTarget));
-
-            //    trans->AddNewlyObject(line->ObjectId, line);
-            //    trans->Commit();
-            //    break;
-            //}
-            //catch (const std::exception&)
-            //{
-            //    trans->Abort();
-            //}
+                Line^ line = gcnew Line(StartPnt, EndPnt);
+                trans->AddNewlyObject(line);
+                trans->Commit();
+                break;
+            }
+            catch (const std::exception&)
+            {
+                trans->Abort();
+            }
             break;
         }
         default:
@@ -73,7 +67,7 @@ namespace FumoWrapper
     IntPtr FmRenderer::CreateRendererWindow(IntPtr parentHandle)
     {
         HINSTANCE hInstance = GetModuleHandle(nullptr);
-        m_hwnd = GetNativePointer()->InitializeWindow(hInstance, SW_SHOW, static_cast<HWND>(parentHandle.ToPointer()));
+        m_hwnd = GetImpObj()->InitializeWindow(hInstance, SW_SHOW, static_cast<HWND>(parentHandle.ToPointer()));
         return IntPtr(m_hwnd);
     }
 
@@ -87,43 +81,43 @@ namespace FumoWrapper
 
     void FmRenderer::DrawCircle(float centerX, float centerY, float radius)
     {
-        FmDbCirclePtr circle = FmDbCircle::CreateObject(centerX, centerY, radius);
-        GetNativePointer()->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-        circle->SetBrush(GetNativePointer()->pBrush);
+        FmDbCirclePtr circle = FmDbCircle::CreateObject();
+        GetImpObj()->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+        circle->SetBrush(GetImpObj()->pBrush);
 
-        DirectXRenderer* ins = GetNativePointer();
+        DirectXRenderer* ins = GetImpObj();
         Geometry::FmGePoint2d pnt = ins->MouseXY().back();
         circle->SetCenter(Geometry::FmGePoint3d(pnt.x, pnt.y, 0));
 
-        //circle->Draw(GetNativePointer()->pRenderTarget);
-        GetNativePointer()->CurDoc()->TransactionManager->StartTransaction(GetNativePointer()->pRenderTarget);
-        GetNativePointer()->CurDoc()->TransactionManager->AddNewlyObject(circle->GetObjectId(), circle);
-        GetNativePointer()->CurDoc()->TransactionManager->Commit();
+        //circle->Draw(GetImpObj()->pRenderTarget);
+        GetImpObj()->CurDoc()->TransactionManager->StartTransaction(GetImpObj()->pRenderTarget);
+        GetImpObj()->CurDoc()->TransactionManager->AddNewlyObject(circle);
+        GetImpObj()->CurDoc()->TransactionManager->Commit();
     }
 
     void FmRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
     {
-        GetNativePointer()->DrawGrid(cellWidth, cellHeight, numColumns, numRows);
+        GetImpObj()->DrawGrid(cellWidth, cellHeight, numColumns, numRows);
     }
 
     FmRenderer::~FmRenderer()
     {
-        delete GetNativePointer();
+        delete GetImpObj();
         DestroyRendererWindow();
     }
 
     String^ FmRenderer::CurrDbName::get()
     {
-        return gcnew String(GetNativePointer()->GetInstance()->CurDoc()->GetName().c_str());
+        return gcnew String(GetImpObj()->GetInstance()->CurDoc()->GetName().c_str());
     }
 
     int FmRenderer::Mode::get()
     {
-        return GetNativePointer()->GetInstance()->GetMode();
+        return GetImpObj()->GetInstance()->GetMode();
     }
 
     void FmRenderer::Mode::set(int value)
     {
-        return GetNativePointer()->GetInstance()->SetMode(value);
+        return GetImpObj()->GetInstance()->SetMode(value);
     }
 }

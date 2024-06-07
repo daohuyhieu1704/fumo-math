@@ -1,34 +1,35 @@
 #pragma once
 
 using namespace System;
-using namespace System::Runtime::InteropServices;
 
 namespace FumoWrapper
 {
-	template <typename T>
-	public ref class DisposableWrapper : IDisposable
-	{
-	private:
-		T* nativePtr;
-	public:
-		DisposableWrapper(T* ptr) : nativePtr(ptr)
-		{
-		}
+    public ref class DisposableWrapper abstract : IDisposable
+    {
+    private:
+        bool autoDelete;
+        IntPtr UnmanagedObject;
+    public:
+        DisposableWrapper(System::IntPtr UnmanagedObject, bool autoDelete)
+            : UnmanagedObject(System::IntPtr(UnmanagedObject)), autoDelete(autoDelete) {};
 
-		!DisposableWrapper()
-		{
-			delete nativePtr;
-			nativePtr = nullptr;
-		}
+        !DisposableWrapper()
+        {
+            if (autoDelete && UnmanagedObject != IntPtr::Zero)
+            {
+                delete UnmanagedObject.ToPointer();
+                UnmanagedObject = IntPtr::Zero;
+            }
+        }
 
-		virtual ~DisposableWrapper()
-		{
-			this->!DisposableWrapper();
-		}
+        virtual ~DisposableWrapper()
+        {
+            this->!DisposableWrapper();
+        }
 
-		T* GetNativePointer()
-		{
-			return nativePtr;
-		}
-	};
+        void* GetImpObj()
+        {
+            return UnmanagedObject.ToPointer();
+        };
+    };
 }

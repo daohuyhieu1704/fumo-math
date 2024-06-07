@@ -15,14 +15,17 @@ namespace DatabaseServices {
         m_renderTarget = renderTarget;
     }
 
-    void FmTransaction::AddNewlyObject(const std::string& id, std::shared_ptr<FmObjectBase> obj) {
+    void FmTransaction::AddNewlyObject(std::shared_ptr<FmObjectBase> obj) {
         if (!m_transactionActive) {
             throw std::runtime_error("No active transaction");
         }
-        if (m_newlyAddedObjects.find(id) != m_newlyAddedObjects.end()) {
+        if (obj == nullptr) {
+            return;
+        }
+        if (m_newlyAddedObjects.find(obj.get()->GetObjectId()) != m_newlyAddedObjects.end()) {
             throw std::runtime_error("Object with the given ID already exists");
         }
-        m_newlyAddedObjects[id] = obj;
+        m_newlyAddedObjects[obj->GetObjectId()] = obj;
     }
 
     void FmTransaction::Abort() {

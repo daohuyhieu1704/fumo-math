@@ -3,12 +3,16 @@
 
 System::String^ FumoWrapper::DbObject::Json::get()
 {
-    nlohmann::json json = GetNativePointer()->ToJson();
+    nlohmann::json json = GetImpObj()->ToJson();
     std::string jsonString = json.dump();
     return gcnew System::String(jsonString.c_str());
 }
 
-FmDbObject* FumoWrapper::DbObject::GetNativePointer()
+FmDbObject* FumoWrapper::DbObject::GetImpObj()
 {
-    return static_cast<FmDbObject*>(DisposableWrapper<FmObjectBase>::GetNativePointer());
+    void* obj = DisposableWrapper::GetImpObj();
+    FmObjectBase* objBase = static_cast<FmObjectBase*>(obj);
+    FmDrawable* objDrawable = static_cast<FmDrawable*>(objBase);
+    FmDbObject* objDb = static_cast<FmDbObject*>(objDrawable);
+    return objDb;
 }

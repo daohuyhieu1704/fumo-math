@@ -1,29 +1,30 @@
 #pragma once
-#include "DisposableWrapper.h"
 #include "FmGePoint2d.h"
 
 using namespace Geometry;
 
 namespace FumoWrapper
 {
-	namespace Geo
-	{
-		public ref class Point2d : public DisposableWrapper<FmGePoint2d>
-		{
+    namespace Geo
+    {
+        public value class Point2d
+        {
+        private:
+            float x;
+            float y;
+
         public:
-            Point2d() : DisposableWrapper(new FmGePoint2d()) {}
-            Point2d(FmGePoint2d* pnt) : DisposableWrapper(pnt) {}
-            Point2d(float x, float y) : DisposableWrapper(new FmGePoint2d(x, y)) {}
+            Point2d(float x, float y) : x(x), y(y) {}
 
             property float X
             {
                 float get()
                 {
-                    return GetNativePointer()->x;
+                    return x;
                 }
                 void set(float value)
                 {
-                    GetNativePointer()->x = value;
+                    x = value;
                 }
             }
 
@@ -31,13 +32,23 @@ namespace FumoWrapper
             {
                 float get()
                 {
-                    return GetNativePointer()->y;
+                    return y;
                 }
                 void set(float value)
                 {
-                    GetNativePointer()->y = value;
+                    y = value;
                 }
             }
-		};
-	}
+
+            FmGePoint2d ToNative()
+            {
+                return FmGePoint2d(x, y);
+            }
+
+            static Point2d FromNative(FmGePoint2d point)
+            {
+                return Point2d(point.x, point.y);
+            }
+        };
+    }
 }

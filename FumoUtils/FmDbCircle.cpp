@@ -27,15 +27,12 @@ namespace {
     static CircleRegistrar circleRegistrar;
 }
 
-FmDbCirclePtr FmDbCircle::CreateObject(float x, float y, float radius) {
+FmDbCirclePtr FmDbCircle::CreateObject() {
     auto circle = FmDbCircleFactory::GetCircle();
-    circle->Initialize(x, y, radius);
     return circle;
 }
 
-void FmDbCircle::Initialize(float x, float y, float radius) {
-    SetPosition({ x, y, 0 });
-    this->m_radius = radius;
+void FmDbCircle::Initialize() {
 }
 
 FmGePoint3d FmDbCircle::GetCenter() const {
@@ -46,7 +43,7 @@ void FmDbCircle::SetCenter(FmGePoint3d center) {
     SetPosition(center.x, center.y);
 }
 
-FmDbCircle::FmDbCircle() : m_radius(0) {}
+FmDbCircle::FmDbCircle() : FmDbEntity() , m_radius(0) {}
 
 void FmDbCircle::SetRadius(float r) {
     m_radius = r;
@@ -68,7 +65,10 @@ HRESULT FmDbCircle::Draw(ID2D1HwndRenderTarget* renderTarget) {
 }
 
 FmObjectBase* FmDbCircle::Clone() const {
-    return FmDbCircle::CreateObject(GetPosition().x, GetPosition().y, m_radius).get();
+    FmDbCirclePtr circleClone = FmDbCircle::CreateObject();
+    circleClone->SetCenter(this->GetCenter());
+    circleClone->SetRadius(this->GetRadius());
+    return circleClone.get();
 }
 
 nlohmann::json FmDbCircle::ToJson() const {

@@ -19,9 +19,9 @@ namespace DatabaseServices
         std::deque<std::shared_ptr<FmObjectBase>> m_undoneObjects;
         ID2D1HwndRenderTarget* m_renderTarget;
     public:
-        FmTransaction(FmDatabasePtr parentDoc) : m_transactionActive(false), m_Doc(parentDoc) {}
+        FmTransaction(FmDatabasePtr parentDoc) : FmObjectBase(), m_transactionActive(false), m_Doc(parentDoc), m_renderTarget(nullptr) {}
         void StartTransaction(ID2D1HwndRenderTarget* renderTarget);
-        void AddNewlyObject(const std::string& id, std::shared_ptr<FmObjectBase> obj);
+        void AddNewlyObject(std::shared_ptr<FmObjectBase> obj);
         void Abort();
         void Commit();
         void Undo();

@@ -12,11 +12,6 @@ std::string FmObjectBase::GetObjectId() const
 	return m_objectId;
 }
 
-void FmObjectBase::SetObjectId(const std::string& objectId)
-{
-    m_objectId = objectId;
-}
-
 std::string FmObjectBase::GenerateShortId()
 {
     std::time_t t = std::time(nullptr);
@@ -39,7 +34,7 @@ ObjectBaseFactory& ObjectBaseFactory::Instance()
     return factory;
 }
 
-std::unique_ptr<FmObjectBase> ObjectBaseFactory::CreateObject(const std::string& type) const
+std::shared_ptr<FmObjectBase> ObjectBaseFactory::CreateObject(const std::string& type) const
 {
     auto it = creators.find(type);
     if (it != creators.end()) {

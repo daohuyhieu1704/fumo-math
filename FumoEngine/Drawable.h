@@ -6,8 +6,10 @@ namespace FumoWrapper {
     public ref class Drawable : public ObjectBase
     {
     public:
-        Drawable(FmDrawable* ptr) : ObjectBase(ptr) {}
-
+        Drawable(IntPtr unmanagedObjPtr, bool autoDelete) : ObjectBase(System::IntPtr(unmanagedObjPtr), autoDelete)
+        {
+        }
+        ~Drawable(){}
         property float PositionX
         {
             float get();
@@ -35,6 +37,6 @@ namespace FumoWrapper {
         void Draw(IntPtr renderTarget);
 
     private:
-        FmDrawable* GetNativePointer();
+        FmDrawable* GetImpObj();
     };
 }

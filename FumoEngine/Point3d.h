@@ -1,5 +1,4 @@
 #pragma once
-#include "DisposableWrapper.h"
 #include "FmGePoint3d.h"
 #include "Point2d.h"
 
@@ -9,22 +8,25 @@ namespace FumoWrapper
 {
     namespace Geo
     {
-        public ref class Point3d : public DisposableWrapper<FmGePoint3d>
+        public value class Point3d
         {
+        private:
+            float x;
+            float y;
+            float z;
+
         public:
-            Point3d() : DisposableWrapper(new FmGePoint3d()) {}
-            Point3d(FmGePoint3d* pnt) : DisposableWrapper(pnt) {}
-            Point3d(float x, float y, float z) : DisposableWrapper(new FmGePoint3d(x, y, z)) {}
+            Point3d(float x, float y, float z) : x(x), y(y), z(z) {}
 
             property float X
             {
                 float get()
                 {
-                    return GetNativePointer()->x;
+                    return x;
                 }
                 void set(float value)
                 {
-                    GetNativePointer()->x = value;
+                    x = value;
                 }
             }
 
@@ -32,11 +34,11 @@ namespace FumoWrapper
             {
                 float get()
                 {
-                    return GetNativePointer()->y;
+                    return y;
                 }
                 void set(float value)
                 {
-                    GetNativePointer()->y = value;
+                    y = value;
                 }
             }
 
@@ -44,45 +46,54 @@ namespace FumoWrapper
             {
                 float get()
                 {
-                    return GetNativePointer()->z;
+                    return z;
                 }
                 void set(float value)
                 {
-                    GetNativePointer()->z = value;
+                    z = value;
                 }
             }
 
-            float DistanceTo(Point3d^ other)
+            float DistanceTo(Point3d other)
             {
-                return GetNativePointer()->DistanceTo(*other->GetNativePointer());
+                FmGePoint3d thisPoint(x, y, z);
+                FmGePoint3d otherPoint(other.x, other.y, other.z);
+                return thisPoint.DistanceTo(otherPoint);
             }
 
-            Point2d^ ConvertTo2d()
+            Point2d ConvertTo2d()
             {
-                auto native2d = GetNativePointer()->ConvertTo2d();
-                return gcnew Point2d(native2d.x, native2d.y);
+                FmGePoint3d thisPoint(x, y, z);
+                FmGePoint2d native2d = thisPoint.ConvertTo2d();
+                return Point2d(native2d.x, native2d.y);
             }
 
-            void Add(Point3d^ other)
+            void Add(Point3d other)
             {
-                *GetNativePointer() += *other->GetNativePointer();
+                x += other.x;
+                y += other.y;
+                z += other.z;
             }
 
-            void AddVelocity(Point3d^ velocity)
+            void AddVelocity(Point3d velocity)
             {
-                *GetNativePointer() += *velocity->GetNativePointer();
+                x += velocity.x;
+                y += velocity.y;
+                z += velocity.z;
             }
 
-            Point3d^ Multiply(float scalar)
+            Point3d Multiply(float scalar)
             {
-                Geometry::FmGePoint3d result = GetNativePointer()->operator*(scalar);
-                return gcnew Point3d(result.x, result.y, result.z);
+                return Point3d(x * scalar, y * scalar, z * scalar);
             }
 
-        private:
-            FmGePoint3d* GetNativePointer()
+            FmGePoint3d ToNative() {
+                return FmGePoint3d(x, y, z);
+            }
+
+            static Point3d FromNative(FmGePoint3d point)
             {
-                return static_cast<FmGePoint3d*>(DisposableWrapper<FmGePoint3d>::GetNativePointer());
+                return Point3d(point.x, point.y, point.z);
             }
         };
     }

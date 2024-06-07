@@ -9,59 +9,68 @@ namespace FumoWrapper {
     public ref class Line : public DbEntity
     {
     public:
-        Line() : DbEntity(FmDbLine::CreateObject().get()) {}
-        Line(FmDbLine* ptr) : DbEntity(ptr) {}
-
-        property Point3d^ StartPnt
+        Line(IntPtr unmanagedObjPtr, bool autoDelete) : DbEntity(System::IntPtr(unmanagedObjPtr), autoDelete) {}
+        Line(Point3d startPnt, Point3d endPnt)
+            : DbEntity(System::IntPtr(new FmDbLine()), true)
         {
-            Point3d^ get()
+            StartPnt = startPnt;
+            EndPnt = endPnt;
+        }
+
+        property Point3d StartPnt
+        {
+            Point3d get()
             {
-                Geometry::FmGePoint3d pnt = GetNativePointer()->GetStartPoint();
-                return gcnew Point3d(pnt.x, pnt.y, pnt.z);
+                return Point3d::FromNative(GetImpObj()->GetStartPoint());
             }
-            void set(Point3d^ value)
+            void set(Point3d value)
             {
-                GetNativePointer()->SetStartPoint(*value->GetNativePointer());
+                GetImpObj()->SetStartPoint(value.ToNative());
             }
         }
 
-        property Point3d^ EndPnt
+        property Point3d EndPnt
         {
-            Point3d^ get()
+            Point3d get()
             {
-                Geometry::FmGePoint3d pnt = GetNativePointer()->GetEndPoint();
-                return gcnew Point3d(pnt.x, pnt.y, pnt.z);
+                return Point3d::FromNative(GetImpObj()->GetEndPoint());
             }
-            void set(Point3d^ value)
+            void set(Point3d value)
             {
-                GetNativePointer()->SetEndPoint(*value->GetNativePointer());
+                GetImpObj()->SetEndPoint(value.ToNative());
             }
         }
 
         void Draw(IntPtr renderTarget)
         {
-            GetNativePointer()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
+            GetImpObj()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
         }
 
-        Line^ Clone()
+        ObjectBase^ Clone() override
         {
-            return gcnew Line(dynamic_cast<FmDbLine*>(GetNativePointer()->Clone()));
+            return gcnew ObjectBase(System::IntPtr(GetImpObj()->Clone()), true);
         }
 
         property System::String^ Json
         {
             System::String^ get()
             {
-                nlohmann::json json = GetNativePointer()->ToJson();
+                nlohmann::json json = GetImpObj()->ToJson();
                 std::string jsonString = json.dump();
                 return gcnew System::String(jsonString.c_str());
             }
         }
 
     private:
-        FmDbLine* GetNativePointer()
+        FmDbLine* GetImpObj()
         {
-            return static_cast<FmDbLine*>(DisposableWrapper<FmObjectBase>::GetNativePointer());
+            void* obj = DisposableWrapper::GetImpObj();
+            FmObjectBase* objBase = static_cast<FmObjectBase*>(obj);
+            FmDrawable* objDrawable = static_cast<FmDrawable*>(objBase);
+            FmDbObject* objDb = static_cast<FmDbObject*>(objDrawable);
+            FmDbEntity* objEntity = static_cast<FmDbEntity*>(objDb);
+            FmDbLine* line = static_cast<FmDbLine*>(objEntity);
+            return line;
         }
     };
 }

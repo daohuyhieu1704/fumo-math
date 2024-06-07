@@ -5,17 +5,14 @@ namespace FumoWrapper
 {
     System::String^ ObjectBase::ObjectId::get()
     {
-        return gcnew System::String(GetNativePointer()->GetObjectId().c_str());
+        return gcnew System::String(GetImpObj()->GetObjectId().c_str());
     }
-
-    void ObjectBase::ObjectId::set(System::String^ value)
-    {
-        std::string objectId = msclr::interop::marshal_as<std::string>(value);
-        GetNativePointer()->SetObjectId(objectId);
-    }
-
     ObjectBase^ ObjectBase::Clone()
     {
-        return gcnew ObjectBase(GetNativePointer()->Clone());
+        return gcnew ObjectBase(System::IntPtr(GetImpObj()->Clone()), true);
+    }
+    String^ ObjectBase::GenerateId()
+    {
+        return gcnew System::String(FmObjectBase::GenerateShortId().c_str());
     }
 }

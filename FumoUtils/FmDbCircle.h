@@ -11,8 +11,8 @@ typedef std::shared_ptr<FmDbCircle> FmDbCirclePtr;
 
 class FmDbCircle : public FmDbEntity {
 public:
-    static FmDbCirclePtr CreateObject(float x, float y, float radius);
-    void Initialize(float x, float y, float radius);
+    static FmDbCirclePtr CreateObject();
+    void Initialize();
 #pragma region Properties
     FmGePoint3d GetCenter() const;
     void SetCenter(FmGePoint3d center);
