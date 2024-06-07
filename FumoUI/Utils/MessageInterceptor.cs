@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Interop;
 using System.Windows;
+using FumoWrapper;
 
 namespace FumoUI.Utils
 {
@@ -43,7 +44,7 @@ namespace FumoUI.Utils
         {
             if (msg == WM_MY_MESSAGE)
             {
-                DirectXHost.DrawCircle(0, 0, 50);
+                FmRenderer.Instance.AddEntity();
                 handled = true;
             }
             return IntPtr.Zero;

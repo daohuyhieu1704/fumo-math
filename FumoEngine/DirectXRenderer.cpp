@@ -11,6 +11,16 @@ std::vector<FmGePoint2d> DirectXRenderer::MouseXY() const
     return m_mouse_fp;
 }
 
+int DirectXRenderer::GetMode()
+{
+    return GetInstance()->m_mode;
+}
+
+void DirectXRenderer::SetMode(int value)
+{
+	GetInstance()->m_mode = value;
+}
+
 LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg) {

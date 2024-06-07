@@ -2,12 +2,14 @@
 #include "DbEntity.h"
 #include "FmDbCircle.h"
 #include "Point3d.h"
+#include "FmRenderer.h"
 
 namespace FumoWrapper {
 
     public ref class Circle : public DbEntity
     {
     public:
+        Circle() : DbEntity(FmDbCircle::CreateObject(0,0,0).get()) {}
         Circle(FmDbCircle* ptr) : DbEntity(ptr) {}
 
         property Point3d^ Center
@@ -35,9 +37,9 @@ namespace FumoWrapper {
             }
         }
 
-        void Draw(IntPtr renderTarget)
+        void Draw()
         {
-            GetNativePointer()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
+            GetNativePointer()->Draw(DirectXRenderer::GetInstance()->pRenderTarget);
         }
 
         Circle^ Clone()

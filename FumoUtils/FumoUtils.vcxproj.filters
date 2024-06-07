@@ -55,6 +55,9 @@
     <Filter Include="Common\ObjectBase">
       <UniqueIdentifier>{40f4e43f-44ba-468b-ac5e-69beb6adc562}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Line">
+      <UniqueIdentifier>{0bb82a2c-8655-43ef-a80d-4b989b5f00c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FmGePoint3d.cpp">
@@ -96,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="FmGeExtend2d.cpp">
       <Filter>Geometry\Extend2d</Filter>
+    </ClCompile>
+    <ClCompile Include="FmDbLine.cpp">
+      <Filter>Entities\Line</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="FmDbObject.h">
       <Filter>Common\DbObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FmDbLine.h">
+      <Filter>Entities\Line</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

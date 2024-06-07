@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="FmDatabase.h" />
     <ClInclude Include="DatabaseServices.h" />
+    <ClInclude Include="FmDbLine.h" />
     <ClInclude Include="FmGeExtend2d.h" />
     <ClInclude Include="FmDbCircle.h" />
     <ClInclude Include="FmDbEntity.h" />
@@ -40,6 +41,7 @@
     <ClCompile Include="FmDatabase.cpp" />
     <ClCompile Include="FmDbCircle.cpp" />
     <ClCompile Include="FmDbEntity.cpp" />
+    <ClCompile Include="FmDbLine.cpp" />
     <ClCompile Include="FmDbObject.cpp" />
     <ClCompile Include="FmDrawable.cpp" />
     <ClCompile Include="FmGeExtend2d.cpp" />

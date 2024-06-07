@@ -120,5 +120,10 @@ namespace FumoUI.ViewModels.TopPanel
                 }
             }
         }
+
+        public void SetMode(int v)
+        {
+            FmRenderer.Instance.Mode = v;
+        }
     }
 }

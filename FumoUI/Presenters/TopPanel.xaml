@@ -32,6 +32,18 @@
                 Click="Save_Click" />
             <GridSplitter Width="1" IsEnabled="False" Height="20" />
         </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Height="50">
+            <Button
+                Style="{StaticResource CustomButtonStyle}"
+                Content="Circle"
+                Click="CircleMode_Click" />
+            <GridSplitter Width="1" IsEnabled="False" Height="20" />
+            <Button
+                Style="{StaticResource CustomButtonStyle}"
+                Content="Line"
+                Click="LineMode_Click" />
+            <GridSplitter Width="1" IsEnabled="False" Height="20" />
+        </StackPanel>
         <TabControl
                 Background="Transparent" 
                 ItemsSource="{Binding FileItems}" 

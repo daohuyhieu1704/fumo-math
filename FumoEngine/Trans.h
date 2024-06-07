@@ -1,12 +1,14 @@
 #pragma once
 #include "ObjectBase.h"
 #include "FmTransaction.h"
+#include "FmRenderer.h"
 
 namespace FumoWrapper {
     namespace DbServices {
         public ref class Trans : public ObjectBase
         {
         public:
+            Trans() : ObjectBase(FmRenderer::Instance->GetNativePointer()->CurDoc()->TransactionManager.get()) {}
             Trans(DatabaseServices::FmTransaction* ptr) : ObjectBase(ptr) {}
 
             void StartTransaction()

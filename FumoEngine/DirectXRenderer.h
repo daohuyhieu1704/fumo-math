@@ -14,6 +14,7 @@ private:
     unsigned int m_curDocIndex;
     HWND m_directWindow;
     HWND m_parent;
+    int m_mode = 0;
     DirectXRenderer()
     {
         FmDatabasePtr newDb = FmDatabase::CreateObject();
@@ -32,6 +33,8 @@ public:
     }
 #pragma region Properties
     std::vector<FmGePoint2d> MouseXY() const;
+    int GetMode();
+    void SetMode(int value);
 #pragma endregion
 
  static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -48,6 +51,6 @@ public:
     ID3D11DeviceContext* deviceContext;
     ID3D11Buffer* vertexBuffer;
     ID2D1Factory* pFactory;
- ID2D1HwndRenderTarget* pRenderTarget;
+    ID2D1HwndRenderTarget* pRenderTarget;
     ID2D1SolidColorBrush* pBrush;
 };

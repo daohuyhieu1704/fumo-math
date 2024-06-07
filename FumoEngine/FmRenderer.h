@@ -30,6 +30,11 @@ namespace FumoWrapper
             String^ get();
         }
 
+        property int Mode {
+            int get();
+            void set(int value);
+        }
+        void AddEntity();
         IntPtr CreateRendererWindow(IntPtr parentHandle);
         void DestroyRendererWindow();
         void DrawCircle(float centerX, float centerY, float radius);

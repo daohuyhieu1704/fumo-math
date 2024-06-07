@@ -67,6 +67,9 @@
     <Filter Include="Geometry\Extend2d">
       <UniqueIdentifier>{777f3d0a-6496-46a0-b188-a27f67410124}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Entities\Line">
+      <UniqueIdentifier>{7896019a-311f-4959-b772-3a98a252b08f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectXRenderer.cpp">
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Entities\Line</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="Circle.h">
       <Filter>Entities\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Entities\Line</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
