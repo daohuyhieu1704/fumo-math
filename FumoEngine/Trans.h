@@ -19,7 +19,7 @@ namespace FumoWrapper {
             void AddNewlyObject(System::String^ id, ObjectBase^ obj)
             {
                 std::string nativeId = msclr::interop::marshal_as<std::string>(id);
-                GetNativePointer()->AddNewlyObject(nativeId, std::unique_ptr<FmObjectBase>(obj->GetNativePointer()));
+                GetNativePointer()->AddNewlyObject(nativeId, std::shared_ptr<FmObjectBase>(obj->GetNativePointer()));
             }
 
             void Abort()

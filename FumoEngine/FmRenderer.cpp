@@ -17,25 +17,27 @@ namespace FumoWrapper
         if (pntList.size() < 2) {
             return;
         }
+        //Trans^ trans = gcnew Trans();
+        //trans->StartTransaction();
         switch (Mode)
         {
         case 1: {
             try
             {
                 DrawCircle(10, 10, 50);
-                //Circle^ circle = gcnew Circle();
+                // Circle^ circle = gcnew Circle();
                 //Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
                 //Geometry::FmGePoint2d pnt2 = pntList.back();
-                //circle->Center = gcnew Point3d(pnt1.x, pnt1.y, 0);
-                //Point3d^ p2 = gcnew Point3d(pnt2.x, pnt2.y, 0);
+                //circle->Center = gcnew Point3d(pntList[pntList.size() - 2].x, pntList[pntList.size() - 2].y, 0);
+                //Point3d^ p2 = gcnew Point3d(pntList.back().x, pntList.back().y, 0);
                 //circle->Radius = circle->Center->DistanceTo(p2) / 2;
-                //dynamic_cast<FmDbCircle*>(circle->GetNativePointer())->Draw(GetNativePointer()->pRenderTarget);
                 //trans->AddNewlyObject(circle->ObjectId, circle);
                 //trans->Commit();
                 break;
             }
             catch (const std::exception&)
             {
+                // trans->Abort();
             }
             break;
         }

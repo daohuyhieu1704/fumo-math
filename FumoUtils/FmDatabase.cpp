@@ -10,7 +10,7 @@ namespace DatabaseServices {
         m_name = name;
     };
     FmDatabase::FmDatabase()
-        : TransactionManager(std::make_unique<FmTransaction>(FmDatabasePtr(this, [](FmDatabase*) {})))
+        : TransactionManager(std::make_shared<FmTransaction>(FmDatabasePtr(this, [](FmDatabase*) {})))
         , m_ObjectRecords(std::make_unique<DataTableRecord>())
     {}
 

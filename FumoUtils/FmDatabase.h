@@ -9,7 +9,7 @@ namespace DatabaseServices {
     class FmTransaction;
 
     typedef std::shared_ptr<class FmDatabase> FmDatabasePtr;
-    typedef std::unique_ptr<FmTransaction> FmTransactionPtr;
+    typedef std::shared_ptr<FmTransaction> FmTransactionPtr;
 
     class FmDatabase : public FmObjectBase
     {

@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "FmDatabase.h"
 #include "FmTransaction.h"
+#include "FmDatabase.h"
 #include "FmDrawable.h"
 
 namespace DatabaseServices {
@@ -63,8 +63,8 @@ namespace DatabaseServices {
         }
         m_isUndoRedoInProgress = true;
 
-        auto lastUndone = std::move(m_undoneObjects.back());
-        m_newlyAddedObjects[lastUndone->GetObjectId()] = std::move(lastUndone);
+        auto lastUndone = m_undoneObjects.back();
+        m_newlyAddedObjects[lastUndone->GetObjectId()] = lastUndone;
         m_undoneObjects.pop_back();
 
         m_isUndoRedoInProgress = false;

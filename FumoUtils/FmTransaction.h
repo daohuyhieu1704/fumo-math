@@ -5,8 +5,9 @@
 
 namespace DatabaseServices 
 {
-    class FmDatabase;
-    typedef std::shared_ptr<FmDatabase> FmDatabasePtr;
+    class FmTransaction;
+    typedef std::shared_ptr<class FmDatabase> FmDatabasePtr;
+    typedef std::shared_ptr<FmTransaction> FmTransactionPtr;
 
     class FmTransaction : public FmObjectBase
     {
@@ -27,6 +28,4 @@ namespace DatabaseServices
         FmObjectBase* Clone() const override;
         virtual ~FmTransaction() = default;
     };
-
-    typedef std::unique_ptr<FmTransaction> FmTransactionPtr;
 }
