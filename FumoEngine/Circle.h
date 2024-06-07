@@ -37,9 +37,9 @@ namespace FumoWrapper {
             }
         }
 
-        void Draw()
+        void Draw(IntPtr renderTarget)
         {
-            GetNativePointer()->Draw(DirectXRenderer::GetInstance()->pRenderTarget);
+            GetNativePointer()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
         }
 
         Circle^ Clone()

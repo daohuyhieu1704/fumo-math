@@ -38,9 +38,9 @@ namespace FumoWrapper {
             }
         }
 
-        void Draw()
+        void Draw(IntPtr renderTarget)
         {
-            GetNativePointer()->Draw(FmRenderer::Instance->GetNativePointer()->pRenderTarget);
+            GetNativePointer()->Draw(static_cast<ID2D1HwndRenderTarget*>(renderTarget.ToPointer()));
         }
 
         Line^ Clone()

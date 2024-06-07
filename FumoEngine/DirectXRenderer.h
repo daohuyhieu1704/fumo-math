@@ -25,6 +25,7 @@ private:
 public:
     static DirectXRenderer* GetInstance()
     {
+
         if (m_instance == nullptr)
         {
             m_instance = new DirectXRenderer();
