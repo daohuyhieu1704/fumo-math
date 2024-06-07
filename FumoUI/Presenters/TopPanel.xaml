@@ -42,7 +42,7 @@
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                     <Border BorderBrush="White" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal" Background="Transparent" Width="60">
+                        <StackPanel Orientation="Horizontal" Background="Transparent" Width="100">
                             <TextBlock Text="{Binding}" VerticalAlignment="Center" Foreground="White" Background="Transparent" />
                             <Button
                                 Background="Transparent"
