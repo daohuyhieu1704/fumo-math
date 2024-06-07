@@ -25,43 +25,45 @@ namespace FumoWrapper
             try
             {
                 DrawCircle(10, 10, 50);
-                // Circle^ circle = gcnew Circle();
+                //Circle^ circle = gcnew Circle();
                 //Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
                 //Geometry::FmGePoint2d pnt2 = pntList.back();
-                //circle->Center = gcnew Point3d(pntList[pntList.size() - 2].x, pntList[pntList.size() - 2].y, 0);
-                //Point3d^ p2 = gcnew Point3d(pntList.back().x, pntList.back().y, 0);
-                //circle->Radius = circle->Center->DistanceTo(p2) / 2;
+                //circle->Center->X = pntList[pntList.size() - 2].x;
+                //circle->Center->Y = pntList[pntList.size() - 2].y;
+                //// Point3d^ p2 = gcnew Point3d(pntList.back().x, pntList.back().y, 0);
+                //circle->Radius = 50;
+                //// p2->Dispose();
                 //trans->AddNewlyObject(circle->ObjectId, circle);
                 //trans->Commit();
                 break;
             }
             catch (const std::exception&)
             {
-                // trans->Abort();
+                //trans->Abort();
             }
             break;
         }
         case 2: {
-            Trans^ trans = gcnew Trans();
-            try
-            {
-                Line^ line = gcnew Line();
+            //Trans^ trans = gcnew Trans();
+            //try
+            //{
+            //    Line^ line = gcnew Line();
 
-                DirectXRenderer* ins = GetNativePointer();
-                Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
-                Geometry::FmGePoint2d pnt2 = pntList.back();
-                line->StartPnt = gcnew Point3d(pnt1.x, pnt1.y, 0);
-                line->EndPnt = gcnew Point3d(pnt2.x, pnt2.y, 0);
-                line->Draw(IntPtr(GetNativePointer()->pRenderTarget));
+            //    DirectXRenderer* ins = GetNativePointer();
+            //    Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
+            //    Geometry::FmGePoint2d pnt2 = pntList.back();
+            //    line->StartPnt = gcnew Point3d(pnt1.x, pnt1.y, 0);
+            //    line->EndPnt = gcnew Point3d(pnt2.x, pnt2.y, 0);
+            //    line->Draw(IntPtr(GetNativePointer()->pRenderTarget));
 
-                trans->AddNewlyObject(line->ObjectId, line);
-                trans->Commit();
-                break;
-            }
-            catch (const std::exception&)
-            {
-                trans->Abort();
-            }
+            //    trans->AddNewlyObject(line->ObjectId, line);
+            //    trans->Commit();
+            //    break;
+            //}
+            //catch (const std::exception&)
+            //{
+            //    trans->Abort();
+            //}
             break;
         }
         default:
@@ -93,8 +95,8 @@ namespace FumoWrapper
         Geometry::FmGePoint2d pnt = ins->MouseXY().back();
         circle->SetCenter(Geometry::FmGePoint3d(pnt.x, pnt.y, 0));
 
-        circle->Draw(GetNativePointer()->pRenderTarget);
-        GetNativePointer()->CurDoc()->TransactionManager->StartTransaction();
+        //circle->Draw(GetNativePointer()->pRenderTarget);
+        GetNativePointer()->CurDoc()->TransactionManager->StartTransaction(GetNativePointer()->pRenderTarget);
         GetNativePointer()->CurDoc()->TransactionManager->AddNewlyObject(circle->GetObjectId(), circle);
         GetNativePointer()->CurDoc()->TransactionManager->Commit();
     }

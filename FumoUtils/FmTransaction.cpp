@@ -2,14 +2,17 @@
 #include "FmTransaction.h"
 #include "FmDatabase.h"
 #include "FmDrawable.h"
+#include <type_traits>
 
 namespace DatabaseServices {
-    void FmTransaction::StartTransaction() {
+    void FmTransaction::StartTransaction(ID2D1HwndRenderTarget* renderTarget) {
         if (m_transactionActive) {
             throw std::runtime_error("Transaction is already active");
         }
+
         m_transactionActive = true;
         m_newlyAddedObjects.clear();
+        m_renderTarget = renderTarget;
     }
 
     void FmTransaction::AddNewlyObject(const std::string& id, std::shared_ptr<FmObjectBase> obj) {
@@ -35,9 +38,11 @@ namespace DatabaseServices {
             throw std::runtime_error("No active transaction to commit");
         }
         for (auto& pair : m_newlyAddedObjects) {
-            m_Doc.get()->AppendObject(pair.second);
-            FmDrawable* drawable = dynamic_cast<FmDrawable*>(pair.second.get());
-            if (drawable != nullptr) {
+            m_Doc.get()->AppendObject(pair.second); 
+            FmObjectBase* pnt = pair.second.get();
+            FmDrawable* drawable = dynamic_cast<FmDrawable*>(pnt);
+            if (m_renderTarget != nullptr) {
+                drawable->Draw(m_renderTarget);
             }
         }
         m_newlyAddedObjects.clear();

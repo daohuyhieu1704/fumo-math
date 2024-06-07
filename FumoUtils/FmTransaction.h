@@ -17,9 +17,10 @@ namespace DatabaseServices
         std::map<std::string, std::shared_ptr<FmObjectBase>> m_newlyAddedObjects;
         bool m_isUndoRedoInProgress = false;
         std::deque<std::shared_ptr<FmObjectBase>> m_undoneObjects;
+        ID2D1HwndRenderTarget* m_renderTarget;
     public:
         FmTransaction(FmDatabasePtr parentDoc) : m_transactionActive(false), m_Doc(parentDoc) {}
-        void StartTransaction();
+        void StartTransaction(ID2D1HwndRenderTarget* renderTarget);
         void AddNewlyObject(const std::string& id, std::shared_ptr<FmObjectBase> obj);
         void Abort();
         void Commit();

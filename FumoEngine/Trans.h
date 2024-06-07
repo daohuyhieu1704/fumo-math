@@ -13,7 +13,7 @@ namespace FumoWrapper {
 
             void StartTransaction()
             {
-                GetNativePointer()->StartTransaction();
+                GetNativePointer()->StartTransaction(FmRenderer::Instance->GetNativePointer()->pRenderTarget);
             }
 
             void AddNewlyObject(System::String^ id, ObjectBase^ obj)
