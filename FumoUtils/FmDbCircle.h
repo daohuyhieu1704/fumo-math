@@ -20,6 +20,7 @@ public:
     float GetRadius() const;
 #pragma endregion
     HRESULT Draw(ID2D1HwndRenderTarget* renderTarget) override;
+    virtual void WorldDraw() override;
     FmObjectBase* Clone() const override;
     nlohmann::json ToJson() const override;
     FmDbCircle();

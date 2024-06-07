@@ -55,13 +55,20 @@ float FmDbCircle::GetRadius() const {
 
 HRESULT FmDbCircle::Draw(ID2D1HwndRenderTarget* renderTarget) {
     renderTarget->BeginDraw();
-    // renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
     renderTarget->DrawEllipse(
         D2D1::Ellipse(D2D1::Point2F(GetCenter().x, GetCenter().y), GetRadius(), GetRadius()),
         GetBrush(),
         1.0f
     );
     return renderTarget->EndDraw();
+}
+
+void FmDbCircle::WorldDraw()
+{
+    FmGePoint2d minPnt(GetCenter().x - m_radius, GetCenter().y - m_radius);
+    FmGePoint2d maxPnt(GetCenter().x + m_radius, GetCenter().y + m_radius);
+    Geometry::FmGeExtend2d ext = Geometry::FmGeExtend2d(minPnt, maxPnt);
+    SetBoundary(ext);
 }
 
 FmObjectBase* FmDbCircle::Clone() const {

@@ -44,6 +44,7 @@ public:
  HWND InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND parentHwnd);
     void ResizeWindow(HWND hwnd, int width, int height);
     HRESULT InitializeDirect2D(HWND hwnd);
+    void ClearScreen();
     void DrawUCS();
     void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
     void CreateDeviceIndependentResources();

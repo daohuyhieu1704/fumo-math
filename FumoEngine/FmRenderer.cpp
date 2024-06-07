@@ -79,25 +79,9 @@ namespace FumoWrapper
         }
     }
 
-    void FmRenderer::DrawCircle(float centerX, float centerY, float radius)
+    void FmRenderer::ClearScreen()
     {
-        FmDbCirclePtr circle = FmDbCircle::CreateObject();
-        GetImpObj()->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
-        circle->SetBrush(GetImpObj()->pBrush);
-
-        DirectXRenderer* ins = GetImpObj();
-        Geometry::FmGePoint2d pnt = ins->MouseXY().back();
-        circle->SetCenter(Geometry::FmGePoint3d(pnt.x, pnt.y, 0));
-
-        //circle->Draw(GetImpObj()->pRenderTarget);
-        GetImpObj()->CurDoc()->TransactionManager->StartTransaction(GetImpObj()->pRenderTarget);
-        GetImpObj()->CurDoc()->TransactionManager->AddNewlyObject(circle);
-        GetImpObj()->CurDoc()->TransactionManager->Commit();
-    }
-
-    void FmRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)
-    {
-        GetImpObj()->DrawGrid(cellWidth, cellHeight, numColumns, numRows);
+        GetImpObj()->ClearScreen();
     }
 
     FmRenderer::~FmRenderer()

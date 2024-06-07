@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FumoUI.Presenters"
              mc:Ignorable="d" 
+             Padding="10"
              Background="Transparent"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -54,7 +55,7 @@
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                     <Border BorderBrush="White" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal" Background="Transparent" Width="100">
+                        <StackPanel Orientation="Horizontal" Background="Transparent" Width="auto">
                             <TextBlock Text="{Binding}" VerticalAlignment="Center" Foreground="White" Background="Transparent" />
                             <Button
                                 Background="Transparent"

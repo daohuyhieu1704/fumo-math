@@ -24,10 +24,5 @@ namespace FumoUI.Utils
         {
             FmRenderer.Instance?.DestroyRendererWindow();
         }
-
-        public static void DrawCircle(float centerX, float centerY, float radius)
-        {
-            FmRenderer.Instance?.DrawCircle(centerX, centerY, radius);
-        }
     }
 }

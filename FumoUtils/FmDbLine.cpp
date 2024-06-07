@@ -65,6 +65,12 @@ HRESULT FmDbLine::Draw(ID2D1HwndRenderTarget* renderTarget) {
     return renderTarget->EndDraw();
 }
 
+void FmDbLine::WorldDraw()
+{
+    Geometry::FmGeExtend2d ext = Geometry::FmGeExtend2d(GetStartPoint().ConvertTo2d(), GetEndPoint().ConvertTo2d());
+    SetBoundary(ext);
+}
+
 FmObjectBase* FmDbLine::Clone() const {
     FmDbLinePtr clone = FmDbLine::CreateObject();
     clone->SetStartPoint(GetStartPoint());

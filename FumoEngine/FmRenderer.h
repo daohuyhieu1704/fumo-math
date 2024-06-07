@@ -37,8 +37,7 @@ namespace FumoWrapper
         void AddEntity();
         IntPtr CreateRendererWindow(IntPtr parentHandle);
         void DestroyRendererWindow();
-        void DrawCircle(float centerX, float centerY, float radius);
-        void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
+        void ClearScreen();
         ~FmRenderer();
 
         DirectXRenderer* GetImpObj()

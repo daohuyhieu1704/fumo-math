@@ -15,6 +15,7 @@ public:
     FmGeExtend2d GetBoundary() const;
     void SetBoundary(FmGeExtend2d boundary);
 #pragma endregion
+    virtual void WorldDraw() = 0;
     FmObjectBase* Clone() const override;
     virtual ~FmDbEntity() = default;
 };

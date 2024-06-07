@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         xmlns:usercontrols="clr-namespace:FumoUI.Presenters"
         d:ResizeMode="NoResize"
-        Title="MainWindow" Height="900" Width="1600">
+        d:WindowStartupLocation="CenterScreen"
+        Title="Fumo Math" Height="900" Width="1600">
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#2c2d2f" Offset="0"/>

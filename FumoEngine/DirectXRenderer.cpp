@@ -6,6 +6,12 @@ using namespace Geometry;
 
 DirectXRenderer* DirectXRenderer::m_instance = nullptr;
 
+void DirectXRenderer::ClearScreen()
+{
+    pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+    DrawUCS();
+}
+
 std::vector<FmGePoint2d> DirectXRenderer::MouseXY() const
 {
     return m_mouse_fp;

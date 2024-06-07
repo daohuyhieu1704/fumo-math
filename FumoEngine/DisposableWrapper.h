@@ -17,8 +17,8 @@ namespace FumoWrapper
         {
             if (autoDelete && UnmanagedObject != IntPtr::Zero)
             {
-                delete UnmanagedObject.ToPointer();
-                UnmanagedObject = IntPtr::Zero;
+                //delete UnmanagedObject.ToPointer();
+                //UnmanagedObject = IntPtr::Zero;
             }
         }
 
