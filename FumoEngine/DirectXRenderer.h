@@ -2,6 +2,7 @@
 #include "pch.h"
 #include <vector>
 #include <FmDatabase.h>
+#include <FmUcs.h>
 
 using namespace DatabaseServices;
 
@@ -21,6 +22,7 @@ private:
         newDb->SetName("No_name");
         m_dbs.push_back(newDb);
         m_curDocIndex = 0;
+        ucs = std::make_unique<FmUcs>();
     }
 public:
     static DirectXRenderer* GetInstance()
@@ -42,6 +44,7 @@ public:
  HWND InitializeWindow(HINSTANCE hInstance, int nCmdShow, HWND parentHwnd);
     void ResizeWindow(HWND hwnd, int width, int height);
     HRESULT InitializeDirect2D(HWND hwnd);
+    void DrawUCS();
     void DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows);
     void CreateDeviceIndependentResources();
     void CreateDeviceResources();
@@ -54,4 +57,5 @@ public:
     ID2D1Factory* pFactory;
     ID2D1HwndRenderTarget* pRenderTarget;
     ID2D1SolidColorBrush* pBrush;
+    std::unique_ptr<FmUcs> ucs;
 };

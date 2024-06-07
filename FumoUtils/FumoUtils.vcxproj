@@ -30,6 +30,7 @@
     <ClInclude Include="FmObjectBase.h" />
     <ClInclude Include="DataTableRecord.h" />
     <ClInclude Include="FmTransaction.h" />
+    <ClInclude Include="FmUcs.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="FmGePoint2d.h" />
@@ -48,6 +49,7 @@
     <ClCompile Include="FmObjectBase.cpp" />
     <ClCompile Include="DataTableRecord.cpp" />
     <ClCompile Include="FmTransaction.cpp" />
+    <ClCompile Include="FmUcs.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="FmGePoint2d.cpp" />
     <ClCompile Include="FmGePoint3d.cpp" />

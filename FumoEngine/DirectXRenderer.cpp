@@ -34,12 +34,6 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             int xPos = pt.x * 4 / 5;
             int yPos = pt.y * 4 / 5;
             ins->pRenderTarget->BeginDraw();
-            ins->pRenderTarget->DrawLine(
-                D2D1::Point2F(0, 0),
-                D2D1::Point2F(xPos, yPos),
-                ins->pBrush,
-                0.5f
-            );
             ins->pRenderTarget->EndDraw();
             ins->pRenderTarget->EndDraw();
             ins->m_mouse_fp.push_back(FmGePoint2d(static_cast<float>(xPos), static_cast<float>(yPos)));
@@ -77,6 +71,7 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
+        GetInstance()->DrawUCS();
         HDC hdc = BeginPaint(hwnd, &ps);
         EndPaint(hwnd, &ps);
     }
@@ -154,6 +149,18 @@ HRESULT DirectXRenderer::InitializeDirect2D(HWND hwnd)
     }
 
     return hr;
+}
+
+void DirectXRenderer::DrawUCS()
+{
+    DirectXRenderer* ins = GetInstance();
+    if (!ins->pRenderTarget || !ins->pBrush) {
+        return;
+    }
+    ins->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+
+    ucs->SetBrush(ins->pBrush);
+    ucs->Draw(pRenderTarget);
 }
 
 void DirectXRenderer::DrawGrid(float cellWidth, float cellHeight, int numColumns, int numRows)

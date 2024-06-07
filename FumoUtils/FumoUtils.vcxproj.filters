@@ -58,6 +58,9 @@
     <Filter Include="Entities\Line">
       <UniqueIdentifier>{0bb82a2c-8655-43ef-a80d-4b989b5f00c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Drawable\Ucs">
+      <UniqueIdentifier>{956c5cd7-c1e6-4b48-9867-2454c9bf332f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FmGePoint3d.cpp">
@@ -102,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="FmDbLine.cpp">
       <Filter>Entities\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="FmUcs.cpp">
+      <Filter>Common\Drawable\Ucs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +159,9 @@
     </ClInclude>
     <ClInclude Include="FmDbLine.h">
       <Filter>Entities\Line</Filter>
+    </ClInclude>
+    <ClInclude Include="FmUcs.h">
+      <Filter>Common\Drawable\Ucs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
