@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXRenderer.h" />
+    <ClInclude Include="FmBaseSettings.h" />
+    <ClInclude Include="FmCircleJig.h" />
     <ClInclude Include="FmDatabase.h" />
     <ClInclude Include="DatabaseServices.h" />
     <ClInclude Include="FmDbLine.h" />
@@ -27,6 +30,7 @@
     <ClInclude Include="FmDbEntity.h" />
     <ClInclude Include="FmDbObject.h" />
     <ClInclude Include="FmDrawable.h" />
+    <ClInclude Include="FmJig.h" />
     <ClInclude Include="FmObjectBase.h" />
     <ClInclude Include="DataTableRecord.h" />
     <ClInclude Include="FmTransaction.h" />
@@ -39,6 +43,9 @@
     <ClInclude Include="FmGeVelocity3d.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXRenderer.cpp" />
+    <ClCompile Include="FmBaseSettings.cpp" />
+    <ClCompile Include="FmCircleJig.cpp" />
     <ClCompile Include="FmDatabase.cpp" />
     <ClCompile Include="FmDbCircle.cpp" />
     <ClCompile Include="FmDbEntity.cpp" />
@@ -46,6 +53,7 @@
     <ClCompile Include="FmDbObject.cpp" />
     <ClCompile Include="FmDrawable.cpp" />
     <ClCompile Include="FmGeExtend2d.cpp" />
+    <ClCompile Include="FmJig.cpp" />
     <ClCompile Include="FmObjectBase.cpp" />
     <ClCompile Include="DataTableRecord.cpp" />
     <ClCompile Include="FmTransaction.cpp" />
@@ -84,7 +92,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -109,6 +117,9 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\Lib\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\Lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

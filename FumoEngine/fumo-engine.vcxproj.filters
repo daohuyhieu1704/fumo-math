@@ -70,11 +70,11 @@
     <Filter Include="Entities\Line">
       <UniqueIdentifier>{7896019a-311f-4959-b772-3a98a252b08f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{38a8f803-e285-4fc0-a8f2-1e8245575ec5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DirectXRenderer.cpp">
-      <Filter>Common\DirectXRenderer</Filter>
-    </ClCompile>
     <ClCompile Include="FmRenderer.cpp">
       <Filter>Common\DirectXRenderer</Filter>
     </ClCompile>
@@ -127,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXRenderer.h">
-      <Filter>Common\DirectXRenderer</Filter>
     </ClInclude>
     <ClInclude Include="FmRenderer.h">
       <Filter>Common\DirectXRenderer</Filter>

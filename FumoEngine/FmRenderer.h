@@ -1,7 +1,8 @@
 #pragma once
 #include "pch.h"
 #include "DisposableWrapper.h"
-#include "DirectXRenderer.h"
+#include <DirectXRenderer.h>
+
 using namespace System;
 
 namespace FumoWrapper 

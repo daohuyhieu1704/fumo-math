@@ -14,6 +14,20 @@ namespace DatabaseServices {
         , m_ObjectRecords(std::make_unique<DataTableRecord>())
     {}
 
+    void FmDatabase::ReRender(ID2D1HwndRenderTarget* pRenderTarget)
+    {
+        for (const auto& record : m_ObjectRecords->GetObjects()) {
+			FmDbObject* dbObj = dynamic_cast<FmDbObject*>(record.get());
+			if (dbObj == nullptr) {
+				continue;
+			}
+			FmDrawable* drawable = dynamic_cast<FmDrawable*>(dbObj);
+			if (drawable != nullptr) {
+				drawable->Draw(pRenderTarget);
+			}
+		}
+    }
+
     FmDatabasePtr FmDatabase::CreateObject()
     {
         return std::make_shared<FmDatabase>();

@@ -1,8 +1,9 @@
 #pragma once
 #include "pch.h"
 #include <vector>
-#include <FmDatabase.h>
-#include <FmUcs.h>
+#include "FmDatabase.h"
+#include "FmUcs.h"
+#include "FmJig.h"
 
 using namespace DatabaseServices;
 
@@ -11,12 +12,18 @@ class DirectXRenderer
 private:
     static DirectXRenderer* m_instance;
     std::vector<FmDatabasePtr> m_dbs;
-    std::vector<FmGePoint2d> m_mouse_fp;
     unsigned int m_curDocIndex;
     HWND m_directWindow;
     HWND m_parent;
-    int m_mode = 0;
+    int m_mode;
+    int m_readPos;
+    int m_writePos;
+    FmJig* m_HotEntity;
+    bool m_activeHotEntity;
     DirectXRenderer()
+        : m_curDocIndex(0), m_directWindow(nullptr), m_parent(nullptr), m_mode(0), m_dbs(), m_mouse_fp(), ucs(nullptr),
+        device(nullptr), deviceContext(nullptr), vertexBuffer(nullptr), pFactory(nullptr), pRenderTarget(nullptr), pBrush(nullptr),
+        m_readPos(0), m_writePos(0), m_HotEntity(nullptr), m_activeHotEntity(false)
     {
         FmDatabasePtr newDb = FmDatabase::CreateObject();
         newDb->SetName("No_name");
@@ -38,6 +45,10 @@ public:
     std::vector<FmGePoint2d> MouseXY() const;
     int GetMode();
     void SetMode(int value);
+    FmJig* GetHotEntity();
+    void SetHotEntity(FmJig* value);
+    bool GetActiveHotEntity();
+    void SetActiveHotEntity(bool value);
 #pragma endregion
 
  static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -52,6 +63,7 @@ public:
     void DiscardDeviceIndependentResources();
  void DiscardDeviceResources();
     FmDatabasePtr CurDoc();
+    std::vector<FmGePoint2d> m_mouse_fp;
     ID3D11Device* device;
     ID3D11DeviceContext* deviceContext;
     ID3D11Buffer* vertexBuffer;

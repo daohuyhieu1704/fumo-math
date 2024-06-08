@@ -5,6 +5,7 @@
 #include "Trans.h"
 #include "Circle.h"
 #include "Line.h"
+#include <FmCircleJig.h>
 
 namespace FumoWrapper
 {
@@ -12,35 +13,53 @@ namespace FumoWrapper
 
     void FmRenderer::AddEntity()
     {
-        DirectXRenderer* ins = GetImpObj();
+        DirectXRenderer* ins = GetImpObj()->GetInstance();
         std::vector<Geometry::FmGePoint2d> pntList = ins->MouseXY();
-        if (pntList.size() < 2) {
+        if (pntList.size() < 1) {
             return;
         }
-        Trans^ trans = gcnew Trans();
-        trans->StartTransaction();
         switch (Mode)
         {
         case 1: {
-            try
+            ins->SetActiveHotEntity(true);
+            FmJig* circleJig = new FmCircleJig();
+
+            ins->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::Red));
+
+            circleJig->m_pBrush = ins->pBrush;
+            ins->SetHotEntity(circleJig);
+            if (!ins->GetActiveHotEntity())
             {
-                // DrawCircle(10, 10, 50);
-                Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
-                Geometry::FmGePoint2d pnt2 = pntList.back();
-                Point3d center = Point3d(pnt1.x, pnt1.y, 0);
-                Point3d boundPnt = Point3d(pnt2.x, pnt2.y, 0);
-                Circle^ circle = gcnew Circle(center, center.DistanceTo(boundPnt));
-                trans->AddNewlyObject(circle);
-                trans->Commit();
-                break;
-            }
-            catch (const std::exception&)
-            {
-                trans->Abort();
-            }
+                Trans^ trans = gcnew Trans();
+                trans->StartTransaction();
+                ins->SetActiveHotEntity(false);
+                try
+                {
+                    ins->pBrush->SetColor(D2D1::ColorF(D2D1::ColorF::White));
+                    Geometry::FmGePoint2d pnt1 = pntList[pntList.size() - 2];
+                    Geometry::FmGePoint2d pnt2 = pntList.back();
+                    Point3d center = Point3d(pnt1.x, pnt1.y, 0);
+                    Point3d boundPnt = Point3d(pnt2.x, pnt2.y, 0);
+                    Circle^ circle = gcnew Circle(center, center.DistanceTo(boundPnt));
+                    trans->AddNewlyObject(circle);
+                    trans->Commit();
+                    break;
+                }
+                catch (const std::exception&)
+                {
+                    trans->Abort();
+                }
+                finally 
+                {
+                    ins->m_mouse_fp.resize(0);
+                    ins->CurDoc()->ReRender(ins->pRenderTarget);
+                }
+			}
             break;
         }
         case 2: {
+            Trans^ trans = gcnew Trans();
+            trans->StartTransaction();
             try
             {
                 DirectXRenderer* ins = GetImpObj();

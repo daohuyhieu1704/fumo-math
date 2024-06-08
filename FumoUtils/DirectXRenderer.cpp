@@ -8,7 +8,9 @@ DirectXRenderer* DirectXRenderer::m_instance = nullptr;
 
 void DirectXRenderer::ClearScreen()
 {
+    pRenderTarget->BeginDraw();
     pRenderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+    pRenderTarget->EndDraw();
     DrawUCS();
 }
 
@@ -27,8 +29,30 @@ void DirectXRenderer::SetMode(int value)
 	GetInstance()->m_mode = value;
 }
 
+FmJig* DirectXRenderer::GetHotEntity()
+{
+    return GetInstance()->m_HotEntity;
+}
+
+void DirectXRenderer::SetHotEntity(FmJig* value)
+{
+    GetInstance()->m_HotEntity = value;
+}
+
+bool DirectXRenderer::GetActiveHotEntity()
+{
+    return GetInstance()->m_activeHotEntity;
+}
+
+void DirectXRenderer::SetActiveHotEntity(bool value)
+{
+    GetInstance()->m_activeHotEntity = value;
+}
+
 LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+    static UINT_PTR timerID = 1;
+    static DWORD lastMouseMove = 0;
     switch (uMsg) {
     case WM_LBUTTONDOWN:
     {
@@ -39,13 +63,50 @@ LRESULT DirectXRenderer::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
             ScreenToClient(hwnd, &pt);
             int xPos = pt.x * 4 / 5;
             int yPos = pt.y * 4 / 5;
-            ins->pRenderTarget->BeginDraw();
-            ins->pRenderTarget->EndDraw();
-            ins->pRenderTarget->EndDraw();
             ins->m_mouse_fp.push_back(FmGePoint2d(static_cast<float>(xPos), static_cast<float>(yPos)));
-            if (ins->m_mouse_fp.size() > 0)
+            if (ins->m_mouse_fp.size() == 1)
             {
-                PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
+                ins->SetActiveHotEntity(true);
+            }
+            else if (ins->m_mouse_fp.size() > 2)
+            {
+                ins->SetActiveHotEntity(false);
+                ins->ClearScreen();
+            }
+
+            PostMessage(GetParent(hwnd), WM_MY_MESSAGE, wParam, lParam);
+            return 0;
+        }
+        break;
+    }
+    case WM_MOUSEMOVE:
+    {
+        DirectXRenderer* ins = GetInstance();
+        if (ins->GetMode() == 0)
+        {
+            return 0;
+        }
+        DWORD currentTime = GetTickCount64();
+        if (currentTime - lastMouseMove < 100) {
+            return 0;
+        }
+        lastMouseMove = currentTime;
+        if (GetInstance()->pRenderTarget != nullptr)
+        {
+            if (ins->m_activeHotEntity && ins->m_HotEntity != nullptr)
+            {
+                POINT pt;
+                if (GetCursorPos(&pt)) {
+                    ScreenToClient(hwnd, &pt);
+                    FmGePoint2d mousePos(static_cast<double>(pt.x), static_cast<double>(pt.y));
+                    ins->m_mouse_fp.resize(2);
+                    ins->m_mouse_fp[1] = mousePos;
+                    ins->m_HotEntity->sampler();
+                    if (ins->m_HotEntity->update()) {
+                        ins->ClearScreen();
+                        ins->m_HotEntity->Preview(ins->pRenderTarget);
+                    }
+                }
             }
             return 0;
         }

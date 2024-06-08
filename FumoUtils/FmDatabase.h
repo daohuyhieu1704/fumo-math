@@ -22,6 +22,7 @@ namespace DatabaseServices {
         std::string GetName() const;
         void SetName(const std::string& name);
 #pragma endregion
+        void ReRender(ID2D1HwndRenderTarget* pRenderTarget);
         static FmDatabasePtr CreateObject();
         void AppendObject(std::shared_ptr<FmObjectBase> obj);
         void SaveToJson(const std::string& filename);

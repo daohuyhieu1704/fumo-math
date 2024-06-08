@@ -61,6 +61,24 @@
     <Filter Include="Common\Drawable\Ucs">
       <UniqueIdentifier>{956c5cd7-c1e6-4b48-9867-2454c9bf332f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{d9d98397-b521-400e-b08e-f657fdd8608d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Settings\Circle">
+      <UniqueIdentifier>{d4c75912-949a-412d-9f00-7dfcabbafc07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Settings\Line">
+      <UniqueIdentifier>{113cf624-eb75-4248-bf3f-b17196960b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jig">
+      <UniqueIdentifier>{69e2ed5a-cb6b-4846-93a4-62b17b1597fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jig\CircleJig">
+      <UniqueIdentifier>{aef50fd8-7066-44c8-8f12-47e7ba3d0bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\DirectXRenderer">
+      <UniqueIdentifier>{0bbc6f60-fb00-4731-8a7a-5ea95b40a024}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FmGePoint3d.cpp">
@@ -108,6 +126,18 @@
     </ClCompile>
     <ClCompile Include="FmUcs.cpp">
       <Filter>Common\Drawable\Ucs</Filter>
+    </ClCompile>
+    <ClCompile Include="FmBaseSettings.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="FmJig.cpp">
+      <Filter>Jig</Filter>
+    </ClCompile>
+    <ClCompile Include="FmCircleJig.cpp">
+      <Filter>Jig\CircleJig</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXRenderer.cpp">
+      <Filter>Common\DirectXRenderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +192,18 @@
     </ClInclude>
     <ClInclude Include="FmUcs.h">
       <Filter>Common\Drawable\Ucs</Filter>
+    </ClInclude>
+    <ClInclude Include="FmBaseSettings.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="FmJig.h">
+      <Filter>Jig</Filter>
+    </ClInclude>
+    <ClInclude Include="FmCircleJig.h">
+      <Filter>Jig\CircleJig</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXRenderer.h">
+      <Filter>Common\DirectXRenderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

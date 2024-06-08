@@ -17,6 +17,7 @@ namespace Geometry
 
 		void operator+=(const FmGePoint3d& other);
 		void operator+=(const FmGeVelocity3d& other);
+		bool operator==(const FmGePoint3d& other) const;
 		FmGePoint3d operator*(float scalar) const;
 
 		float x;

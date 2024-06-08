@@ -51,6 +51,11 @@ namespace Geometry
 
 	}
 
+	bool FmGePoint3d::operator==(const FmGePoint3d& other) const
+	{
+		return (x == other.x && y == other.y && z == other.z);
+	}
+
 	FmGePoint3d FmGePoint3d::operator*(float scalar) const
 	{
 		return FmGePoint3d(this->x * scalar, this->y * scalar, this->z * scalar);
